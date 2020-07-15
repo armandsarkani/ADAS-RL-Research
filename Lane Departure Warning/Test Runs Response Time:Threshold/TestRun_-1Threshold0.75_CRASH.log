@@ -1,0 +1,24 @@
+2020-06-29 21:26:54,112 Warning! Approaching right lane!, car y = 148.12208557128906 LM y = 148.99246215820312
+2020-06-29 21:26:54,118 Brake: 0.0
+2020-06-29 21:26:54,123 Steering: 0.0010000000474974513
+2020-06-29 21:26:54,129 Throttle: 0.75
+2020-06-29 21:26:54,141 Warning issued 1 time(s)
+2020-06-29 21:26:58,175 Vehicle crossed lane 1 time(s)
+2020-06-29 21:26:58,181 Moving vehicle to center of lane...
+
+2020-06-29 21:26:58,213 Warning! Approaching right lane!, car y = 148.49574279785156 LM y = 149.0525665283203Warning! Approaching right lane!, car y = 148.9766387939453 LM y = 149.11648559570312Warning! Approaching left lane!, car y = 149.56820678710938 LM y = 149.1831817626953
+2020-06-29 21:26:58,219 Brake: 0.0
+2020-06-29 21:26:58,225 Steering: 0.0010000000474974513
+2020-06-29 21:26:58,231 Throttle: 0.75
+2020-06-29 21:26:58,236 Warning issued 2 time(s)
+2020-06-29 21:27:02,271 Vehicle did not cross lane
+2020-06-29 21:27:02,284 Moving vehicle to center of lane...
+
+2020-06-29 21:27:02,319 Warning! Approaching right lane!, car y = 148.74832153320312 LM y = 149.30078125Warning! Approaching left lane!, car y = 149.8892822265625 LM y = 149.35885620117188
+2020-06-29 21:27:02,324 Brake: 0.0
+2020-06-29 21:27:02,330 Steering: 0.0010000000474974513
+2020-06-29 21:27:02,337 Throttle: 0.75
+2020-06-29 21:27:02,343 Warning issued 3 time(s)
+2020-06-29 21:27:06,373 Vehicle did not cross lane
+2020-06-29 21:27:06,380 Moving vehicle to center of lane...
+

@@ -1,0 +1,40 @@
+2020-06-29 21:11:15,713 Warning! Approaching right lane!, car y = 149.56179809570312 LM y = 149.58935546875
+2020-06-29 21:11:15,739 Brake: 0.0
+2020-06-29 21:11:15,746 Steering: 0.0010000000474974513
+2020-06-29 21:11:15,751 Throttle: 0.5
+2020-06-29 21:11:15,762 Warning issued 1 time(s)
+2020-06-29 21:11:17,798 Vehicle crossed lane 1 time(s)
+2020-06-29 21:11:17,806 Moving vehicle to center of lane...
+
+2020-06-29 21:11:36,763 Warning! Approaching right lane!, car y = 153.49252319335938 LM y = 153.5174102783203
+2020-06-29 21:11:36,769 Brake: 0.0
+2020-06-29 21:11:36,774 Steering: 0.0010000000474974513
+2020-06-29 21:11:36,774 Throttle: 0.5
+2020-06-29 21:11:36,782 Warning issued 2 time(s)
+2020-06-29 21:11:38,820 Vehicle did not cross lane
+2020-06-29 21:11:38,825 Moving vehicle to center of lane...
+
+2020-06-29 21:11:38,854 Warning! Approaching right lane!, car y = 153.70030212402344 LM y = 153.53872680664062
+2020-06-29 21:11:38,859 Brake: 0.0
+2020-06-29 21:11:38,865 Steering: 0.0010000000474974513
+2020-06-29 21:11:38,870 Throttle: 0.5
+2020-06-29 21:11:38,876 Warning issued 3 time(s)
+2020-06-29 21:11:40,910 Vehicle did not cross lane
+2020-06-29 21:11:40,918 Moving vehicle to center of lane...
+
+2020-06-29 21:11:59,810 Warning! Approaching right lane!, car y = 153.96676635742188 LM y = 153.98655700683594
+2020-06-29 21:11:59,817 Brake: 0.0
+2020-06-29 21:11:59,823 Steering: 0.0010000000474974513
+2020-06-29 21:11:59,829 Throttle: 0.5
+2020-06-29 21:11:59,835 Warning issued 4 time(s)
+2020-06-29 21:12:01,866 Vehicle did not cross lane
+2020-06-29 21:12:01,872 Moving vehicle to center of lane...
+
+2020-06-29 21:12:01,913 Warning! Approaching right lane!, car y = 154.16477966308594 LM y = 154.0066680908203Warning! Approaching right lane!, car y = 154.2203826904297 LM y = 154.0271453857422
+2020-06-29 21:12:01,918 Brake: 0.0
+2020-06-29 21:12:01,924 Steering: 0.0010000000474974513
+2020-06-29 21:12:01,930 Throttle: 0.5
+2020-06-29 21:12:01,940 Warning issued 5 time(s)
+2020-06-29 21:12:03,971 Vehicle did not cross lane
+2020-06-29 21:12:03,977 Moving vehicle to center of lane...
+

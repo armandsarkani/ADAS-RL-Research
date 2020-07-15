@@ -1,0 +1,73 @@
+2020-07-07 19:13:49,840 Warning! Approaching right lane!, car y = 148.02130126953125 LM y = 148.9749298095703
+2020-07-07 19:13:49,845 Brake: 0.0
+2020-07-07 19:13:49,852 Steering: 0.0010000000474974513
+2020-07-07 19:13:49,857 Throttle: 0.5
+2020-07-07 19:13:49,863 Warning issued 1 time(s)
+
+2020-07-07 19:13:52,797 Warning active and cautious!
+2020-07-07 19:13:52,825 Warning active and cautious!
+2020-07-07 19:13:52,844 Warning active and cautious!
+2020-07-07 19:13:53,840 Warning active and cautious!
+2020-07-07 19:13:54,842 Warning active and cautious!
+2020-07-07 19:13:55,855 Response time elapsed (s): 5.978973150253296
+
+2020-07-07 19:14:09,872 Warning! Approaching right lane!, car y = 148.39990234375 LM y = 149.3455047607422
+2020-07-07 19:14:09,877 Brake: 0.0
+2020-07-07 19:14:09,883 Steering: 0.0010000000474974513
+2020-07-07 19:14:09,889 Throttle: 0.5
+2020-07-07 19:14:09,896 Warning issued 2 time(s)
+
+2020-07-07 19:14:11,540 Warning active and cautious!
+2020-07-07 19:14:11,870 Warning active and cautious!
+2020-07-07 19:14:12,876 Warning active and cautious!
+2020-07-07 19:14:13,879 Response time elapsed (s): 3.9720265865325928
+
+2020-07-07 19:14:27,903 Warning! Approaching right lane!, car y = 148.754150390625 LM y = 149.68267822265625
+2020-07-07 19:14:27,909 Brake: 0.0
+2020-07-07 19:14:27,915 Steering: 0.0010000000474974513
+2020-07-07 19:14:27,922 Throttle: 0.5
+2020-07-07 19:14:27,928 Warning issued 3 time(s)
+
+2020-07-07 19:14:31,800 Warning active and cautious!
+2020-07-07 19:14:31,818 Warning active and cautious!
+2020-07-07 19:14:31,903 Warning active and cautious!
+2020-07-07 19:14:32,911 Warning active and cautious!
+2020-07-07 19:14:33,905 Warning active and cautious!
+2020-07-07 19:14:34,911 Warning active and cautious!
+2020-07-07 19:14:35,915 Response time elapsed (s): 7.969085931777954
+
+2020-07-07 19:14:49,946 Warning! Approaching right lane!, car y = 149.0865020751953 LM y = 150.061767578125
+2020-07-07 19:14:49,952 Brake: 0.0
+2020-07-07 19:14:49,958 Steering: 0.0010000000474974513
+2020-07-07 19:14:49,963 Throttle: 0.5
+2020-07-07 19:14:49,969 Warning issued 4 time(s)
+
+2020-07-07 19:14:53,223 Warning active and cautious!
+2020-07-07 19:14:53,235 Warning active and cautious!
+2020-07-07 19:14:53,953 Warning active and cautious!
+2020-07-07 19:14:54,957 Warning active and cautious!
+2020-07-07 19:14:55,957 Response time elapsed (s): 5.977334976196289
+
+2020-07-07 19:15:09,990 Warning! Approaching right lane!, car y = 149.5001678466797 LM y = 150.4329071044922
+2020-07-07 19:15:09,996 Brake: 0.0
+2020-07-07 19:15:10,003 Steering: 0.0010000000474974513
+2020-07-07 19:15:10,008 Throttle: 0.5
+2020-07-07 19:15:10,008 Warning issued 5 time(s)
+
+2020-07-07 19:15:12,353 Warning active and cautious!
+2020-07-07 19:15:12,373 Warning active and cautious!
+2020-07-07 19:15:12,998 Warning active and cautious!
+2020-07-07 19:15:14,010 Warning active and cautious!
+2020-07-07 19:15:15,018 Response time elapsed (s): 4.9970011711120605
+
+2020-07-07 19:15:29,056 Warning! Approaching right lane!, car y = 149.85009765625 LM y = 150.79058837890625
+2020-07-07 19:15:29,064 Brake: 0.0
+2020-07-07 19:15:29,070 Steering: 0.0010000000474974513
+2020-07-07 19:15:29,078 Throttle: 0.5
+2020-07-07 19:15:29,078 Warning issued 6 time(s)
+
+2020-07-07 19:15:31,392 Warning active and cautious!
+2020-07-07 19:15:31,413 Warning active and cautious!
+2020-07-07 19:15:32,057 Warning active and cautious!
+2020-07-07 19:15:34,073 Response time elapsed (s): 4.97710657119751
+
