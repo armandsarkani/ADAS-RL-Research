@@ -1,0 +1,6 @@
+Download Carla 0.9.5 from Carla GitHub (pre-built)
+Use Windows 10 virtual machine to setup environment
+Use pre-built version
+Install Visual Studio 2017 x64 Native Tools command line
+Install Python 3.7
+Run python scripts with py -3.7
