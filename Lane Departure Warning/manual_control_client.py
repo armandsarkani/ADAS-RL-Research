@@ -996,9 +996,6 @@ def Receive(sock):
             prev_location = player.get_location()
         response = sock.recv(4096)
         print(response.decode())
-        if(response is not None):
-            time.sleep(1)
-            DetermineLaneCentering(prev_location, prev_lane_id)
         print("\n")
             
 # ==============================================================================
@@ -1007,8 +1004,8 @@ def Receive(sock):
 
 
 def main():
-    HOST = '192.168.0.4' # iMac Pro
-    #HOST = '192.168.254.41' # 16-inch other
+    #HOST = '192.168.0.4' # iMac Pro
+    HOST = '192.168.254.41' # 16-inch other
     #HOST = '192.168.0.78' # 16-inch
     #HOST = 'localhost'
     argparser = argparse.ArgumentParser(
