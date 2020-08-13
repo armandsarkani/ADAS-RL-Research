@@ -1004,8 +1004,15 @@ def Receive(sock):
 
 
 def main():
+    HOST = input("Enter IP Address or hostname: ")
+    if(HOST == "iMac"):
+        HOST = '192.168.0.4'
+    elif(HOST == "MBP"):
+        HOST = '192.168.0.78'
+    elif(HOST == "MBPo"):
+        HOST = '192.168.254.41'
     #HOST = '192.168.0.4' # iMac Pro
-    HOST = '192.168.254.41' # 16-inch other
+    #HOST = '192.168.254.41' # 16-inch other
     #HOST = '192.168.0.78' # 16-inch
     #HOST = 'localhost'
     argparser = argparse.ArgumentParser(
