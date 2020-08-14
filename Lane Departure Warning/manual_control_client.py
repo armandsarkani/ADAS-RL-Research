@@ -294,6 +294,8 @@ class LaneDepartureData:
         self.acc_z  = player.get_acceleration().z
         self.left_lane_width = 0
         self.steer = player.get_control().steer
+        velocity = player.get_velocity()
+        self.speed = math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
         if(worldmap.get_waypoint(location).get_right_lane() is not None):
             self.right_x = worldmap.get_waypoint(location).get_right_lane().transform.location.x
             self.right_y = worldmap.get_waypoint(location).get_right_lane().transform.location.y
@@ -463,9 +465,7 @@ class KeyboardControl(object):
                     # replayer
                     client.replay_file("manual_recording.rec", world.recording_start, 0, 0)
                     world.camera_manager.set_sensor(currentIndex)
-               # elif event.key == K_w:
-                  #  r = right_lane_departure_warning()
-                  #  l = left_lane_departure_warning()
+                #elif event.key == K_w:
                 elif event.key == K_MINUS and (pygame.key.get_mods() & KMOD_CTRL):
                     if pygame.key.get_mods() & KMOD_SHIFT:
                         world.recording_start -= 10
@@ -944,6 +944,7 @@ def game_loop(args):
             pygame.HWSURFACE | pygame.DOUBLEBUF)
 
         hud = HUD(args.width, args.height)
+        #world = World(client.load_world('Town06'), hud, args.filter, args.rolename)
         world = World(client.get_world(), hud, args.filter, args.rolename)
         controller = KeyboardControl(world, args.autopilot)
 
@@ -1004,7 +1005,8 @@ def Receive(sock):
 
 
 def main():
-    HOST = input("Enter IP Address or hostname: ")
+    #HOST = input("Enter IP Address or hostname: ")
+    HOST = "MBPo"
     if(HOST == "iMac"):
         HOST = '192.168.0.4'
     elif(HOST == "MBP"):
