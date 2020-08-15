@@ -40,7 +40,7 @@ q_values = np.zeros((num_distance_states, num_speed_states, 2))
 # total rewards
 rewards = 0
 # iterations for runtime
-iterations = 60
+iterations = 1000
 # connection variables
 conn = None
 d = None
@@ -142,7 +142,8 @@ def send_action(action):
         string = "WARNING! Approaching lane."
         conn.send(string.encode())
     else:
-        pass
+        string = "Safe"
+        conn.send(string.encode())
 def q_learning(step_size= alpha):
     global q_values
     global rewards
@@ -173,7 +174,9 @@ def q_learning(step_size= alpha):
         # Q-learning lookup table update
         q_values[state[0], state[1], action] += step_size * (reward + gamma * np.max(q_values[next_state[0], next_state[1], :]) - q_values[state[0], state[1], action])
         state = next_state
-    print("Done")
+    string = "Done"
+    print(string)
+    conn.send(string.encode)
 def right_lane_distance(location_x, location_y, right_x, right_y, right_lane_width):
     if(abs(location_x - right_x) <= 1): # if x are negligibly similar
         if(location_y - right_y < 0):
@@ -213,6 +216,7 @@ def ThreadFunction(conn):
             d = pickle.loads(data)
         except ConnectionResetError:
             conn_reset = True
+            np.save("DriverQValues.npy", q_values) # custom file
             print("Disconnected.")
             break
 def main():
@@ -243,7 +247,7 @@ def main():
         print(q_values)
     try:
         q_learning()
-        np.save("DriverQValues.npy", q_values)
+        np.save("DriverQValues.npy", q_values) # custom file
         thread.join()
         exit()
         if(conn_reset):
