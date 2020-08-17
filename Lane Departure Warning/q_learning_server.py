@@ -40,7 +40,7 @@ q_values = np.zeros((num_distance_states, num_speed_states, 2))
 # total rewards
 rewards = 0
 # iterations for runtime
-iterations = 1000
+iterations = 100
 # connection variables
 conn = None
 d = None
@@ -61,17 +61,19 @@ class LaneDepartureData:
     acc_y = 0
     acc_z = 0
     speed = 0
+    speed_limit = 0
 def receive_metrics():
     if(d is not None):
         dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
         dl = left_lane_distance(d.location_x, d.location_y, d.left_x, d.left_y, d.left_lane_width)
-        if(dr is not None and dl is not None):
+        speed_limit = d.speed_limit
+        if(dr is not None and dl is not None and speed_limit is not None):
             dr *= -1
             dl *= -1
             dr = float('%.2f' % dr)
             dl = float('%.2f' % dl)
             speed = d.speed * 2.237 # m/s to mph
-            return [dl, dr, speed]
+            return [dl, dr, speed, speed_limit]
     else:
         return None
 def initialize_q_table():
@@ -84,7 +86,7 @@ def initialize_q_table():
     for i in range(8, 12):
         q_values[i, :, 0] = 0
         q_values[i, :, 1] = 0.5
-def enumerate_state(dl, dr, speed):
+def enumerate_state(dl, dr, speed, speed_limit):
     # initialize state vector
     state = [0, 0]
     # distance
@@ -113,11 +115,11 @@ def enumerate_state(dl, dr, speed):
     elif(dl < 0.25 or dr < 0.25):
         state[0] = 11
     # speed
-    if(speed <= 45):
+    if(speed <= speed_limit * 0.9):
         state[1] = 0
-    elif(speed > 45 and speed < 60):
+    elif(speed > 0.9 * speed_limit and speed <= 1.1 * speed_limit):
         state[1] = 1
-    elif(speed > 60):
+    elif(speed > 1.1 * speed_limit):
         state[1] = 2
     return state
 def define_rewards(state, next_state):
@@ -147,17 +149,19 @@ def send_action(action):
 def q_learning(step_size= alpha):
     global q_values
     global rewards
-    initialize_q_table()
+    rewards = 0
     dl = None
     dr = None
     speed = None
+    speed_limit = None
     metrics = receive_metrics()
     while(metrics is None):
         metrics = receive_metrics()
     dl = metrics[0]
     dr = metrics[1]
     speed = metrics[2]
-    state = enumerate_state(dl, dr, speed)
+    speed_limit = metrics[3]
+    state = enumerate_state(dl, dr, speed, speed_limit)
     for i in trange(iterations):
         action = choose_action(state)
         send_action(action)
@@ -168,15 +172,13 @@ def q_learning(step_size= alpha):
         dl = metrics[0]
         dr = metrics[1]
         speed = metrics[2]
-        next_state = enumerate_state(dl, dr, speed)
+        speed_limit = metrics[3]
+        next_state = enumerate_state(dl, dr, speed, speed_limit)
         reward = define_rewards(state, next_state)
         rewards += reward
         # Q-learning lookup table update
         q_values[state[0], state[1], action] += step_size * (reward + gamma * np.max(q_values[next_state[0], next_state[1], :]) - q_values[state[0], state[1], action])
         state = next_state
-    string = "Done"
-    print(string)
-    conn.send(string.encode)
 def right_lane_distance(location_x, location_y, right_x, right_y, right_lane_width):
     if(abs(location_x - right_x) <= 1): # if x are negligibly similar
         if(location_y - right_y < 0):
@@ -226,7 +228,7 @@ def main():
     global rewards
     device = sys.argv[1]
     if(device == "iMac"):
-        HOST = '192.168.0.4' # iMac Pro
+        HOST = '192.168.0.3' # iMac Pro
     elif(device == "MBPo"):
         HOST = '192.168.254.41' # 16-inch other
     elif(device == "MBP"):
@@ -242,14 +244,21 @@ def main():
     thread = threading.Thread(target=ThreadFunction, args=(conn,))
     thread.start()
     if(os.path.exists("DriverQValues.npy")):
-        print("Data loaded ...")
+        print("\n")
+        print("Existing Q-table loaded ...")
         q_values = np.load("DriverQValues.npy")
         print(q_values)
+    else:
+        initialize_q_table()
     try:
-        q_learning()
-        np.save("DriverQValues.npy", q_values) # custom file
-        thread.join()
-        exit()
+        episode = 1
+        while(True):
+            print("Running episode " + str(episode) + " (" + str(iterations) + " iterations)")
+            q_learning()
+            np.save("DriverQValues.npy", q_values) # custom file
+            print("Episode " + str(episode) + " completed. Total rewards this episode = ", rewards)
+            episode += 1
+            print("\n")
         if(conn_reset):
             s.close()
             conn.close()

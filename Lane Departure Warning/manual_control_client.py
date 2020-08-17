@@ -134,6 +134,7 @@ counter_right = 0
 player = None
 worldmap = None
 first_pass = True
+worldset = ""
 def find_weather_presets():
     rgx = re.compile('.+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)')
     name = lambda x: ' '.join(m.group(0) for m in rgx.finditer(x))
@@ -296,6 +297,7 @@ class LaneDepartureData:
         self.steer = player.get_control().steer
         velocity = player.get_velocity()
         self.speed = math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
+        self.speed_limit = player.get_speed_limit()
         if(worldmap.get_waypoint(location).get_right_lane() is not None):
             self.right_x = worldmap.get_waypoint(location).get_right_lane().transform.location.x
             self.right_y = worldmap.get_waypoint(location).get_right_lane().transform.location.y
@@ -944,8 +946,10 @@ def game_loop(args):
             pygame.HWSURFACE | pygame.DOUBLEBUF)
 
         hud = HUD(args.width, args.height)
-        #world = World(client.load_world('Town06'), hud, args.filter, args.rolename)
-        world = World(client.get_world(), hud, args.filter, args.rolename)
+        if(worldset == "set"):
+            world = World(client.load_world('Town06'), hud, args.filter, args.rolename)
+        else:
+            world = World(client.get_world(), hud, args.filter, args.rolename)
         controller = KeyboardControl(world, args.autopilot)
 
         clock = pygame.time.Clock()
@@ -1005,18 +1009,10 @@ def Receive(sock):
 
 
 def main():
-    #HOST = input("Enter IP Address or hostname: ")
-    HOST = "MBPo"
-    if(HOST == "iMac"):
-        HOST = '192.168.0.4'
-    elif(HOST == "MBP"):
-        HOST = '192.168.0.78'
-    elif(HOST == "MBPo"):
-        HOST = '192.168.254.41'
-    #HOST = '192.168.0.4' # iMac Pro
-    #HOST = '192.168.254.41' # 16-inch other
-    #HOST = '192.168.0.78' # 16-inch
-    #HOST = 'localhost'
+    global worldset
+    if(sys.argv[1] == "help"):
+       print("Format: (-d device) (-m set/none)")
+       exit()
     argparser = argparse.ArgumentParser(
         description='CARLA Manual Control Client')
     argparser.add_argument(
@@ -1024,6 +1020,16 @@ def main():
         action='store_true',
         dest='debug',
         help='print debug information')
+    argparser.add_argument(
+        '--hostname',
+        metavar='HOSTNAME',
+        default='localhost',
+        help='computer hostname')
+    argparser.add_argument(
+        '--mode',
+        metavar='MODE',
+        default='continue',
+        help='mode (set/continue)')
     argparser.add_argument(
         '--host',
         metavar='H',
@@ -1064,6 +1070,17 @@ def main():
     logging.info('listening to server %s:%s', args.host, args.port)
 
     print(__doc__)
+    
+    HOST = args.hostname
+    worldset = args.mode
+    if(HOST == "iMac"):
+        HOST = '192.168.0.3'
+    elif(HOST == "MBP"):
+        HOST = '192.168.0.78'
+    elif(HOST == "MBPo"):
+        HOST = '192.168.254.41'
+    else:
+        HOST = 'localhost'
 
     try:
         PORT = 50007
