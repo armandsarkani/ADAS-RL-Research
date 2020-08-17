@@ -25,11 +25,11 @@ from tqdm import trange
 # probability for exploration
 epsilon = 0.1
 # step size
-alpha = 0.5
+alpha = 0.9
 # gamma for Q-Learning
-gamma = 1
+gamma = 0.95
 # rate at which state transitions are measured
-sampling_rate = 1.0
+sampling_rate = 1.5
 # binary actions
 actions = [0, 1] # 0 = no warning, 1 = issue warning
 # number of states per dimension
@@ -217,6 +217,16 @@ def ThreadFunction(conn):
             data = conn.recv(4096)
             d = pickle.loads(data)
         except ConnectionResetError:
+            conn_reset = True
+            np.save("DriverQValues.npy", q_values) # custom file
+            print("Disconnected.")
+            break
+        except EOFError:
+            conn_reset = True
+            np.save("DriverQValues.npy", q_values) # custom file
+            print("Disconnected.")
+            break
+        except BrokenPipeError:
             conn_reset = True
             np.save("DriverQValues.npy", q_values) # custom file
             print("Disconnected.")
