@@ -25,9 +25,9 @@ from tqdm import trange
 # probability for exploration
 epsilon = 0.1
 # step size
-alpha = 0.9
+alpha = 0.5
 # gamma for Q-Learning
-gamma = 0.95
+gamma = 0.99
 # rate at which state transitions are measured
 sampling_rate = 1.5
 # binary actions
@@ -125,13 +125,13 @@ def enumerate_state(dl, dr, speed, speed_limit):
 def define_rewards(state, next_state):
     reward = 0
     if(state[0] > next_state[0]):
-        reward += -10 * (next_state[0] - state[0])
+        reward += 10 * (state[0] - next_state[0])
     elif(state[0] < next_state[0]):
-        reward += 10 * (next_state[0] - state[0])
+        reward += -10 * (next_state[0] - state[0])
     if(state[1] > next_state[1]):
-        reward += -20 * (next_state[1] - state[1])
+        reward += 15 * (state[1] - next_state[1])
     elif(state[1] < next_state[1]):
-        reward += 20 * (next_state[1] - state[1])
+        reward += -15 * (next_state[1] - state[1])
     return reward
 def choose_action(state):
     if(np.random.binomial(1, epsilon) == 1):
@@ -175,10 +175,12 @@ def q_learning(step_size= alpha):
         speed_limit = metrics[3]
         next_state = enumerate_state(dl, dr, speed, speed_limit)
         reward = define_rewards(state, next_state)
+        print("Reward from state", state, "to state", next_state, ":", reward)
         rewards += reward
         # Q-learning lookup table update
         q_values[state[0], state[1], action] += step_size * (reward + gamma * np.max(q_values[next_state[0], next_state[1], :]) - q_values[state[0], state[1], action])
         state = next_state
+        np.save("DriverQValues.npy", q_values) # save on each iteration
 def right_lane_distance(location_x, location_y, right_x, right_y, right_lane_width):
     if(abs(location_x - right_x) <= 1): # if x are negligibly similar
         if(location_y - right_y < 0):
@@ -238,7 +240,7 @@ def main():
     global rewards
     device = sys.argv[1]
     if(device == "iMac"):
-        HOST = '192.168.0.3' # iMac Pro
+        HOST = '192.168.0.5' # iMac Pro
     elif(device == "MBPo"):
         HOST = '192.168.254.41' # 16-inch other
     elif(device == "MBP"):
@@ -257,6 +259,7 @@ def main():
         print("\n")
         print("Existing Q-table loaded ...")
         q_values = np.load("DriverQValues.npy")
+        np.set_printoptions(suppress=True)
         print(q_values)
     else:
         initialize_q_table()
@@ -265,7 +268,6 @@ def main():
         while(True):
             print("Running episode " + str(episode) + " (" + str(iterations) + " iterations)")
             q_learning()
-            np.save("DriverQValues.npy", q_values) # custom file
             print("Episode " + str(episode) + " completed. Total rewards this episode = ", rewards)
             episode += 1
             print("\n")

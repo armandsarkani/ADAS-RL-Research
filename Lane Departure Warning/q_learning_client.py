@@ -166,7 +166,7 @@ try:
     worldset = sys.argv[3]
     driver = sys.argv[4]
     if(device == "iMac"):
-        HOST = '192.168.0.4' # iMac Pro
+        HOST = '192.168.0.5' # iMac Pro
     elif(device == "MBPo"):
         HOST = '192.168.254.41' # 16-inch other
     elif(device == "MBP"):

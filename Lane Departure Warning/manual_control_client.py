@@ -1074,7 +1074,7 @@ def main():
     HOST = args.hostname
     worldset = args.mode
     if(HOST == "iMac"):
-        HOST = '192.168.0.3'
+        HOST = '192.168.0.5'
     elif(HOST == "MBP"):
         HOST = '192.168.0.78'
     elif(HOST == "MBPo"):
