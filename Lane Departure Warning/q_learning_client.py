@@ -295,7 +295,7 @@ try:
             vehicle.set_transform(car.transform) # quick adjust wheels
             warning_active = False
             print("Warning off!")
-        vehicle.apply_control(carla.VehicleControl(throttle=random.uniform(throttle - 0.05, throttle + 0.05), steer=random.uniform(-0.0005, 0.002)))
+        vehicle.apply_control(carla.VehicleControl(throttle=random.uniform(throttle - 0.05, throttle + 0.05), steer=random.uniform(0.0005, 0.002)))
         vehicle_2.apply_control(carla.VehicleControl(throttle=throttle, steer=0))
         vehicle_3.apply_control(carla.VehicleControl(throttle=throttle, steer=0))
         if(vehicle.is_at_traffic_light()):

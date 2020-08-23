@@ -29,7 +29,7 @@ alpha = 0.5
 # gamma for Q-Learning
 gamma = 0.99
 # rate at which state transitions are measured
-sampling_rate = 1.5
+sampling_rate = 0.1
 # binary actions
 actions = [0, 1] # 0 = no warning, 1 = issue warning
 # number of states per dimension
@@ -63,19 +63,17 @@ class LaneDepartureData:
     speed = 0
     speed_limit = 0
 def receive_metrics():
-    if(d is not None):
-        dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
-        dl = left_lane_distance(d.location_x, d.location_y, d.left_x, d.left_y, d.left_lane_width)
-        speed_limit = d.speed_limit
-        if(dr is not None and dl is not None and speed_limit is not None):
-            dr *= -1
-            dl *= -1
-            dr = float('%.2f' % dr)
-            dl = float('%.2f' % dl)
-            speed = d.speed * 2.237 # m/s to mph
-            return [dl, dr, speed, speed_limit]
-    else:
-        return None
+    while True:
+        if(d is not None):
+            dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
+            dl = left_lane_distance(d.location_x, d.location_y, d.left_x, d.left_y, d.left_lane_width)
+            if(dr is not None and dl is not None and d.speed_limit is not None and d.speed is not None):
+                dr *= -1
+                dl *= -1
+                dr = float('%.2f' % dr)
+                dl = float('%.2f' % dl)
+                speed = d.speed * 2.237 # m/s to mph
+                return dl, dr, speed, d.speed_limit
 def initialize_q_table():
     for i in range(0, 5):
         q_values[i, :, 0] = 0.5
@@ -146,41 +144,40 @@ def send_action(action):
     else:
         string = "Safe"
         conn.send(string.encode())
+# poll action vector every 20 seconds
 def q_learning(step_size= alpha):
     global q_values
     global rewards
     rewards = 0
-    dl = None
-    dr = None
-    speed = None
-    speed_limit = None
-    metrics = receive_metrics()
-    while(metrics is None):
-        metrics = receive_metrics()
-    dl = metrics[0]
-    dr = metrics[1]
-    speed = metrics[2]
-    speed_limit = metrics[3]
-    state = enumerate_state(dl, dr, speed, speed_limit)
+    iteration_rewards = 0
+    vector = []
+    dl, dr, speed, speed_limit = receive_metrics()
+    init_state = enumerate_state(dl, dr, speed, speed_limit)
     for i in trange(iterations):
-        action = choose_action(state)
+        state_vector = []
+        action = choose_action(init_state)
         send_action(action)
-        time.sleep(sampling_rate)
-        metrics = receive_metrics()
-        while(metrics is None):
-            metrics = receive_metrics()
-        dl = metrics[0]
-        dr = metrics[1]
-        speed = metrics[2]
-        speed_limit = metrics[3]
-        next_state = enumerate_state(dl, dr, speed, speed_limit)
-        reward = define_rewards(state, next_state)
-        print("Reward from state", state, "to state", next_state, ":", reward)
-        rewards += reward
+        for j in range(0, int(2/sampling_rate)):
+            dl, dr, speed, speed_limit = receive_metrics()
+            state = enumerate_state(dl, dr, speed, speed_limit)
+            state_vector.append(state)
+            time.sleep(sampling_rate)
+            dl, dr, speed, speed_limit = receive_metrics()
+            next_state = enumerate_state(dl, dr, speed, speed_limit)
+            state_vector.append(next_state)
+        #iteration_rewards += define_rewards(init_state, state_vector[0])
+        #for k in range(0, len(state_vector) - 1):
+            #iteration_rewards += define_rewards(state_vector[k], state_vector[k+1])
+        #rewards += iteration_rewards
         # Q-learning lookup table update
-        q_values[state[0], state[1], action] += step_size * (reward + gamma * np.max(q_values[next_state[0], next_state[1], :]) - q_values[state[0], state[1], action])
-        state = next_state
+        iteration_rewards = define_rewards(init_state, state_vector[-1])
+        final_state = state_vector[-1]
+        print("Going from state", init_state, "to state", final_state, "rewards = ", iteration_rewards)
+        delta = step_size * (iteration_rewards + gamma * np.max(q_values[final_state[0], final_state[1], :]) - q_values[init_state[0], init_state[1], action])
+        q_values[init_state[0], init_state[1], action] += delta
+        print("Delta =", delta)
         np.save("DriverQValues.npy", q_values) # save on each iteration
+        init_state = final_state
 def right_lane_distance(location_x, location_y, right_x, right_y, right_lane_width):
     if(abs(location_x - right_x) <= 1): # if x are negligibly similar
         if(location_y - right_y < 0):
@@ -262,7 +259,8 @@ def main():
         np.set_printoptions(suppress=True)
         print(q_values)
     else:
-        initialize_q_table()
+        np.save("DriverQValues.npy", q_values) # custom file
+        #initialize_q_table()
     try:
         episode = 1
         while(True):
