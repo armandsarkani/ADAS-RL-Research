@@ -130,7 +130,15 @@ def define_rewards(state, next_state):
         reward += 15 * (state[1] - next_state[1])
     elif(state[1] < next_state[1]):
         reward += -15 * (next_state[1] - state[1])
+    if(is_safe(state) and is_safe(next_state)):
+        reward += 20
     return reward
+def is_safe(state):
+    if(state[0] <= 3 and state[1] == 0):
+        return True
+    else:
+        return False
+#def has_invaded(state, next_state):
 def choose_action(state):
     if(np.random.binomial(1, epsilon) == 1):
         return np.random.choice(actions)
@@ -157,7 +165,7 @@ def q_learning(step_size= alpha):
         state_vector = []
         action = choose_action(init_state)
         send_action(action)
-        for j in range(0, int(2/sampling_rate)):
+        for j in range(0, int(2/sampling_rate)): # generic response time
             dl, dr, speed, speed_limit = receive_metrics()
             state = enumerate_state(dl, dr, speed, speed_limit)
             state_vector.append(state)
@@ -165,6 +173,8 @@ def q_learning(step_size= alpha):
             dl, dr, speed, speed_limit = receive_metrics()
             next_state = enumerate_state(dl, dr, speed, speed_limit)
             state_vector.append(next_state)
+            if(is_safe(next_state) and not is_safe(init_state)):
+                break
         #iteration_rewards += define_rewards(init_state, state_vector[0])
         #for k in range(0, len(state_vector) - 1):
             #iteration_rewards += define_rewards(state_vector[k], state_vector[k+1])
