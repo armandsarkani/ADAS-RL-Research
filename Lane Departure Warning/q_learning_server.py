@@ -62,18 +62,23 @@ class LaneDepartureData:
     acc_z = 0
     speed = 0
     speed_limit = 0
+    lane_id = 0
+class State:
+    def __init__(self):
+        self.metrics = receive_metrics()
+        self.value = enumerate_state(self.metrics)
 def receive_metrics():
     while True:
         if(d is not None):
             dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
             dl = left_lane_distance(d.location_x, d.location_y, d.left_x, d.left_y, d.left_lane_width)
-            if(dr is not None and dl is not None and d.speed_limit is not None and d.speed is not None):
+            if(dr is not None and dl is not None and d.speed_limit is not None and d.speed is not None and d.lane_id is not None):
                 dr *= -1
                 dl *= -1
                 dr = float('%.2f' % dr)
                 dl = float('%.2f' % dl)
                 speed = d.speed * 2.237 # m/s to mph
-                return dl, dr, speed, d.speed_limit
+                return {"dl": dl, "dr": dr, "speed": speed, "speed_limit": d.speed_limit, "lane_id": d.lane_id}
 def initialize_q_table():
     for i in range(0, 5):
         q_values[i, :, 0] = 0.5
@@ -84,9 +89,14 @@ def initialize_q_table():
     for i in range(8, 12):
         q_values[i, :, 0] = 0
         q_values[i, :, 1] = 0.5
-def enumerate_state(dl, dr, speed, speed_limit):
+def enumerate_state(metrics):
     # initialize state vector
     state = [0, 0]
+    # get values from dictionary
+    dl = metrics.get("dl")
+    dr = metrics.get("dr")
+    speed = metrics.get("speed")
+    speed_limit = metrics.get("speed_limit")
     # distance
     if(dl == 1.75 and dr == 1.75):
         state[0] = 0
@@ -122,28 +132,32 @@ def enumerate_state(dl, dr, speed, speed_limit):
     return state
 def define_rewards(state, next_state):
     reward = 0
-    if(state[0] > next_state[0]):
-        reward += 10 * (state[0] - next_state[0])
-    elif(state[0] < next_state[0]):
-        reward += -10 * (next_state[0] - state[0])
-    if(state[1] > next_state[1]):
-        reward += 15 * (state[1] - next_state[1])
-    elif(state[1] < next_state[1]):
-        reward += -15 * (next_state[1] - state[1])
-    if(is_safe(state) and is_safe(next_state)):
+    if(state.value[0] > next_state.value[0]):
+        reward += 10 * (state.value[0] - next_state.value[0])
+    elif(state.value[0] < next_state.value[0]):
+        reward += -10 * (next_state.value[0] - state.value[0])
+    if(state.value[1] > next_state.value[1]):
+        reward += 15 * (state.value[1] - next_state.value[1])
+    elif(state.value[1] < next_state.value[1]):
+        reward += -15 * (next_state.value[1] - state.value[1])
+    if(is_safe(state.value) and is_safe(next_state.value)):
         reward += 20
+    lane_id = state.metrics.get("lane_id")
+    next_lane_id = next_state.metrics.get("lane_id")
+    if(lane_id != next_lane_id): # if lane invasion occurs
+        reward -= 40
     return reward
-def is_safe(state):
-    if(state[0] <= 3 and state[1] == 0):
+def is_safe(state_value):
+    if(state_value[0] <= 3 and state_value[1] == 0):
         return True
     else:
         return False
 #def has_invaded(state, next_state):
-def choose_action(state):
+def choose_action(state_value):
     if(np.random.binomial(1, epsilon) == 1):
         return np.random.choice(actions)
     else:
-        values = q_values[state[0], state[1], :] # row of values for a given state, any actions
+        values = q_values[state_value[0], state_value[1], :] # row of values for a given state, any actions
         return np.random.choice([action for action, value in enumerate(values) if value == np.max(values)])
 def send_action(action):
     if(action == 1):
@@ -158,33 +172,25 @@ def q_learning(step_size= alpha):
     global rewards
     rewards = 0
     iteration_rewards = 0
-    vector = []
-    dl, dr, speed, speed_limit = receive_metrics()
-    init_state = enumerate_state(dl, dr, speed, speed_limit)
+    init_state = State()
     for i in trange(iterations):
         state_vector = []
-        action = choose_action(init_state)
+        action = choose_action(init_state.value)
         send_action(action)
         for j in range(0, int(2/sampling_rate)): # generic response time
-            dl, dr, speed, speed_limit = receive_metrics()
-            state = enumerate_state(dl, dr, speed, speed_limit)
+            state = State()
             state_vector.append(state)
             time.sleep(sampling_rate)
-            dl, dr, speed, speed_limit = receive_metrics()
-            next_state = enumerate_state(dl, dr, speed, speed_limit)
+            next_state = State()
             state_vector.append(next_state)
-            if(is_safe(next_state) and not is_safe(init_state)):
+            if(is_safe(next_state.value) and not is_safe(init_state.value)):
                 break
-        #iteration_rewards += define_rewards(init_state, state_vector[0])
-        #for k in range(0, len(state_vector) - 1):
-            #iteration_rewards += define_rewards(state_vector[k], state_vector[k+1])
-        #rewards += iteration_rewards
         # Q-learning lookup table update
         iteration_rewards = define_rewards(init_state, state_vector[-1])
         final_state = state_vector[-1]
-        print("Going from state", init_state, "to state", final_state, "rewards = ", iteration_rewards)
-        delta = step_size * (iteration_rewards + gamma * np.max(q_values[final_state[0], final_state[1], :]) - q_values[init_state[0], init_state[1], action])
-        q_values[init_state[0], init_state[1], action] += delta
+        print("Going from state", init_state.value, "to state", final_state.value, "rewards = ", iteration_rewards)
+        delta = step_size * (iteration_rewards + gamma * np.max(q_values[final_state.value[0], final_state.value[1], :]) - q_values[init_state.value[0], init_state.value[1], action])
+        q_values[init_state.value[0], init_state.value[1], action] += delta
         print("Delta =", delta)
         np.save("DriverQValues.npy", q_values) # save on each iteration
         init_state = final_state

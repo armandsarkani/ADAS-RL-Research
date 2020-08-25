@@ -60,6 +60,7 @@ class LaneDepartureData:
         self.left_lane_width = 0
         self.steer = vehicle.get_control().steer
         velocity = vehicle.get_velocity()
+        self.lane_id = worldmap.get_waypoint(location).lane_id
         self.speed = math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
         self.speed_limit = vehicle.get_speed_limit()
         if(worldmap.get_waypoint(location).get_right_lane() is not None):
