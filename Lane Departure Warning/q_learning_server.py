@@ -41,6 +41,9 @@ q_values = np.zeros((num_distance_states, num_speed_states, 2))
 rewards = 0
 # iterations for runtime
 iterations = 100
+# actions
+NO_WARNING = 0
+WARNING = 1
 # connection variables
 conn = None
 d = None
@@ -130,7 +133,7 @@ def enumerate_state(metrics):
     elif(speed > 1.1 * speed_limit):
         state[1] = 2
     return state
-def define_rewards(state, next_state):
+def define_rewards(state, action, next_state):
     reward = 0
     if(state.value[0] > next_state.value[0]):
         reward += 10 * (state.value[0] - next_state.value[0])
@@ -140,7 +143,7 @@ def define_rewards(state, next_state):
         reward += 15 * (state.value[1] - next_state.value[1])
     elif(state.value[1] < next_state.value[1]):
         reward += -15 * (next_state.value[1] - state.value[1])
-    if(is_safe(state.value) and is_safe(next_state.value)):
+    if(is_safe(state.value) and is_safe(next_state.value) and action == NO_WARNING):
         reward += 20
     lane_id = state.metrics.get("lane_id")
     next_lane_id = next_state.metrics.get("lane_id")
@@ -160,7 +163,7 @@ def choose_action(state_value):
         values = q_values[state_value[0], state_value[1], :] # row of values for a given state, any actions
         return np.random.choice([action for action, value in enumerate(values) if value == np.max(values)])
 def send_action(action):
-    if(action == 1):
+    if(action == WARNING):
         string = "WARNING! Approaching lane."
         conn.send(string.encode())
     else:
@@ -186,7 +189,7 @@ def q_learning(step_size= alpha):
             if(is_safe(next_state.value) and not is_safe(init_state.value)):
                 break
         # Q-learning lookup table update
-        iteration_rewards = define_rewards(init_state, state_vector[-1])
+        iteration_rewards = define_rewards(init_state, action, state_vector[-1])
         final_state = state_vector[-1]
         print("Going from state", init_state.value, "to state", final_state.value, "rewards = ", iteration_rewards)
         delta = step_size * (iteration_rewards + gamma * np.max(q_values[final_state.value[0], final_state.value[1], :]) - q_values[init_state.value[0], init_state.value[1], action])
