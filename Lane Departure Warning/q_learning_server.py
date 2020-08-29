@@ -21,6 +21,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from tqdm import trange
+import oura_client
 
 # probability for exploration
 epsilon = 0.1
@@ -250,6 +251,9 @@ def ThreadFunction(conn):
             print("Disconnected.")
             break
 def main():
+    userinfo, sleep, activity, readiness = oura_client.get_all_data()
+    oura_client.save_json()
+    print(readiness['readiness'][0]['score'])
     global conn_reset
     global conn
     global q_values
