@@ -75,3 +75,5 @@ def save_json():
     json.dump(sleep, sleep_outfile)
     json.dump(activity, activity_outfile)
     json.dump(readiness, readiness_outfile)
+    os.chdir('..')
+save_json()
