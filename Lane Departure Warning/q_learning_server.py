@@ -25,31 +25,49 @@ import oura_client
 
 # probability for exploration
 epsilon = 0.1
+
 # step size
 alpha = 0.5
+
 # gamma for Q-Learning
 gamma = 0.99
+
 # rate at which state transitions are measured
 sampling_rate = 0.1
-# binary actions
-actions = [0, 1] # 0 = no warning, 1 = issue warning
+
+# human states
+attentive = 0
+moderate = 1
+unattentive = 2
+dict_human_states = {attentive: "attentive", moderate: "moderate", unattentive: "unattentive"}
+current_human_state = 0
+
 # number of states per dimension
 num_distance_states = 12
 num_speed_states = 3
+num_human_states = 3
+
 # q-value lookup table, initialized to zeros
-q_values = np.zeros((num_distance_states, num_speed_states, 2))
+q_values = np.zeros((num_distance_states, num_speed_states, num_human_states, 2))
+
 # total rewards
 rewards = 0
+
 # iterations for runtime
 iterations = 100
+
 # actions
-NO_WARNING = 0
-WARNING = 1
+no_warning = 0
+warning = 1
+actions = [no_warning, warning]
+dict_actions = {no_warning: "no warning", warning: "warning"}
+
 # connection variables
 conn = None
 d = None
 conn_reset = False
 
+# class definitions
 class LaneDepartureData:
     location_x = 0
     location_y = 0
@@ -71,6 +89,7 @@ class State:
     def __init__(self):
         self.metrics = receive_metrics()
         self.value = enumerate_state(self.metrics)
+# Q-learning functions
 def receive_metrics():
     while True:
         if(d is not None):
@@ -85,17 +104,17 @@ def receive_metrics():
                 return {"dl": dl, "dr": dr, "speed": speed, "speed_limit": d.speed_limit, "lane_id": d.lane_id}
 def initialize_q_table():
     for i in range(0, 5):
-        q_values[i, :, 0] = 0.5
-        q_values[i, :, 1] = 0
+        q_values[i, :, :, 0] = 0.5
+        q_values[i, :, :, 1] = 0
     for i in range(5, 8):
-        q_values[i, :, 0] = 0.5
-        q_values[i, :, 1] = 0.25
+        q_values[i, :, :, 0] = 0.5
+        q_values[i, :, :, 1] = 0.25
     for i in range(8, 12):
-        q_values[i, :, 0] = 0
-        q_values[i, :, 1] = 0.5
+        q_values[i, :, :, 0] = 0
+        q_values[i, :, :, 1] = 0.5
 def enumerate_state(metrics):
     # initialize state vector
-    state = [0, 0]
+    state = [0, 0, 0]
     # get values from dictionary
     dl = metrics.get("dl")
     dr = metrics.get("dr")
@@ -133,6 +152,8 @@ def enumerate_state(metrics):
         state[1] = 1
     elif(speed > 1.1 * speed_limit):
         state[1] = 2
+    # human
+    state[2] = current_human_state
     return state
 def define_rewards(state, action, next_state):
     reward = 0
@@ -144,15 +165,50 @@ def define_rewards(state, action, next_state):
         reward += 15 * (state.value[1] - next_state.value[1])
     elif(state.value[1] < next_state.value[1]):
         reward += -15 * (next_state.value[1] - state.value[1])
-    if(is_safe(state.value) and is_safe(next_state.value) and action == NO_WARNING):
-        reward += 20
     lane_id = state.metrics.get("lane_id")
     next_lane_id = next_state.metrics.get("lane_id")
     if(lane_id != next_lane_id): # if lane invasion occurs
-        reward -= 40
+        reward -= 50
+        return reward
+    if(is_intermediate(state.value) and is_intermediate(next_state.value) and action == no_warning): # if going from intermediate state to intermediate state, warning not issued
+        reward += 20
+    if(is_intermediate(state.value) and is_intermediate(next_state.value) and action == warning): # if warning "ignored"
+        reward -= 20
+    if(is_unsafe(state.value) and is_safe(next_state.value)): # if corrective action taken after warning from unsafe to safe state (warning implied)
+        reward += 50
+    if(is_unsafe(state.value) and is_intermediate(next_state.value)): # if corrective action taken after warning from unsafe to intermediate state (warning implied)
+        reward += 30
+    if(is_intermediate(state.value) and is_safe(next_state.value) and action == warning): # if corrective action taken after warning from intermediate to safe state
+        reward += 20
+    if(is_intermediate(state.value) and is_safe(next_state.value) and action == no_warning): # if corrective action taken after no warning from intermediate to safe state
+        reward -= 10
+    if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == no_warning): # if no warning issued, but next state was unsafe
+        reward -= 10
+        if(state.value[2] == unattentive):
+            reward -= 10
+    if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == warning): # if warning issued, but next state was unsafe
+        reward -= 10
+        if(state.value[2] == unattentive):
+            reward -= 20
+    if(state.value[2] == unattentive and action == warning): # giving warning to unattentive driver
+        reward += 5
+    if(state.value[2] == attentive and action == warning): # giving warning to attentive driver
+        reward -= 5
+    if(state.value[2] == attentive and action == no_warning): # not giving warning to attentive driver
+        reward += 5
     return reward
 def is_safe(state_value):
-    if(state_value[0] <= 3 and state_value[1] == 0):
+    if(state_value[0] < 3 and state_value[1] <= 1 and state_value[2] <= 1):
+        return True
+    else:
+        return False
+def is_intermediate(state_value):
+    if(not is_safe(state_value) and not is_unsafe(state_value)):
+        return True
+    else:
+        return False
+def is_unsafe(state_value):
+    if(state_value[0] >= 9):
         return True
     else:
         return False
@@ -161,16 +217,15 @@ def choose_action(state_value):
     if(np.random.binomial(1, epsilon) == 1):
         return np.random.choice(actions)
     else:
-        values = q_values[state_value[0], state_value[1], :] # row of values for a given state, any actions
+        values = q_values[state_value[0], state_value[1], state_value[2], :] # row of values for a given state, any actions
         return np.random.choice([action for action, value in enumerate(values) if value == np.max(values)])
 def send_action(action):
-    if(action == WARNING):
+    if(action == warning):
         string = "WARNING! Approaching lane."
         conn.send(string.encode())
     else:
         string = "Safe"
         conn.send(string.encode())
-# poll action vector every 20 seconds
 def q_learning(step_size= alpha):
     global q_values
     global rewards
@@ -179,7 +234,12 @@ def q_learning(step_size= alpha):
     init_state = State()
     for i in trange(iterations):
         state_vector = []
-        action = choose_action(init_state.value)
+        if(is_safe(init_state.value)):
+            action = no_warning
+        elif(is_unsafe(init_state.value)):
+            action = warning
+        else:
+            action = choose_action(init_state.value)
         send_action(action)
         for j in range(0, int(2/sampling_rate)): # generic response time
             state = State()
@@ -192,9 +252,9 @@ def q_learning(step_size= alpha):
         # Q-learning lookup table update
         iteration_rewards = define_rewards(init_state, action, state_vector[-1])
         final_state = state_vector[-1]
-        print("Going from state", init_state.value, "to state", final_state.value, "rewards = ", iteration_rewards)
-        delta = step_size * (iteration_rewards + gamma * np.max(q_values[final_state.value[0], final_state.value[1], :]) - q_values[init_state.value[0], init_state.value[1], action])
-        q_values[init_state.value[0], init_state.value[1], action] += delta
+        print("Going from state", init_state.value, "to state", final_state.value, "action = ", dict_actions[action], "rewards = ", iteration_rewards)
+        delta = step_size * (iteration_rewards + gamma * np.max(q_values[final_state.value[0], final_state.value[1], final_state.value[2], :]) - q_values[init_state.value[0], init_state.value[1], init_state.value[2], action])
+        q_values[init_state.value[0], init_state.value[1], init_state.value[2], action] += delta
         print("Delta =", delta)
         np.save("DriverQValues.npy", q_values) # save on each iteration
         init_state = final_state
@@ -250,10 +310,9 @@ def ThreadFunction(conn):
             np.save("DriverQValues.npy", q_values) # custom file
             print("Disconnected.")
             break
+            
+# main function
 def main():
-    userinfo, sleep, activity, readiness = oura_client.get_all_data()
-    oura_client.save_json()
-    print(readiness['readiness'][0]['score'])
     global conn_reset
     global conn
     global q_values
@@ -285,9 +344,11 @@ def main():
         np.save("DriverQValues.npy", q_values) # custom file
         #initialize_q_table()
     try:
+        global current_human_state
         episode = 1
         while(True):
             print("Running episode " + str(episode) + " (" + str(iterations) + " iterations)")
+            current_human_state = oura_client.get_current_state() # get human state only once each episode.
             q_learning()
             print("Episode " + str(episode) + " completed. Total rewards this episode = ", rewards)
             episode += 1

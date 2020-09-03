@@ -1,40 +1,72 @@
-2020-08-27 18:21:34,491 WARNING! Approaching lane.
-2020-08-27 18:21:34,497 Brake: 0.0
-2020-08-27 18:21:34,502 Steering: 0.0011250415118411183
-2020-08-27 18:21:34,508 Throttle: 0.5101553797721863
-2020-08-27 18:21:34,514 Warning issued 1 time(s)
+2020-09-02 23:44:06,044 WARNING! Approaching lane.
+2020-09-02 23:44:06,050 Brake: 0.0
+2020-09-02 23:44:06,056 Steering: 0.0
+2020-09-02 23:44:06,061 Throttle: 0.0
+2020-09-02 23:44:06,066 Warning issued 1 time(s)
 
-2020-08-27 18:21:36,533 Warning active and fast!
-2020-08-27 18:21:38,591 Response time elapsed (s): 4.064136266708374
+2020-09-02 23:44:08,072 Warning active and fast!
+2020-09-02 23:44:10,149 Warning active and fast!
+2020-09-02 23:44:12,187 Warning active and fast!
+2020-09-02 23:44:14,220 Warning active and fast!
+2020-09-02 23:44:16,275 Response time elapsed (s): 10.177131175994873
 
-2020-08-27 18:21:42,712 WARNING! Approaching lane.
-2020-08-27 18:21:42,717 Brake: 0.0
-2020-08-27 18:21:42,723 Steering: 0.001917175599373877
-2020-08-27 18:21:42,728 Throttle: 0.5011950135231018
-2020-08-27 18:21:42,734 Warning issued 2 time(s)
+2020-09-02 23:44:18,319 WARNING! Approaching lane.
+2020-09-02 23:44:18,326 Brake: 0.0
+2020-09-02 23:44:18,331 Steering: 0.0014004341792315245
+2020-09-02 23:44:18,337 Throttle: 0.47802460193634033
+2020-09-02 23:44:18,343 Warning issued 2 time(s)
 
-2020-08-27 18:21:44,771 Response time elapsed (s): 2.0229995250701904
+2020-09-02 23:44:20,362 Warning active and fast!
+2020-09-02 23:44:22,403 Warning active and fast!
+2020-09-02 23:44:29,515 Response time elapsed (s): 11.160990476608276
 
-2020-08-27 18:21:54,304 WARNING! Approaching lane.
-2020-08-27 18:21:54,316 Brake: 0.0
-2020-08-27 18:21:54,323 Steering: 0.0015117140719667077
-2020-08-27 18:21:54,328 Throttle: 0.4829123616218567
-2020-08-27 18:21:54,339 Warning issued 3 time(s)
+2020-09-02 23:44:39,727 WARNING! Approaching lane.
+2020-09-02 23:44:39,733 Brake: 0.0
+2020-09-02 23:44:39,739 Steering: 0.0008482870180159807
+2020-09-02 23:44:39,739 Throttle: 0.5085124969482422
+2020-09-02 23:44:39,745 Warning issued 3 time(s)
 
-2020-08-27 18:21:56,358 Warning active and fast!
-2020-08-27 18:21:58,414 Response time elapsed (s): 4.064978361129761
+2020-09-02 23:44:41,767 Warning active and fast!
+2020-09-02 23:44:43,806 Warning active and fast!
+2020-09-02 23:44:45,850 Warning active and fast!
+2020-09-02 23:44:47,910 Warning active and fast!
+2020-09-02 23:44:49,945 Warning active and fast!
+2020-09-02 23:44:51,991 Warning active and fast!
+2020-09-02 23:44:54,046 Warning active and fast!
+2020-09-02 23:44:56,111 Warning active and fast!
+2020-09-02 23:44:58,184 Warning active and fast!
+2020-09-02 23:45:00,220 Warning active and fast!
+2020-09-02 23:45:02,271 Warning active and fast!
+2020-09-02 23:45:04,333 Warning active and fast!
+2020-09-02 23:45:06,389 Warning active and fast!
+2020-09-02 23:45:08,454 Warning active and fast!
+2020-09-02 23:45:10,507 Response time elapsed (s): 30.71832299232483
 
-2020-08-27 18:22:10,667 WARNING! Approaching lane.
-2020-08-27 18:22:10,675 Brake: 0.0
-2020-08-27 18:22:10,681 Steering: 0.000673190806992352
-2020-08-27 18:22:10,687 Throttle: 0.46797797083854675
-2020-08-27 18:22:10,692 Warning issued 4 time(s)
+2020-09-02 23:45:23,693 WARNING! Approaching lane.
+2020-09-02 23:45:23,699 Brake: 0.0
+2020-09-02 23:45:23,714 Steering: 0.001622166601009667
+2020-09-02 23:45:23,721 Throttle: 0.4578271508216858
+2020-09-02 23:45:23,738 Warning issued 4 time(s)
 
-2020-08-27 18:22:12,720 Response time elapsed (s): 2.0169403553009033
+2020-09-02 23:45:25,821 Warning active and fast!
+2020-09-02 23:45:27,817 Warning active and fast!
+2020-09-02 23:45:29,869 Warning active and fast!
+2020-09-02 23:45:31,898 Warning active and fast!
+2020-09-02 23:45:33,936 Warning active and fast!
+2020-09-02 23:45:36,024 Warning active and fast!
+2020-09-02 23:45:38,040 Warning active and fast!
+2020-09-02 23:45:40,073 Warning active and fast!
+2020-09-02 23:45:42,145 Warning active and fast!
+2020-09-02 23:45:44,169 Warning active and fast!
+2020-09-02 23:45:46,265 Warning active and fast!
+2020-09-02 23:45:48,300 Warning active and fast!
+2020-09-02 23:45:50,363 Warning active and fast!
+2020-09-02 23:45:52,431 Warning active and fast!
+2020-09-02 23:45:52,734 Response time elapsed (s): 28.93842601776123
 
-2020-08-27 18:22:45,495 WARNING! Approaching lane.
-2020-08-27 18:22:45,501 Brake: 0.0
-2020-08-27 18:22:45,528 Steering: 0.0017549187177792192
-2020-08-27 18:22:45,530 Throttle: 0.5129231214523315
-2020-08-27 18:22:45,530 Warning issued 5 time(s)
+2020-09-02 23:46:05,034 WARNING! Approaching lane.
+2020-09-02 23:46:05,034 Brake: 0.0
+2020-09-02 23:46:05,034 Steering: 0.0013649278553202748
+2020-09-02 23:46:05,034 Throttle: 0.5450408458709717
+2020-09-02 23:46:05,034 Warning issued 5 time(s)
 

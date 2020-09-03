@@ -138,11 +138,12 @@ def process_img(image): #live preview
     arr_i = np.array(image.raw_data)
     arr_i2 = arr_i.reshape((IM_HEIGHT, IM_WIDTH, 4))
     arr_i3 = arr_i2[:, :, :3]
-    cv2.imshow("", arr_i3)
-    cv2.waitKey(1)
+    #cv2.imshow("", arr_i3)
+    #cv2.waitKey(1)
     d = LaneDepartureData()
     data_string = pickle.dumps(d)
     sock.send(data_string)
+    #cv2.destroyAllWindows()
     return arr_i3/255.0
 def straight(vehicle, t, throttle):
     print("Going straight ...")
@@ -305,7 +306,7 @@ try:
             vehicle.apply_control(carla.VehicleControl(brake=1.0))
     
 except KeyboardInterrupt:
-    sensor.stop()
+    #sensor.stop()
     print("Destroying actors ...")
     for actor in actor_list:
         actor.destroy()
