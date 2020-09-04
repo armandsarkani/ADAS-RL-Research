@@ -1,72 +1,153 @@
-2020-09-02 23:44:06,044 WARNING! Approaching lane.
-2020-09-02 23:44:06,050 Brake: 0.0
-2020-09-02 23:44:06,056 Steering: 0.0
-2020-09-02 23:44:06,061 Throttle: 0.0
-2020-09-02 23:44:06,066 Warning issued 1 time(s)
+2020-09-03 21:18:34,615 
+2020-09-03 21:18:34,621 Brake: 0.0
+2020-09-03 21:18:34,627 Steering: 0.0008774716407060623
+2020-09-03 21:18:34,633 Throttle: 0.4696285128593445
+2020-09-03 21:18:34,639 Warning issued 1 time(s)
 
-2020-09-02 23:44:08,072 Warning active and fast!
-2020-09-02 23:44:10,149 Warning active and fast!
-2020-09-02 23:44:12,187 Warning active and fast!
-2020-09-02 23:44:14,220 Warning active and fast!
-2020-09-02 23:44:16,275 Response time elapsed (s): 10.177131175994873
-
-2020-09-02 23:44:18,319 WARNING! Approaching lane.
-2020-09-02 23:44:18,326 Brake: 0.0
-2020-09-02 23:44:18,331 Steering: 0.0014004341792315245
-2020-09-02 23:44:18,337 Throttle: 0.47802460193634033
-2020-09-02 23:44:18,343 Warning issued 2 time(s)
-
-2020-09-02 23:44:20,362 Warning active and fast!
-2020-09-02 23:44:22,403 Warning active and fast!
-2020-09-02 23:44:29,515 Response time elapsed (s): 11.160990476608276
-
-2020-09-02 23:44:39,727 WARNING! Approaching lane.
-2020-09-02 23:44:39,733 Brake: 0.0
-2020-09-02 23:44:39,739 Steering: 0.0008482870180159807
-2020-09-02 23:44:39,739 Throttle: 0.5085124969482422
-2020-09-02 23:44:39,745 Warning issued 3 time(s)
-
-2020-09-02 23:44:41,767 Warning active and fast!
-2020-09-02 23:44:43,806 Warning active and fast!
-2020-09-02 23:44:45,850 Warning active and fast!
-2020-09-02 23:44:47,910 Warning active and fast!
-2020-09-02 23:44:49,945 Warning active and fast!
-2020-09-02 23:44:51,991 Warning active and fast!
-2020-09-02 23:44:54,046 Warning active and fast!
-2020-09-02 23:44:56,111 Warning active and fast!
-2020-09-02 23:44:58,184 Warning active and fast!
-2020-09-02 23:45:00,220 Warning active and fast!
-2020-09-02 23:45:02,271 Warning active and fast!
-2020-09-02 23:45:04,333 Warning active and fast!
-2020-09-02 23:45:06,389 Warning active and fast!
-2020-09-02 23:45:08,454 Warning active and fast!
-2020-09-02 23:45:10,507 Response time elapsed (s): 30.71832299232483
-
-2020-09-02 23:45:23,693 WARNING! Approaching lane.
-2020-09-02 23:45:23,699 Brake: 0.0
-2020-09-02 23:45:23,714 Steering: 0.001622166601009667
-2020-09-02 23:45:23,721 Throttle: 0.4578271508216858
-2020-09-02 23:45:23,738 Warning issued 4 time(s)
-
-2020-09-02 23:45:25,821 Warning active and fast!
-2020-09-02 23:45:27,817 Warning active and fast!
-2020-09-02 23:45:29,869 Warning active and fast!
-2020-09-02 23:45:31,898 Warning active and fast!
-2020-09-02 23:45:33,936 Warning active and fast!
-2020-09-02 23:45:36,024 Warning active and fast!
-2020-09-02 23:45:38,040 Warning active and fast!
-2020-09-02 23:45:40,073 Warning active and fast!
-2020-09-02 23:45:42,145 Warning active and fast!
-2020-09-02 23:45:44,169 Warning active and fast!
-2020-09-02 23:45:46,265 Warning active and fast!
-2020-09-02 23:45:48,300 Warning active and fast!
-2020-09-02 23:45:50,363 Warning active and fast!
-2020-09-02 23:45:52,431 Warning active and fast!
-2020-09-02 23:45:52,734 Response time elapsed (s): 28.93842601776123
-
-2020-09-02 23:46:05,034 WARNING! Approaching lane.
-2020-09-02 23:46:05,034 Brake: 0.0
-2020-09-02 23:46:05,034 Steering: 0.0013649278553202748
-2020-09-02 23:46:05,034 Throttle: 0.5450408458709717
-2020-09-02 23:46:05,034 Warning issued 5 time(s)
-
+2020-09-03 21:18:34,657 Warning active and fast!
+2020-09-03 21:18:34,676 Warning active and fast!
+2020-09-03 21:18:34,692 Warning active and fast!
+2020-09-03 21:18:34,710 Warning active and fast!
+2020-09-03 21:18:34,722 Warning active and fast!
+2020-09-03 21:18:34,741 Warning active and fast!
+2020-09-03 21:18:34,758 Warning active and fast!
+2020-09-03 21:18:34,777 Warning active and fast!
+2020-09-03 21:18:34,790 Warning active and fast!
+2020-09-03 21:18:34,809 Warning active and fast!
+2020-09-03 21:18:34,825 Warning active and fast!
+2020-09-03 21:18:34,842 Warning active and fast!
+2020-09-03 21:18:34,858 Warning active and fast!
+2020-09-03 21:18:34,877 Warning active and fast!
+2020-09-03 21:18:34,894 Warning active and fast!
+2020-09-03 21:18:34,912 Warning active and fast!
+2020-09-03 21:18:34,929 Warning active and fast!
+2020-09-03 21:18:34,948 Warning active and fast!
+2020-09-03 21:18:34,968 Warning active and fast!
+2020-09-03 21:18:34,984 Warning active and fast!
+2020-09-03 21:18:34,996 Warning active and fast!
+2020-09-03 21:18:35,013 Warning active and fast!
+2020-09-03 21:18:35,030 Warning active and fast!
+2020-09-03 21:18:35,048 Warning active and fast!
+2020-09-03 21:18:35,064 Warning active and fast!
+2020-09-03 21:18:35,081 Warning active and fast!
+2020-09-03 21:18:35,101 Warning active and fast!
+2020-09-03 21:18:35,113 Warning active and fast!
+2020-09-03 21:18:35,135 Warning active and fast!
+2020-09-03 21:18:35,148 Warning active and fast!
+2020-09-03 21:18:35,168 Warning active and fast!
+2020-09-03 21:18:35,187 Warning active and fast!
+2020-09-03 21:18:35,203 Warning active and fast!
+2020-09-03 21:18:35,222 Warning active and fast!
+2020-09-03 21:18:35,237 Warning active and fast!
+2020-09-03 21:18:35,256 Warning active and fast!
+2020-09-03 21:18:35,274 Warning active and fast!
+2020-09-03 21:18:35,293 Warning active and fast!
+2020-09-03 21:18:35,312 Warning active and fast!
+2020-09-03 21:18:35,331 Warning active and fast!
+2020-09-03 21:18:35,348 Warning active and fast!
+2020-09-03 21:18:35,367 Warning active and fast!
+2020-09-03 21:18:35,387 Warning active and fast!
+2020-09-03 21:18:35,404 Warning active and fast!
+2020-09-03 21:18:35,423 Warning active and fast!
+2020-09-03 21:18:35,436 Warning active and fast!
+2020-09-03 21:18:35,448 Warning active and fast!
+2020-09-03 21:18:35,465 Warning active and fast!
+2020-09-03 21:18:35,481 Warning active and fast!
+2020-09-03 21:18:35,500 Warning active and fast!
+2020-09-03 21:18:35,520 Warning active and fast!
+2020-09-03 21:18:35,538 Warning active and fast!
+2020-09-03 21:18:35,556 Warning active and fast!
+2020-09-03 21:18:35,575 Warning active and fast!
+2020-09-03 21:18:35,591 Warning active and fast!
+2020-09-03 21:18:35,611 Warning active and fast!
+2020-09-03 21:18:35,634 Warning active and fast!
+2020-09-03 21:18:35,653 Warning active and fast!
+2020-09-03 21:18:35,660 Warning active and fast!
+2020-09-03 21:18:35,680 Warning active and fast!
+2020-09-03 21:18:35,710 Warning active and fast!
+2020-09-03 21:18:35,746 Warning active and fast!
+2020-09-03 21:18:35,771 Warning active and fast!
+2020-09-03 21:18:35,790 Warning active and fast!
+2020-09-03 21:18:35,809 Warning active and fast!
+2020-09-03 21:18:35,828 Warning active and fast!
+2020-09-03 21:18:35,841 Warning active and fast!
+2020-09-03 21:18:35,863 Warning active and fast!
+2020-09-03 21:18:35,879 Warning active and fast!
+2020-09-03 21:18:35,900 Warning active and fast!
+2020-09-03 21:18:35,920 Warning active and fast!
+2020-09-03 21:18:35,937 Warning active and fast!
+2020-09-03 21:18:35,960 Warning active and fast!
+2020-09-03 21:18:35,980 Warning active and fast!
+2020-09-03 21:18:36,000 Warning active and fast!
+2020-09-03 21:18:36,019 Warning active and fast!
+2020-09-03 21:18:36,039 Warning active and fast!
+2020-09-03 21:18:36,050 Warning active and fast!
+2020-09-03 21:18:36,070 Warning active and fast!
+2020-09-03 21:18:36,083 Warning active and fast!
+2020-09-03 21:18:36,104 Warning active and fast!
+2020-09-03 21:18:36,118 Warning active and fast!
+2020-09-03 21:18:36,140 Warning active and fast!
+2020-09-03 21:18:36,158 Warning active and fast!
+2020-09-03 21:18:36,188 Warning active and fast!
+2020-09-03 21:18:36,201 Warning active and fast!
+2020-09-03 21:18:36,220 Warning active and fast!
+2020-09-03 21:18:36,238 Warning active and fast!
+2020-09-03 21:18:36,256 Warning active and fast!
+2020-09-03 21:18:36,277 Warning active and fast!
+2020-09-03 21:18:36,288 Warning active and fast!
+2020-09-03 21:18:36,307 Warning active and fast!
+2020-09-03 21:18:36,327 Warning active and fast!
+2020-09-03 21:18:36,350 Warning active and fast!
+2020-09-03 21:18:36,374 Warning active and fast!
+2020-09-03 21:18:36,395 Warning active and fast!
+2020-09-03 21:18:36,411 Warning active and fast!
+2020-09-03 21:18:36,428 Warning active and fast!
+2020-09-03 21:18:36,445 Warning active and fast!
+2020-09-03 21:18:36,476 Warning active and fast!
+2020-09-03 21:18:36,511 Warning active and fast!
+2020-09-03 21:18:36,532 Warning active and fast!
+2020-09-03 21:18:36,543 Warning active and fast!
+2020-09-03 21:18:36,561 Warning active and fast!
+2020-09-03 21:18:36,581 Warning active and fast!
+2020-09-03 21:18:36,594 Warning active and fast!
+2020-09-03 21:18:36,612 Warning active and fast!
+2020-09-03 21:18:36,626 Warning active and fast!
+2020-09-03 21:18:36,644 Warning active and fast!
+2020-09-03 21:18:36,662 Warning active and fast!
+2020-09-03 21:18:36,680 Warning active and fast!
+2020-09-03 21:18:36,698 Warning active and fast!
+2020-09-03 21:18:36,717 Warning active and fast!
+2020-09-03 21:18:36,733 Warning active and fast!
+2020-09-03 21:18:36,751 Warning active and fast!
+2020-09-03 21:18:36,767 Warning active and fast!
+2020-09-03 21:18:36,785 Warning active and fast!
+2020-09-03 21:18:36,803 Warning active and fast!
+2020-09-03 21:18:36,819 Warning active and fast!
+2020-09-03 21:18:36,835 Warning active and fast!
+2020-09-03 21:18:36,852 Warning active and fast!
+2020-09-03 21:18:36,870 Warning active and fast!
+2020-09-03 21:18:36,886 Warning active and fast!
+2020-09-03 21:18:36,902 Warning active and fast!
+2020-09-03 21:18:36,913 Warning active and fast!
+2020-09-03 21:18:36,932 Warning active and fast!
+2020-09-03 21:18:36,952 Warning active and fast!
+2020-09-03 21:18:36,969 Warning active and fast!
+2020-09-03 21:18:36,985 Warning active and fast!
+2020-09-03 21:18:37,003 Warning active and fast!
+2020-09-03 21:18:37,020 Warning active and fast!
+2020-09-03 21:18:37,038 Warning active and fast!
+2020-09-03 21:18:37,056 Warning active and fast!
+2020-09-03 21:18:37,071 Warning active and fast!
+2020-09-03 21:18:37,088 Warning active and fast!
+2020-09-03 21:18:37,101 Warning active and fast!
+2020-09-03 21:18:37,112 Warning active and fast!
+2020-09-03 21:18:37,133 Warning active and fast!
+2020-09-03 21:18:37,549 Warning active and fast!
+2020-09-03 21:18:37,568 Warning active and fast!
+2020-09-03 21:18:37,585 Warning active and fast!
+2020-09-03 21:18:37,603 Warning active and fast!
+2020-09-03 21:18:37,620 Warning active and fast!
+2020-09-03 21:18:37,639 Warning active and fast!
+2020-09-03 21:18:37,658 Warning active and fast!
+2020-09-03 21:18:37,676 Warning active and fast!
+2020-09-03 21:18:37,693 Warning active and fast!

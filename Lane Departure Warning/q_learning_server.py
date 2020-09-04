@@ -2,17 +2,8 @@ import glob
 import os
 import sys
 
-try:
-    sys.path.append(glob.glob('../carla/dist/carla-*%d.%d-%s.egg' % (
-        sys.version_info.major,
-        sys.version_info.minor,
-        'win-amd64' if os.name == 'nt' else 'linux-x86_64'))[0])
-except IndexError:
-    pass
-
 import socket
 import pickle
-#import carla
 import math
 import time
 import threading
@@ -22,6 +13,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from tqdm import trange
 import oura_client
+import argparse
 
 # probability for exploration
 epsilon = 0.1
@@ -50,10 +42,7 @@ num_human_states = 3
 # q-value lookup table, initialized to zeros
 q_values = np.zeros((num_distance_states, num_speed_states, num_human_states, 2))
 
-# total rewards
-rewards = 0
-
-# iterations for runtime
+# iterations for episode
 iterations = 100
 
 # actions
@@ -63,6 +52,7 @@ actions = [no_warning, warning]
 dict_actions = {no_warning: "no warning", warning: "warning"}
 
 # connection variables
+sock = None
 conn = None
 d = None
 conn_reset = False
@@ -170,8 +160,6 @@ def define_rewards(state, action, next_state):
     if(lane_id != next_lane_id): # if lane invasion occurs
         reward -= 50
         return reward
-    if(is_intermediate(state.value) and is_intermediate(next_state.value) and action == no_warning): # if going from intermediate state to intermediate state, warning not issued
-        reward += 20
     if(is_intermediate(state.value) and is_intermediate(next_state.value) and action == warning): # if warning "ignored"
         reward -= 20
     if(is_unsafe(state.value) and is_safe(next_state.value)): # if corrective action taken after warning from unsafe to safe state (warning implied)
@@ -183,7 +171,7 @@ def define_rewards(state, action, next_state):
     if(is_intermediate(state.value) and is_safe(next_state.value) and action == no_warning): # if corrective action taken after no warning from intermediate to safe state
         reward -= 10
     if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == no_warning): # if no warning issued, but next state was unsafe
-        reward -= 10
+        reward -= 30
         if(state.value[2] == unattentive):
             reward -= 10
     if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == warning): # if warning issued, but next state was unsafe
@@ -226,10 +214,9 @@ def send_action(action):
     else:
         string = "Safe"
         conn.send(string.encode())
-def q_learning(step_size= alpha):
+def q_learning(thread, step_size= alpha):
     global q_values
     global rewards
-    rewards = 0
     iteration_rewards = 0
     init_state = State()
     for i in trange(iterations):
@@ -240,6 +227,12 @@ def q_learning(step_size= alpha):
             action = warning
         else:
             action = choose_action(init_state.value)
+        if(not thread.is_alive()):
+            np.save("DriverQValues.npy", q_values)
+            sock.close()
+            conn.close()
+            print("Disconnected.")
+            main()
         send_action(action)
         for j in range(0, int(2/sampling_rate)): # generic response time
             state = State()
@@ -255,7 +248,7 @@ def q_learning(step_size= alpha):
         print("Going from state", init_state.value, "to state", final_state.value, "action = ", dict_actions[action], "rewards = ", iteration_rewards)
         delta = step_size * (iteration_rewards + gamma * np.max(q_values[final_state.value[0], final_state.value[1], final_state.value[2], :]) - q_values[init_state.value[0], init_state.value[1], init_state.value[2], action])
         q_values[init_state.value[0], init_state.value[1], init_state.value[2], action] += delta
-        print("Delta =", delta)
+        print("Δ =", delta)
         np.save("DriverQValues.npy", q_values) # save on each iteration
         init_state = final_state
 def right_lane_distance(location_x, location_y, right_x, right_y, right_lane_width):
@@ -298,17 +291,14 @@ def ThreadFunction(conn):
         except ConnectionResetError:
             conn_reset = True
             np.save("DriverQValues.npy", q_values) # custom file
-            print("Disconnected.")
             break
         except EOFError:
             conn_reset = True
             np.save("DriverQValues.npy", q_values) # custom file
-            print("Disconnected.")
             break
         except BrokenPipeError:
             conn_reset = True
             np.save("DriverQValues.npy", q_values) # custom file
-            print("Disconnected.")
             break
             
 # main function
@@ -316,22 +306,23 @@ def main():
     global conn_reset
     global conn
     global q_values
-    global rewards
-    device = sys.argv[1]
-    if(device == "iMac"):
-        HOST = '192.168.0.5' # iMac Pro
-    elif(device == "MBPo"):
-        HOST = '192.168.254.41' # 16-inch other
-    elif(device == "MBP"):
-        HOST = '192.168.0.78' # 16-inch
-    else:
-        HOST = 'localhost'
-    PORT = 50007
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((HOST, PORT))
-    s.listen(1)
-    conn, addr = s.accept()
-    print('Connected by', addr)
+    global sock
+    argparser = argparse.ArgumentParser(
+        description='Q-learning LDW Server')
+    argparser.add_argument(
+        '-n', '--hostname',
+        metavar='HOSTNAME',
+        default='localhost',
+        help='computer hostname')
+    args = argparser.parse_args()
+    hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+    IP = hostname_to_IP.get(args.hostname)
+    port = 50007
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind((IP, port))
+    sock.listen(1)
+    conn, addr = sock.accept()
+    print("Connected by", addr)
     thread = threading.Thread(target=ThreadFunction, args=(conn,))
     thread.start()
     if(os.path.exists("DriverQValues.npy")):
@@ -349,21 +340,22 @@ def main():
         while(True):
             print("Running episode " + str(episode) + " (" + str(iterations) + " iterations)")
             current_human_state = oura_client.get_current_state() # get human state only once each episode.
-            q_learning()
-            print("Episode " + str(episode) + " completed. Total rewards this episode = ", rewards)
+            q_learning(thread)
+            print("Episode " + str(episode) + " completed.")
             episode += 1
             print("\n")
         if(conn_reset):
-            s.close()
+            sock.close()
             conn.close()
             conn_reset = False
             main()
     except EOFError:
+        sock.close()
+        conn.close()
         thread.join()
-        s.close()
         exit()
     except KeyboardInterrupt:
-        s.close()
+        sock.close()
         conn.close()
         thread.join()
         exit()

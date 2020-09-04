@@ -1022,7 +1022,7 @@ def main():
         dest='debug',
         help='print debug information')
     argparser.add_argument(
-        '--hostname',
+        '-n','--hostname',
         metavar='HOSTNAME',
         default='localhost',
         help='computer hostname')
@@ -1030,7 +1030,7 @@ def main():
         '--mode',
         metavar='MODE',
         default='continue',
-        help='mode (set/continue)')
+        help='world mode (set/continue)')
     argparser.add_argument(
         '--host',
         metavar='H',
@@ -1072,22 +1072,15 @@ def main():
 
     print(__doc__)
     
-    HOST = args.hostname
     worldset = args.mode
-    if(HOST == "iMac"):
-        HOST = '192.168.0.5'
-    elif(HOST == "MBP"):
-        HOST = '192.168.0.78'
-    elif(HOST == "MBPo"):
-        HOST = '192.168.254.41'
-    else:
-        HOST = 'localhost'
-
+    hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+    IP = hostname_to_IP.get(args.hostname)
+    
     try:
-        PORT = 50007
+        port = 50007
         global sock
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((HOST, PORT))
+        sock.connect((IP, port))
         thread = threading.Thread(target=Receive, args=(sock,))
         thread.start()
         game_loop(args)
