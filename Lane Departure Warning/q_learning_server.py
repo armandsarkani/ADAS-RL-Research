@@ -12,8 +12,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from tqdm import trange
-import oura_client
 import argparse
+import json
 
 # probability for exploration
 epsilon = 0.1
@@ -31,8 +31,7 @@ sampling_rate = 0.1
 attentive = 0
 moderate = 1
 unattentive = 2
-dict_human_states = {attentive: "attentive", moderate: "moderate", unattentive: "unattentive"}
-current_human_state = 0
+dict_human_states = {"attentive": attentive, "moderate": moderate, "unattentive": unattentive}
 
 # number of states per dimension
 num_distance_states = 12
@@ -50,6 +49,9 @@ no_warning = 0
 warning = 1
 actions = [no_warning, warning]
 dict_actions = {no_warning: "no warning", warning: "warning"}
+
+# files
+input_file = None
 
 # connection variables
 sock = None
@@ -92,18 +94,16 @@ def receive_metrics():
                 dl = float('%.2f' % dl)
                 speed = d.speed * 2.237 # m/s to mph
                 return {"dl": dl, "dr": dr, "speed": speed, "speed_limit": d.speed_limit, "lane_id": d.lane_id}
-        else:
-            print("ERROR!")
 def initialize_q_table():
-    for i in range(0, 5):
-        q_values[i, :, :, 0] = 0.5
+    for i in range(0, 3):
+        q_values[i, :, :, 0] = 1
         q_values[i, :, :, 1] = 0
     for i in range(5, 8):
-        q_values[i, :, :, 0] = 0.5
-        q_values[i, :, :, 1] = 0.25
+        q_values[i, :, :, 0] = 0
+        q_values[i, :, :, 1] = 0
     for i in range(8, 12):
         q_values[i, :, :, 0] = 0
-        q_values[i, :, :, 1] = 0.5
+        q_values[i, :, :, 1] = 1
 def enumerate_state(metrics):
     # initialize state vector
     state = [0, 0, 0]
@@ -145,7 +145,7 @@ def enumerate_state(metrics):
     elif(speed > 1.1 * speed_limit):
         state[1] = 2
     # human
-    state[2] = current_human_state
+    state[2] = dict_human_states.get(receive_human_state())
     return state
 def define_rewards(state, action, next_state):
     reward = 0
@@ -202,7 +202,6 @@ def is_unsafe(state_value):
         return True
     else:
         return False
-#def has_invaded(state, next_state):
 def choose_action(state_value):
     if(np.random.binomial(1, epsilon) == 1):
         return np.random.choice(actions)
@@ -283,6 +282,8 @@ def left_lane_distance(location_x, location_y, left_x, left_y, left_lane_width):
            else:
                lane_marking_x = left_x + left_lane_width/2
                return(lane_marking_x - location_x)
+
+# data management functions
 def ThreadFunction(conn):
     global d
     global conn_reset
@@ -302,6 +303,10 @@ def ThreadFunction(conn):
             conn_reset = True
             np.save("DriverQValues.npy", q_values) # custom file
             break
+def receive_human_state():
+    with open(input_file) as file:
+        data = json.load(file)
+    return data.get(list(data)[-1])
             
 # main function
 def main():
@@ -309,6 +314,7 @@ def main():
     global conn
     global q_values
     global sock
+    global input_file
     argparser = argparse.ArgumentParser(
         description='Q-learning LDW Server')
     argparser.add_argument(
@@ -316,7 +322,13 @@ def main():
         metavar='HOSTNAME',
         default='localhost',
         help='computer hostname')
+    argparser.add_argument(
+        '-i', '--input',
+        metavar='INPUT',
+        default='HumanStates.json',
+        help='specify an input JSON file name for human state data (default is HumanStates.json)')
     args = argparser.parse_args()
+    input_file = args.input
     hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     port = 50007
@@ -335,13 +347,11 @@ def main():
         print(q_values)
     else:
         np.save("DriverQValues.npy", q_values) # custom file
-        #initialize_q_table()
+        initialize_q_table()
     try:
-        global current_human_state
         episode = 1
         while(True):
             print("Running episode " + str(episode) + " (" + str(iterations) + " iterations)")
-            current_human_state = oura_client.get_current_state() # get human state only once each episode.
             q_learning(thread)
             print("Episode " + str(episode) + " completed.")
             episode += 1

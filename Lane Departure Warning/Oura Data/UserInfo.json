@@ -1,1 +1,7 @@
-{"age": 20, "weight": 65.8, "height": 180, "gender": "male", "email": "aahadisa@uci.edu"}
+{
+    "age": 20,
+    "weight": 65.8,
+    "height": 180,
+    "gender": "male",
+    "email": "aahadisa@uci.edu"
+}

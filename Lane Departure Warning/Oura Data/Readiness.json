@@ -1,1 +1,3 @@
-{"readiness": [{"period_id": 0, "score": 81, "score_activity_balance": 0, "score_hrv_balance": 0, "score_previous_day": 0, "score_previous_night": 62, "score_recovery_index": 97, "score_resting_hr": 90, "score_sleep_balance": 0, "score_temperature": 100, "summary_date": "2020-09-01"}]}
+{
+    "readiness": []
+}

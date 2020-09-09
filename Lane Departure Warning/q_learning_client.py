@@ -30,7 +30,7 @@ import argparse
 cautious_time = 1.5
 # warning status
 stop_thread = False
-corrective_percentage = 0.8
+corrective_percentage = 0.95
 
 # lane departure data class to send to server
 class LaneDepartureData:
