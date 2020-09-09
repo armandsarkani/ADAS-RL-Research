@@ -92,6 +92,8 @@ def receive_metrics():
                 dl = float('%.2f' % dl)
                 speed = d.speed * 2.237 # m/s to mph
                 return {"dl": dl, "dr": dr, "speed": speed, "speed_limit": d.speed_limit, "lane_id": d.lane_id}
+        else:
+            print("ERROR!")
 def initialize_q_table():
     for i in range(0, 5):
         q_values[i, :, :, 0] = 0.5
@@ -196,7 +198,7 @@ def is_intermediate(state_value):
     else:
         return False
 def is_unsafe(state_value):
-    if(state_value[0] >= 9):
+    if(state_value[0] >= 8):
         return True
     else:
         return False

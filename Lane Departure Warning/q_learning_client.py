@@ -26,9 +26,12 @@ import socket
 import threading
 import argparse
 
+# times
+cautious_time = 1.5
 # warning status
 stop_thread = False
-corrective_percentage = 0.5
+corrective_percentage = 0.8
+
 # lane departure data class to send to server
 class LaneDepartureData:
     def __init__(self):
@@ -80,7 +83,7 @@ def slow_driver(throttle):
     response = sock.recv(4096)
     while("Safe" not in response.decode()):
         print("Warning active and slow!")
-        vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.001, -0.005)))
+        vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.05, steer=random.uniform(-0.002, -0.005)))
         send_data()
         response = sock.recv(4096)
     print("Response time elapsed (s): ", time.time() - init_time)
@@ -98,7 +101,7 @@ def cautious_driver(throttle):
         vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0))
     while("Safe" not in response.decode()):
         print("Warning active and cautious!")
-        vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.001,-0.003)))
+        vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.05, steer=random.uniform(-0.001,-0.003)))
         send_data()
         response = sock.recv(4096)
     print("Response time elapsed (s): ", time.time() - init_time)
@@ -111,7 +114,7 @@ def fast_driver(throttle):
     response = sock.recv(4096)
     while("Safe" not in response.decode()):
         print("Warning active and fast!")
-        vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=random.uniform(-0.002,-0.005)))
+        vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=random.uniform(-0.003,-0.006)))
         send_data()
         response = sock.recv(4096)
     print("Response time elapsed (s): ", time.time() - init_time)
@@ -169,7 +172,7 @@ def main():
         bp = world.get_blueprint_library().filter('model3')[0] # blueprint for Tesla Model 3
         global vehicle
         vehicle = None
-        spawn_point = carla.Transform(carla.Location(151.071,147.458,2.5),carla.Rotation(0,0.234757,0))
+        spawn_point = carla.Transform(carla.Location(151.071,140.458,2.5),carla.Rotation(0,0.234757,0))
         vehicle = world.try_spawn_actor(bp, spawn_point) # spawn the car (actor)
         actor_list.append(vehicle)
         thread.start()
@@ -177,13 +180,25 @@ def main():
         while(True):
             send_data()
             response = sock.recv(4096)
-            if(np.random.binomial(1, corrective_percentage) == 1 and "Safe" not in response.decode()): # only take corrective action certain % of time
+            flag = False
+            while(np.random.binomial(1, corrective_percentage) == 1 and "Safe" not in response.decode()): # only take corrective action certain % of time
+                print("WARNING!")
                 if(driver == "slow"):
-                    slow_driver(throttle)
+                    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.01,-0.015)))
                 if(driver == "cautious"):
-                    cautious_driver(throttle)
+                    init_time = time.time()
+                    while(time.time() - init_time < cautious_time):
+                        vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0))
+                    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.01,-0.015)))
                 if(driver == "fast"):
-                    fast_driver(throttle)
+                    vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=random.uniform(-0.01,-0.02)))
+                flag = True
+                send_data()
+                response = sock.recv(4096)
+            if(flag):
+                location = vehicle.get_location()
+                lane_center = worldmap.get_waypoint(location)
+                vehicle.set_transform(lane_center.transform) # quick adjust wheels
             vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0.001))
     except KeyboardInterrupt:
         for actor in actor_list:
