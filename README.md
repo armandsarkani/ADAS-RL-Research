@@ -5,7 +5,11 @@ UCI undergraduate research project exploring personalized Advanced Driver Assist
 
 This repository mainly includes code written in Python and used with CARLA Simulator, an open-source driving simulation environment. The CARLA Python API files (for CARLA 0.9.5) are also included in order to make this code run on a CARLA build. They are located in the **carla** directory.
 
-The primary objective up until now has been the Lane Departure Warning sensor, which employs a Q-learning reinforcement learning algorithm to continuously improve the accuracy of the sensor depending on the particular user's driving habits and their human state metrics (such as sleep and readiness). The aforementioned human state metrics are measured using the [Oura Ring] (https://ouraring.com). Relevant code for this objective is located in the **Lane Departure Warning** directory. That directory also includes relevant debugging logs and input/output files relating to Q-learning lookup tables, human state data, etc.
+The primary objective up until now has been the Lane Departure Warning sensor, which employs a Q-learning reinforcement learning algorithm to continuously improve the accuracy of the sensor depending on the particular user's driving habits and their human state metrics (such as sleep and readiness). 
+
+The aforementioned human state metrics are measured using the [Oura Ring] (https://ouraring.com). 
+
+Relevant code for this objective is located in the **Lane Departure Warning** directory. That directory also includes relevant debugging logs and input/output files relating to Q-learning lookup tables, human state data, etc.
 
 ## Running Scripts
 
