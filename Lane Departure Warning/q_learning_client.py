@@ -184,7 +184,11 @@ def main():
             print(response.decode())
             flag = False
             d = LaneDepartureData()
-            dr = -1 * right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
+            dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
+            while(dr is None):
+                d = LaneDepartureData()
+                dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
+            dr *= -1
             while(np.random.binomial(1, corrective_percentage) == 1 and "WARNING! Approaching lane." in response.decode()): # only take corrective action certain % of time
                 if(dr >= threshold and np.random.binomial(1, secondary_corrective_percentage) == 1):  # certain % of the time, if driver is at threshold or closer to the center of the lane, do not take a corrective action
                     print("Not doing corrective action.")

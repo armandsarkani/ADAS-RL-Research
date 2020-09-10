@@ -11,9 +11,9 @@ The primary objective up until now has been the Lane Departure Warning sensor, w
 
 Once the repository is cloned, and CARLA is properly installed on your computer (Windows or Linux), you can run the Q-learning server (located in the **Lane Departure Warning** directory) in the following way:
 
-    python q_learning_server.py --hostname HOSTNAME --input INPUT.json --output OUTPUT.npy
+    python q_learning_server.py --hostname HOSTNAME --input INPUT.json --output OUTPUT.npy --log LOG.log
 
-The hostname or IP address of your computer is needed to establish a connection with a client. By default, localhost (127.0.0.1) is used. The input file in this case is an existing JSON file containing human state data from the Oura Ring. If you do not specify this argument, the default file name (HumanStates.json) will be used. An input file must exist to run the server (see below). The output file is the name of the NumPy file where the driver's Q-learning lookup table is located. The server will continuously output data to this file by updating the existing Q-table. If this file does not exist, the server will automatically create it for you and initialize the Q-table on the first run. If you do not specify this argument, the default file name (DriverQValues.npy) will be used.
+The hostname or IP address of your computer is needed to establish a connection with a client. By default, localhost (127.0.0.1) is used. The input file in this case is an existing JSON file containing human state data from the Oura Ring. If you do not specify this argument, the default file name (HumanStates.json) will be used. An input file must exist to run the server (see below). The output file is the name of the NumPy file where the driver's Q-learning lookup table is located. The server will continuously output data to this file by updating the existing Q-table. If this file does not exist, the server will automatically create it for you and initialize the Q-table on the first run. If you do not specify this argument, the default file name (DriverQValues.npy) will be used. You can specify a custom log file to be created or modified to record output of the simulations (by default, ServerOutput.log is used).
 
 To receive data from the Oura Ring, please run the following script:
 

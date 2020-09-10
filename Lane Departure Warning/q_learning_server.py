@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 from tqdm import trange
 import argparse
 import json
+import logging
 
 # probability for exploration
 epsilon = 0.1
@@ -55,7 +56,7 @@ dict_actions = {no_warning: "no warning", warning: "warning"}
 # files
 input_file = None
 output_file = None
-
+logger = None
 # connection variables
 sock = None
 conn = None
@@ -163,6 +164,7 @@ def define_rewards(state, action, next_state):
     lane_id = state.metrics.get("lane_id")
     next_lane_id = next_state.metrics.get("lane_id")
     if(lane_id != next_lane_id): # if lane invasion occurs
+        logger.debug("Lane invasion")
         reward -= 50
         return reward
     if(is_intermediate(state.value) and is_intermediate(next_state.value) and action == warning): # if warning "ignored"
@@ -253,10 +255,10 @@ def q_learning(thread, step_size= alpha):
         # Q-learning lookup table update
         iteration_rewards = define_rewards(init_state, action, state_vector[-1])
         final_state = state_vector[-1]
-        print("Going from state", init_state.value, "to state", final_state.value, "action = ", dict_actions[action], "rewards = ", iteration_rewards)
+        logger.debug("Going from state " + str(init_state.value) + " to state " + str(final_state.value) + ", action = " + dict_actions[action] + ", rewards = " + str(iteration_rewards))
         delta = step_size * (iteration_rewards + gamma * np.max(q_values[final_state.value[0], final_state.value[1], final_state.value[2], :]) - q_values[init_state.value[0], init_state.value[1], init_state.value[2], action])
         q_values[init_state.value[0], init_state.value[1], init_state.value[2], action] += delta
-        print("Δ =", delta)
+        logger.debug("Δ = " + str(delta))
         np.save(output_file, q_values) # save on each iteration
         init_state = final_state
 def right_lane_distance(location_x, location_y, right_x, right_y, right_lane_width):
@@ -328,6 +330,7 @@ def main():
     global sock
     global input_file
     global output_file
+    global logger
     argparser = argparse.ArgumentParser(
         description='Q-learning LDW Server')
     argparser.add_argument(
@@ -344,12 +347,21 @@ def main():
         '-o', '--output',
         metavar='OUTPUT.npy',
         default='DriverQValues.npy',
-        help='specify the output NumPy file for this driver. If it does not exist, it will be created.')
+        help='specify the output NumPy file for this driver. If it does not exist, it will be created (default is DriverQValues.npy).')
+    argparser.add_argument(
+        '-l', '--log',
+        metavar='LOG.log',
+        default='ServerOutput.log',
+        help='specify the output log file for this driver (default is ServerOutput.log)')
     args = argparser.parse_args()
     input_file = args.input
     output_file = args.output
+    log_file = args.log
     hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
+    logging.basicConfig(filename=log_file, format='%(asctime)s %(message)s', filemode='a')
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
     port = 50007
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((IP, port))
@@ -359,11 +371,11 @@ def main():
     thread = threading.Thread(target=ThreadFunction, args=(conn,))
     thread.start()
     if(os.path.exists(output_file)):
-        print("\n")
         print("Existing Q-table loaded ...")
         q_values = np.load(output_file)
         np.set_printoptions(suppress=True)
-        print(q_values)
+        print("\n")
+        #print(q_values)
     else:
         np.save(output_file, q_values) # custom file
         initialize_q_table()
