@@ -168,7 +168,7 @@ def main():
         description='Oura Ring Data Server')
     argparser.add_argument(
         '-o', '--output',
-        metavar='OUTPUT',
+        metavar='OUTPUT.json',
         default='HumanStates.json',
         help='specify an output JSON file name for human state data (default is HumanStates.json)')
     args = argparser.parse_args()

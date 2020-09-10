@@ -337,12 +337,12 @@ def main():
         help='computer hostname')
     argparser.add_argument(
         '-i', '--input',
-        metavar='INPUT',
+        metavar='INPUT.json',
         default='HumanStates.json',
         help='specify an input JSON file name for human state data (default is HumanStates.json)')
     argparser.add_argument(
         '-o', '--output',
-        metavar='OUTPUT',
+        metavar='OUTPUT.npy',
         default='DriverQValues.npy',
         help='specify the output NumPy file for this driver. If it does not exist, it will be created.')
     args = argparser.parse_args()

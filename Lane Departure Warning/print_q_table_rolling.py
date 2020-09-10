@@ -6,7 +6,7 @@ argparser = argparse.ArgumentParser(
 description='Print Q-table continuously')
 argparser.add_argument(
     '-i', '--input',
-    metavar='INPUT',
+    metavar='INPUT.npy',
     default='DriverQValues.npy',
     help='specify an input NumPy file')
 args = argparser.parse_args()
