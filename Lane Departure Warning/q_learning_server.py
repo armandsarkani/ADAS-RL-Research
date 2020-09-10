@@ -26,11 +26,13 @@ gamma = 0.99
 
 # rate at which state transitions are measured
 sampling_rate = 0.1
+vector_size = int(2/sampling_rate)
 
 # human states
 attentive = 0
 moderate = 1
 unattentive = 2
+human_state = None
 dict_human_states = {"attentive": attentive, "moderate": moderate, "unattentive": unattentive}
 
 # number of states per dimension
@@ -52,6 +54,7 @@ dict_actions = {no_warning: "no warning", warning: "warning"}
 
 # files
 input_file = None
+output_file = None
 
 # connection variables
 sock = None
@@ -177,9 +180,9 @@ def define_rewards(state, action, next_state):
         if(state.value[2] == unattentive):
             reward -= 10
     if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == warning): # if warning issued, but next state was unsafe
-        reward -= 10
+        reward += 20
         if(state.value[2] == unattentive):
-            reward -= 20
+            reward += 20
     if(state.value[2] == unattentive and action == warning): # giving warning to unattentive driver
         reward += 5
     if(state.value[2] == attentive and action == warning): # giving warning to attentive driver
@@ -208,19 +211,22 @@ def choose_action(state_value):
     else:
         values = q_values[state_value[0], state_value[1], state_value[2], :] # row of values for a given state, any actions
         return np.random.choice([action for action, value in enumerate(values) if value == np.max(values)])
-def send_action(action):
+def send_action(action, state):
     if(action == warning):
-        string = "WARNING! Approaching lane."
+        string = "WARNING! Approaching lane. State: " + str(state.value)
         conn.send(string.encode())
     else:
-        string = "Safe"
+        string = "Safe. State: " + str(state.value)
         conn.send(string.encode())
 def q_learning(thread, step_size= alpha):
     global q_values
     global rewards
+    global vector_size
     iteration_rewards = 0
     init_state = State()
     for i in trange(iterations):
+        #if(i/iterations >= 0.5):
+            #vector_size = int(2/sampling_rate) # reset vector size halfway through episode
         state_vector = []
         if(is_safe(init_state.value)):
             action = no_warning
@@ -229,19 +235,20 @@ def q_learning(thread, step_size= alpha):
         else:
             action = choose_action(init_state.value)
         if(not thread.is_alive()):
-            np.save("DriverQValues.npy", q_values)
+            np.save(output_file, q_values)
             sock.close()
             conn.close()
             print("Disconnected.")
             main()
-        send_action(action)
-        for j in range(0, int(2/sampling_rate)): # generic response time
+        send_action(action, init_state)
+        for j in range(0, vector_size): # generic response time
             state = State()
             state_vector.append(state)
             time.sleep(sampling_rate)
             next_state = State()
             state_vector.append(next_state)
-            if(is_safe(next_state.value) and not is_safe(init_state.value)):
+            if(is_safe(next_state.value) and not is_safe(init_state.value) and j > 1):
+                #vector_size = j
                 break
         # Q-learning lookup table update
         iteration_rewards = define_rewards(init_state, action, state_vector[-1])
@@ -250,7 +257,7 @@ def q_learning(thread, step_size= alpha):
         delta = step_size * (iteration_rewards + gamma * np.max(q_values[final_state.value[0], final_state.value[1], final_state.value[2], :]) - q_values[init_state.value[0], init_state.value[1], init_state.value[2], action])
         q_values[init_state.value[0], init_state.value[1], init_state.value[2], action] += delta
         print("Δ =", delta)
-        np.save("DriverQValues.npy", q_values) # save on each iteration
+        np.save(output_file, q_values) # save on each iteration
         init_state = final_state
 def right_lane_distance(location_x, location_y, right_x, right_y, right_lane_width):
     if(abs(location_x - right_x) <= 1): # if x are negligibly similar
@@ -293,20 +300,25 @@ def ThreadFunction(conn):
             d = pickle.loads(data)
         except ConnectionResetError:
             conn_reset = True
-            np.save("DriverQValues.npy", q_values) # custom file
+            np.save(output_file, q_values) # custom file
             break
         except EOFError:
             conn_reset = True
-            np.save("DriverQValues.npy", q_values) # custom file
+            np.save(output_file, q_values) # custom file
             break
         except BrokenPipeError:
             conn_reset = True
-            np.save("DriverQValues.npy", q_values) # custom file
+            np.save(output_file, q_values) # custom file
             break
 def receive_human_state():
+    global human_state
     with open(input_file) as file:
-        data = json.load(file)
-    return data.get(list(data)[-1])
+        try:
+            data = json.load(file)
+            human_state = data.get(list(data)[-1])
+            return human_state
+        except ValueError:
+            return human_state # return last value
             
 # main function
 def main():
@@ -315,6 +327,7 @@ def main():
     global q_values
     global sock
     global input_file
+    global output_file
     argparser = argparse.ArgumentParser(
         description='Q-learning LDW Server')
     argparser.add_argument(
@@ -327,8 +340,14 @@ def main():
         metavar='INPUT',
         default='HumanStates.json',
         help='specify an input JSON file name for human state data (default is HumanStates.json)')
+    argparser.add_argument(
+        '-o', '--output',
+        metavar='OUTPUT',
+        default='DriverQValues.npy',
+        help='specify the output NumPy file for this driver. If it does not exist, it will be created.')
     args = argparser.parse_args()
     input_file = args.input
+    output_file = args.output
     hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     port = 50007
@@ -339,14 +358,14 @@ def main():
     print("Connected by", addr)
     thread = threading.Thread(target=ThreadFunction, args=(conn,))
     thread.start()
-    if(os.path.exists("DriverQValues.npy")):
+    if(os.path.exists(output_file)):
         print("\n")
         print("Existing Q-table loaded ...")
-        q_values = np.load("DriverQValues.npy")
+        q_values = np.load(output_file)
         np.set_printoptions(suppress=True)
         print(q_values)
     else:
-        np.save("DriverQValues.npy", q_values) # custom file
+        np.save(output_file, q_values) # custom file
         initialize_q_table()
     try:
         episode = 1

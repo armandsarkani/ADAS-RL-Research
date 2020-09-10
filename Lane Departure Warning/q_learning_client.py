@@ -26,9 +26,8 @@ import socket
 import threading
 import argparse
 
-# times
+# miscellaneous
 cautious_time = 1.5
-# warning status
 stop_thread = False
 corrective_percentage = 0.95
 
@@ -64,12 +63,45 @@ class LaneDepartureData:
             self.left_y = worldmap.get_waypoint(location).get_left_lane().transform.location.y
             self.left_lane_width = worldmap.get_waypoint(location).get_left_lane().lane_width
             self.left = 1
+
+# helpers from server
+def right_lane_distance(location_x, location_y, right_x, right_y, right_lane_width):
+    if(abs(location_x - right_x) <= 1): # if x are negligibly similar
+        if(location_y - right_y < 0):
+            lane_marking_y = right_y - right_lane_width/2
+            return(location_y - lane_marking_y)
+        else:
+            lane_marking_y = right_y + right_lane_width/2
+            return(lane_marking_y - location_y)
+    elif(abs(location_y - right_y) <= 1): # if y are negligibly similar
+        if(location_x - right_x < 0):
+            lane_marking_x = right_x - right_lane_width/2
+            return(location_x - lane_marking_x)
+        else:
+            lane_marking_x = right_x + right_lane_width/2
+            return(lane_marking_x - location_x)
+def left_lane_distance(location_x, location_y, left_x, left_y, left_lane_width):
+    if(abs(location_x - left_x) <= 1): # if x are negligibly similar
+           if(location_y - left_y < 0):
+               lane_marking_y = left_y - left_lane_width/2
+               return(location_y - lane_marking_y)
+           else:
+               lane_marking_y = left_y + left_lane_width/2
+               return(lane_marking_y - location_y)
+    elif(abs(location_y - left_y) <= 1): # if y are negligibly similar
+           if(location_x - left_x < 0):
+               lane_marking_x = left_x - left_lane_width/2
+               return(location_x - lane_marking_x)
+           else:
+               lane_marking_x = left_x + left_lane_width/2
+               return(lane_marking_x - location_x)
+
             
 # socket communication functions
 def Receive(sock):
     time_issued_warning = 0
     while(True):
-        response = sock.recv(4096)
+        send_data()
         if(stop_thread):
             break
 def send_data(): # send data to server
@@ -79,49 +111,16 @@ def send_data(): # send data to server
     
 # driver scenarios
 def slow_driver(throttle):
-    init_time = time.time()
-    response = sock.recv(4096)
-    while("Safe" not in response.decode()):
-        print("Warning active and slow!")
-        vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.05, steer=random.uniform(-0.002, -0.005)))
-        send_data()
-        response = sock.recv(4096)
-    print("Response time elapsed (s): ", time.time() - init_time)
-    location = vehicle.get_location()
-    lane_center = worldmap.get_waypoint(location)
-    vehicle.set_transform(lane_center.transform) # quick adjust wheels
-    print("Warning off!")
+    for i in range(0, 3):
+        vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.005,-0.01)))
 def cautious_driver(throttle):
     init_time = time.time()
-    response = sock.recv(4096)
-    straight_time = time.time()
-    total_time = random.uniform(0.5, 1.5)
-    while(time.time() - straight_time < total_time):
-        send_data()
+    while(time.time() - init_time < cautious_time):
         vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0))
-    while("Safe" not in response.decode()):
-        print("Warning active and cautious!")
-        vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.05, steer=random.uniform(-0.001,-0.003)))
-        send_data()
-        response = sock.recv(4096)
-    print("Response time elapsed (s): ", time.time() - init_time)
-    location = vehicle.get_location()
-    lane_center = worldmap.get_waypoint(location)
-    vehicle.set_transform(lane_center.transform) # quick adjust wheels
-    print("Warning off!")
+    for i in range(0, 3):
+        vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.005,-0.01)))
 def fast_driver(throttle):
-    init_time = time.time()
-    response = sock.recv(4096)
-    while("Safe" not in response.decode()):
-        print("Warning active and fast!")
-        vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=random.uniform(-0.003,-0.006)))
-        send_data()
-        response = sock.recv(4096)
-    print("Response time elapsed (s): ", time.time() - init_time)
-    location = vehicle.get_location()
-    lane_center = worldmap.get_waypoint(location)
-    vehicle.set_transform(lane_center.transform) # quick adjust wheels
-    print("Warning off!")
+    vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=random.uniform(-0.01,-0.02)))
 
 # main function
 def main():
@@ -177,28 +176,33 @@ def main():
         actor_list.append(vehicle)
         thread.start()
         time.sleep(3)
+        secondary_corrective_percentage = 0.85
+        threshold_dict = {"slow": 1.2, "cautious": 1.1, "fast": 0.9}
+        threshold = threshold_dict.get(driver)
         while(True):
-            send_data()
             response = sock.recv(4096)
+            print(response.decode())
             flag = False
-            while(np.random.binomial(1, corrective_percentage) == 1 and "Safe" not in response.decode()): # only take corrective action certain % of time
-                print("WARNING!")
+            d = LaneDepartureData()
+            dr = -1 * right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
+            while(np.random.binomial(1, corrective_percentage) == 1 and "WARNING! Approaching lane." in response.decode()): # only take corrective action certain % of time
+                if(dr >= threshold and np.random.binomial(1, secondary_corrective_percentage) == 1):  # certain % of the time, if driver is at threshold or closer to the center of the lane, do not take a corrective action
+                    print("Not doing corrective action.")
+                    break # do not take a corrective action
                 if(driver == "slow"):
-                    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.01,-0.015)))
+                    slow_driver(throttle)
                 if(driver == "cautious"):
-                    init_time = time.time()
-                    while(time.time() - init_time < cautious_time):
-                        vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0))
-                    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.01,-0.015)))
+                    cautious_driver(throttle)
                 if(driver == "fast"):
-                    vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=random.uniform(-0.01,-0.02)))
+                    fast_driver(throttle)
                 flag = True
-                send_data()
                 response = sock.recv(4096)
             if(flag):
                 location = vehicle.get_location()
                 lane_center = worldmap.get_waypoint(location)
                 vehicle.set_transform(lane_center.transform) # quick adjust wheels
+            if(vehicle.get_location().x >= 650.0):
+                vehicle.set_transform(carla.Transform(carla.Location(151.071,140.458,2.5),carla.Rotation(0,0.234757,0))) # reset position to the beginning of the road to continue testing when the vehicle reaches end of road
             vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0.001))
     except KeyboardInterrupt:
         for actor in actor_list:
