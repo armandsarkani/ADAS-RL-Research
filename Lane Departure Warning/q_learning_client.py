@@ -133,7 +133,7 @@ def main():
             '-n', '--hostname',
             metavar='NAME',
             default='localhost',
-            help='computer short hostname')
+            help='computer hostname or IP address')
         argparser.add_argument(
             '-m', '--mode',
             metavar='MODE',
@@ -152,6 +152,8 @@ def main():
         args = argparser.parse_args()
         hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
         IP = hostname_to_IP.get(args.hostname)
+        if(IP is None):
+             IP = args.hostname
         worldset = args.mode
         throttle = float(args.throttle)
         driver = args.driver
@@ -177,7 +179,7 @@ def main():
         thread.start()
         time.sleep(3)
         secondary_corrective_percentage = 0.85
-        threshold_dict = {"slow": 1.2, "cautious": 1.1, "fast": 0.9}
+        threshold_dict = {"slow": 1.2, "cautious": 1.1, "fast": 0.65}
         threshold = threshold_dict.get(driver)
         while(True):
             response = sock.recv(4096)

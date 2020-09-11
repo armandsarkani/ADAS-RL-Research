@@ -15,6 +15,7 @@ from tqdm import trange
 import argparse
 import json
 import logging
+import statistics
 
 # probability for exploration
 epsilon = 0.1
@@ -57,11 +58,17 @@ dict_actions = {no_warning: "no warning", warning: "warning"}
 input_file = None
 output_file = None
 logger = None
+
 # connection variables
 sock = None
 conn = None
 d = None
 conn_reset = False
+
+# miscellaneous
+warning_states = []
+num_corrections = 0
+num_invasions = 0
 
 # class definitions
 class LaneDepartureData:
@@ -85,6 +92,7 @@ class State:
     def __init__(self):
         self.metrics = receive_metrics()
         self.value = enumerate_state(self.metrics)
+        
 # Q-learning functions
 def receive_metrics():
     while True:
@@ -152,6 +160,7 @@ def enumerate_state(metrics):
     state[2] = dict_human_states.get(receive_human_state())
     return state
 def define_rewards(state, action, next_state):
+    global num_invasions
     reward = 0
     if(state.value[0] > next_state.value[0]):
         reward += 10 * (state.value[0] - next_state.value[0])
@@ -166,6 +175,7 @@ def define_rewards(state, action, next_state):
     if(lane_id != next_lane_id): # if lane invasion occurs
         logger.debug("Lane invasion")
         reward -= 50
+        num_invasions += 1
         return reward
     if(is_intermediate(state.value) and is_intermediate(next_state.value) and action == warning): # if warning "ignored"
         reward -= 20
@@ -224,11 +234,11 @@ def q_learning(thread, step_size= alpha):
     global q_values
     global rewards
     global vector_size
+    global warning_states
+    global num_corrections
     iteration_rewards = 0
     init_state = State()
     for i in trange(iterations):
-        #if(i/iterations >= 0.5):
-            #vector_size = int(2/sampling_rate) # reset vector size halfway through episode
         state_vector = []
         if(is_safe(init_state.value)):
             action = no_warning
@@ -236,6 +246,8 @@ def q_learning(thread, step_size= alpha):
             action = warning
         else:
             action = choose_action(init_state.value)
+        if(action == warning):
+            warning_states.append(init_state)
         if(not thread.is_alive()):
             np.save(output_file, q_values)
             sock.close()
@@ -250,7 +262,7 @@ def q_learning(thread, step_size= alpha):
             next_state = State()
             state_vector.append(next_state)
             if(is_safe(next_state.value) and not is_safe(init_state.value) and j > 1):
-                #vector_size = j
+                num_corrections += 1
                 break
         # Q-learning lookup table update
         iteration_rewards = define_rewards(init_state, action, state_vector[-1])
@@ -321,7 +333,53 @@ def receive_human_state():
             return human_state
         except ValueError:
             return human_state # return last value
-            
+
+# helper functions
+def generate_statistics(statistics_file, episode, time_elapsed):
+    # get data
+    warning_state_values = []
+    dr = []
+    dl = []
+    for state in warning_states:
+        warning_state_values.append(str(state.value))
+        dr.append(state.metrics.get("dr"))
+        dl.append(state.metrics.get("dl"))
+    try:
+        most_common_state = statistics.mode(warning_state_values)
+    except statistics.StatisticsError:
+        most_common_state = warning_state_values[-1]
+    avg_dr = statistics.mean(dr)
+    avg_dl = statistics.mean(dl)
+    total_time_run = convert(time_elapsed)
+    data = {"q_table_name": output_file, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": num_corrections, "num_invasions": num_invasions, "num_warning_states": len(warning_states)}
+    if(not os.path.exists(statistics_file)):
+        with open(statistics_file, 'w') as file:
+            json.dump(data, file, indent = 4)
+    else:
+        with open(statistics_file) as file:
+            old_data = json.load(file)
+            old_data_percentage = old_data["num_warning_states"] / (old_data["num_warning_states"] + data["num_warning_states"])
+            new_data_percentage = 1 - old_data_percentage
+            data["avg_warning_dr"] = (new_data_percentage * data["avg_warning_dr"]) + (old_data_percentage * old_data["avg_warning_dr"])
+            data["avg_warning_dl"] = (new_data_percentage * data["avg_warning_dl"]) + (old_data_percentage * old_data["avg_warning_dl"])
+            data["total_time_run_seconds"] += old_data["total_time_run_seconds"]
+            data["total_time_run"] = convert(data["total_time_run_seconds"])
+            data["total_num_episodes"] += old_data["total_num_episodes"]
+            data["num_corrections"] += old_data["num_corrections"]
+            data["num_invasions"] += old_data["num_invasions"]
+            data["num_warning_states"] += old_data["num_warning_states"]
+            file.close()
+            with open(statistics_file, 'w') as file:
+                json.dump(data, file, indent = 4)
+def convert(seconds):
+    seconds = seconds % (24 * 3600)
+    hour = seconds // 3600
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+    return "%d:%02d:%02d" % (hour, minutes, seconds)
+
+
 # main function
 def main():
     global conn_reset
@@ -337,7 +395,7 @@ def main():
         '-n', '--hostname',
         metavar='HOSTNAME',
         default='localhost',
-        help='computer hostname')
+        help='computer hostname or IP address')
     argparser.add_argument(
         '-i', '--input',
         metavar='INPUT.json',
@@ -353,12 +411,20 @@ def main():
         metavar='LOG.log',
         default='ServerOutput.log',
         help='specify the output log file for this driver (default is ServerOutput.log)')
+    argparser.add_argument(
+        '-s', '--statistics',
+        metavar='STATISTICS.json',
+        default= None,
+        help='output statistics about simulations')
     args = argparser.parse_args()
     input_file = args.input
     output_file = args.output
     log_file = args.log
+    statistics_file = args.statistics
     hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
+    if(IP is None):
+        IP = args.hostname
     logging.basicConfig(filename=log_file, format='%(asctime)s %(message)s', filemode='a')
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
@@ -379,12 +445,17 @@ def main():
     else:
         np.save(output_file, q_values) # custom file
         initialize_q_table()
+    episode = 1
+    init_time = time.time()
     try:
-        episode = 1
         while(True):
             print("Running episode " + str(episode) + " (" + str(iterations) + " iterations)")
             q_learning(thread)
             print("Episode " + str(episode) + " completed.")
+            if(statistics_file is not None):
+                time_elapsed = time.time() - init_time
+                init_time = time.time()
+                generate_statistics(statistics_file, episode, time_elapsed)
             episode += 1
             print("\n")
         if(conn_reset):
@@ -398,6 +469,10 @@ def main():
         thread.join()
         exit()
     except KeyboardInterrupt:
+        if(statistics_file is not None):
+            time_elapsed = time.time() - init_time
+            init_time = time.time()
+            generate_statistics(statistics_file, episode, time_elapsed)
         sock.close()
         conn.close()
         thread.join()

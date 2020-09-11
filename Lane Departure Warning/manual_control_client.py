@@ -1025,7 +1025,7 @@ def main():
         '-n','--hostname',
         metavar='HOSTNAME',
         default='localhost',
-        help='computer hostname')
+        help='computer hostname or IP address')
     argparser.add_argument(
         '--mode',
         metavar='MODE',
@@ -1075,7 +1075,8 @@ def main():
     worldset = args.mode
     hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
-    
+    if(IP is None):
+         IP = args.hostname
     try:
         port = 50007
         global sock
