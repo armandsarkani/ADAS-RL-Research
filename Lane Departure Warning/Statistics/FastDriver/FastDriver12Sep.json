@@ -1,0 +1,12 @@
+{
+    "q_table_name": "FastDriver.npy",
+    "warning_most_common_state": "[4, 0, 1]",
+    "avg_warning_dr": 0.8959928897917726,
+    "avg_warning_dl": 2.7747689182326054,
+    "total_time_run": "1:45:27",
+    "total_time_run_seconds": 6327.292359828949,
+    "total_num_episodes": 77,
+    "num_corrections": 440,
+    "num_invasions": 69,
+    "num_warning_states": 1969
+}

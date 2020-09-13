@@ -207,7 +207,7 @@ def main():
                 location = vehicle.get_location()
                 lane_center = worldmap.get_waypoint(location)
                 vehicle.set_transform(lane_center.transform) # quick adjust wheels
-            if(vehicle.get_location().x >= 650.0):
+            if(vehicle.get_location().x >= 630.0):
                 vehicle.set_transform(carla.Transform(carla.Location(151.071,140.458,2.5),carla.Rotation(0,0.234757,0))) # reset position to the beginning of the road to continue testing when the vehicle reaches end of road
             vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0.001))
     except KeyboardInterrupt:

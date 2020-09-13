@@ -16,6 +16,7 @@ import argparse
 import json
 import logging
 import statistics
+from datetime import datetime, date
 
 # probability for exploration
 epsilon = 0.1
@@ -69,6 +70,8 @@ conn_reset = False
 warning_states = []
 num_corrections = 0
 num_invasions = 0
+driver_name = None
+block_thread = False
 
 # class definitions
 class LaneDepartureData:
@@ -177,7 +180,7 @@ def define_rewards(state, action, next_state):
         reward -= 50
         num_invasions += 1
         return reward
-    if(is_intermediate(state.value) and is_intermediate(next_state.value) and action == warning): # if warning "ignored"
+    if(is_intermediate(state.value) and is_intermediate(next_state.value) and state.value[0] <= next_state.value[0] and action == warning): # if warning "ignored"
         reward -= 20
     if(is_unsafe(state.value) and is_safe(next_state.value)): # if corrective action taken after warning from unsafe to safe state (warning implied)
         reward += 50
@@ -230,14 +233,16 @@ def send_action(action, state):
     else:
         string = "Safe. State: " + str(state.value)
         conn.send(string.encode())
-def q_learning(thread, step_size= alpha):
+def q_learning(thread, episode, step_size= alpha):
     global q_values
     global rewards
     global vector_size
     global warning_states
     global num_corrections
+    global block_thread
     iteration_rewards = 0
     init_state = State()
+    plot_data = {}
     for i in trange(iterations):
         state_vector = []
         if(is_safe(init_state.value)):
@@ -248,6 +253,7 @@ def q_learning(thread, step_size= alpha):
             action = choose_action(init_state.value)
         if(action == warning):
             warning_states.append(init_state)
+        plot_data.update({init_state: action})
         if(not thread.is_alive()):
             np.save(output_file, q_values)
             sock.close()
@@ -273,6 +279,9 @@ def q_learning(thread, step_size= alpha):
         logger.debug("Δ = " + str(delta))
         np.save(output_file, q_values) # save on each iteration
         init_state = final_state
+    block_thread = True
+    plot(plot_data, episode)
+    block_thread = False
 def right_lane_distance(location_x, location_y, right_x, right_y, right_lane_width):
     if(abs(location_x - right_x) <= 1): # if x are negligibly similar
         if(location_y - right_y < 0):
@@ -311,7 +320,10 @@ def ThreadFunction(conn):
     while True:
         try:
             data = conn.recv(4096)
-            d = pickle.loads(data)
+            if(not block_thread):
+                d = pickle.loads(data)
+        except pickle.UnpicklingError:
+            continue
         except ConnectionResetError:
             conn_reset = True
             np.save(output_file, q_values) # custom file
@@ -335,7 +347,43 @@ def receive_human_state():
             return human_state # return last value
 
 # helper functions
+def plot(plot_data, episode):
+    # manage directories
+    if(not(os.path.exists('Plots'))):
+          os.mkdir('Plots')
+    os.chdir('Plots')
+    if(not(os.path.exists(driver_name))):
+        os.mkdir(driver_name)
+    os.chdir(driver_name)
+    # plot figures based on data
+    plt.axis([0, iterations, 11, 0])
+    dt = datetime.now()
+    timestamp = dt.strftime("%d-%b-%Y (%H:%M)")
+    timestamp_alt = dt.strftime("%d-%b-%Y_%H%M")
+    file_name = driver_name + "_" + timestamp_alt + "_ep" + str(episode) + ".png"
+    title = driver_name + " plot for episode " + str(episode) + " on " + timestamp
+    plt.title(title)
+    plt.xlabel("Iterations")
+    plt.ylabel("Distance state (higher is closer to lane)")
+    i = 1
+    for key in plot_data:
+        y = key.value[0]
+        if(plot_data[key] == warning):
+            plt.plot(i, y, 'ro') # plot (iteration, state) warning as red
+        else:
+            plt.plot(i, y, 'go') # plot (iteration, state) no warning as green
+        i += 1
+    plt.savefig(file_name, dpi=600)
+    os.chdir('../..')
+        
 def generate_statistics(statistics_file, episode, time_elapsed):
+    # manage directories
+    if(not(os.path.exists('Statistics'))):
+          os.mkdir('Statistics')
+    os.chdir('Statistics')
+    if(not(os.path.exists(driver_name))):
+        os.mkdir(driver_name)
+    os.chdir(driver_name)
     # get data
     warning_state_values = []
     dr = []
@@ -352,6 +400,7 @@ def generate_statistics(statistics_file, episode, time_elapsed):
     avg_dl = statistics.mean(dl)
     total_time_run = convert(time_elapsed)
     data = {"q_table_name": output_file, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": num_corrections, "num_invasions": num_invasions, "num_warning_states": len(warning_states)}
+    # write to file
     if(not os.path.exists(statistics_file)):
         with open(statistics_file, 'w') as file:
             json.dump(data, file, indent = 4)
@@ -371,6 +420,7 @@ def generate_statistics(statistics_file, episode, time_elapsed):
             file.close()
             with open(statistics_file, 'w') as file:
                 json.dump(data, file, indent = 4)
+    os.chdir('../..')
 def convert(seconds):
     seconds = seconds % (24 * 3600)
     hour = seconds // 3600
@@ -389,6 +439,7 @@ def main():
     global input_file
     global output_file
     global logger
+    global driver_name
     argparser = argparse.ArgumentParser(
         description='Q-learning LDW Server')
     argparser.add_argument(
@@ -421,12 +472,21 @@ def main():
     output_file = args.output
     log_file = args.log
     statistics_file = args.statistics
+    driver_name = output_file.replace('.npy', '')
     hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
         IP = args.hostname
+    if(not(os.path.exists('Logs'))):
+        os.mkdir('Logs')
+    os.chdir('Logs')
+    if(not(os.path.exists(driver_name))):
+        os.mkdir(driver_name)
+    os.chdir('..')
+    log_file = 'Logs/' + driver_name + '/' + log_file
     logging.basicConfig(filename=log_file, format='%(asctime)s %(message)s', filemode='a')
     logger = logging.getLogger()
+    logging.getLogger('matplotlib.font_manager').disabled = True
     logger.setLevel(logging.DEBUG)
     port = 50007
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -450,7 +510,7 @@ def main():
     try:
         while(True):
             print("Running episode " + str(episode) + " (" + str(iterations) + " iterations)")
-            q_learning(thread)
+            q_learning(thread, episode)
             print("Episode " + str(episode) + " completed.")
             if(statistics_file is not None):
                 time_elapsed = time.time() - init_time
