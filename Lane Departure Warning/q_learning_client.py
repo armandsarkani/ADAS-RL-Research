@@ -203,6 +203,7 @@ def main():
                     fast_driver(throttle)
                 flag = True
                 response = sock.recv(4096)
+                print(response.decode())
             if(flag):
                 location = vehicle.get_location()
                 lane_center = worldmap.get_waypoint(location)

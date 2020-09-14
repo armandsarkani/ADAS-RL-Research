@@ -1,0 +1,1968 @@
+2020-09-14 00:35:03,432 Lane invasion
+2020-09-14 00:35:03,432 Going from state [11, 2, 1] to state [3, 0, 1], action = warning, rewards = 60
+2020-09-14 00:35:03,432 Δ = 39.28699112877693
+2020-09-14 00:35:05,503 Going from state [3, 0, 1] to state [3, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:35:05,504 Δ = -0.09885849625027276
+2020-09-14 00:35:05,807 Going from state [3, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:35:05,807 Δ = 0.16357962309792917
+2020-09-14 00:35:07,869 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:35:07,869 Δ = -0.12801869360880946
+2020-09-14 00:35:09,922 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:35:09,922 Δ = -0.012126249310240755
+2020-09-14 00:35:11,973 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:35:11,974 Δ = -0.012065618063689554
+2020-09-14 00:35:14,010 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:35:14,010 Δ = -0.44954529111710384
+2020-09-14 00:35:16,074 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:35:16,075 Δ = -0.9900463641607633
+2020-09-14 00:35:18,125 Going from state [3, 0, 1] to state [5, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:35:18,125 Δ = 8.382744700352895
+2020-09-14 00:35:20,179 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:35:20,179 Δ = -4.928856303110464
+2020-09-14 00:35:22,231 Going from state [6, 0, 1] to state [7, 0, 1], action = warning, rewards = -30
+2020-09-14 00:35:22,231 Δ = 3.6592312518266255
+2020-09-14 00:35:22,545 Going from state [7, 0, 1] to state [0, 0, 1], action = warning, rewards = 90
+2020-09-14 00:35:22,545 Δ = -3.087547960618167
+2020-09-14 00:35:24,603 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:35:24,603 Δ = -0.2985092402574665
+2020-09-14 00:35:26,661 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:35:26,661 Δ = -0.009757563517785672
+2020-09-14 00:35:28,721 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:35:28,721 Δ = -0.7099668140592372
+2020-09-14 00:35:30,773 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:35:30,773 Δ = -0.05314051268646924
+2020-09-14 00:35:32,836 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:35:32,836 Δ = -0.043940484759716014
+2020-09-14 00:35:34,887 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:35:34,888 Δ = 5.463655334376416
+2020-09-14 00:35:36,928 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:35:36,928 Δ = 9.955941272057252
+2020-09-14 00:35:38,975 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:35:38,975 Δ = 26.95888924438826
+2020-09-14 00:35:41,024 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:35:41,024 Δ = 10.228377098602081
+2020-09-14 00:35:43,069 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:35:43,070 Δ = -19.233856654070628
+2020-09-14 00:35:43,376 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:35:43,376 Δ = -15.49063038311721
+2020-09-14 00:35:45,426 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:35:45,426 Δ = -0.006158941629900605
+2020-09-14 00:35:47,490 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:35:47,490 Δ = -0.00612814692175101
+2020-09-14 00:35:49,537 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:35:49,538 Δ = -0.3968949564896551
+2020-09-14 00:35:51,585 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:35:51,586 Δ = 3.7029759433173943
+2020-09-14 00:35:53,636 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:35:53,636 Δ = -1.161532620567204
+2020-09-14 00:35:55,676 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:35:55,676 Δ = -0.007843442786469979
+2020-09-14 00:35:57,718 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:35:57,718 Δ = 16.547176959794456
+2020-09-14 00:35:59,766 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:35:59,766 Δ = 28.15941961303747
+2020-09-14 00:36:01,810 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:36:01,810 Δ = 9.532342213989637
+2020-09-14 00:36:03,860 Going from state [7, 0, 1] to state [4, 0, 1], action = warning, rewards = 30
+2020-09-14 00:36:03,860 Δ = -31.541832668105656
+2020-09-14 00:36:04,166 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:36:04,166 Δ = -7.718231521118099
+2020-09-14 00:36:06,213 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:36:06,213 Δ = -0.004113031404694045
+2020-09-14 00:36:08,259 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:36:08,259 Δ = -0.0040924662476705675
+2020-09-14 00:36:10,304 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:36:10,304 Δ = 1.6386283625234654
+2020-09-14 00:36:12,346 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:36:12,346 Δ = 1.2765293244779308
+2020-09-14 00:36:14,391 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:36:14,391 Δ = -4.15731890036942
+2020-09-14 00:36:16,431 Going from state [4, 0, 1] to state [6, 0, 1], action = warning, rewards = -40
+2020-09-14 00:36:16,431 Δ = -4.047377681103285
+2020-09-14 00:36:18,470 Going from state [6, 0, 1] to state [6, 0, 1], action = warning, rewards = -20
+2020-09-14 00:36:18,470 Δ = -10.307770568550986
+2020-09-14 00:36:20,513 Going from state [6, 0, 1] to state [5, 0, 1], action = warning, rewards = 10
+2020-09-14 00:36:20,513 Δ = 10.689180933064645
+2020-09-14 00:36:20,818 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:36:20,818 Δ = -15.414389465640081
+2020-09-14 00:36:22,872 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:36:22,872 Δ = -0.012265145729049465
+2020-09-14 00:36:24,902 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:36:24,902 Δ = -0.012203820000404209
+2020-09-14 00:36:26,943 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:36:26,943 Δ = 1.4634306797430354
+2020-09-14 00:36:29,001 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:36:29,001 Δ = -1.4196081934438975
+2020-09-14 00:36:31,039 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:36:31,039 Δ = -2.3265139672316497
+2020-09-14 00:36:33,081 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:36:33,081 Δ = 4.415923848772227
+2020-09-14 00:36:35,129 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:36:35,129 Δ = 14.30648875045852
+2020-09-14 00:36:37,174 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:36:37,174 Δ = 34.56913553649643
+2020-09-14 00:36:39,216 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:36:39,217 Δ = -23.41688455719001
+2020-09-14 00:36:41,265 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 00:36:41,265 Δ = -5.783731240757589
+2020-09-14 00:36:41,578 Going from state [3, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:36:41,579 Δ = -0.2868997945433449
+2020-09-14 00:36:43,622 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:36:43,622 Δ = 0.8112820672231109
+2020-09-14 00:36:45,671 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:36:45,671 Δ = -0.0194599542991174
+2020-09-14 00:36:47,711 Going from state [1, 0, 1] to state [4, 0, 1], action = no warning, rewards = -30
+2020-09-14 00:36:47,711 Δ = -0.6267403366924127
+2020-09-14 00:36:49,753 Going from state [4, 0, 1] to state [4, 0, 1], action = warning, rewards = -20
+2020-09-14 00:36:49,753 Δ = -6.1834500110295565
+2020-09-14 00:36:51,794 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:36:51,794 Δ = 9.289673855863082
+2020-09-14 00:36:53,837 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:36:53,837 Δ = -8.279551082418266
+2020-09-14 00:36:55,872 Going from state [6, 0, 1] to state [7, 0, 1], action = warning, rewards = -30
+2020-09-14 00:36:55,873 Δ = 22.263758584043487
+2020-09-14 00:36:57,925 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 00:36:57,925 Δ = -10.659996515161822
+2020-09-14 00:36:59,974 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:36:59,975 Δ = -24.004089394525195
+2020-09-14 00:37:00,287 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:37:00,287 Δ = -10.32824666244425
+2020-09-14 00:37:02,329 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:37:02,329 Δ = -0.016228952844159705
+2020-09-14 00:37:04,383 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:37:04,383 Δ = -0.016147808079939097
+2020-09-14 00:37:06,432 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:37:06,432 Δ = 0.3682978100746026
+2020-09-14 00:37:08,477 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:37:08,478 Δ = -0.07045459307099566
+2020-09-14 00:37:10,507 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:37:10,507 Δ = 3.897681664157968
+2020-09-14 00:37:12,552 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:37:12,552 Δ = -4.566022955775406
+2020-09-14 00:37:14,614 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:37:14,615 Δ = 16.410142812931177
+2020-09-14 00:37:16,659 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:37:16,659 Δ = 23.02525286728268
+2020-09-14 00:37:18,694 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:37:18,694 Δ = 12.211905949453083
+2020-09-14 00:37:20,724 Going from state [7, 0, 1] to state [4, 0, 1], action = warning, rewards = 30
+2020-09-14 00:37:20,724 Δ = -26.532502683366673
+2020-09-14 00:37:21,033 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:37:21,033 Δ = -7.063145993152389
+2020-09-14 00:37:23,084 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:37:23,085 Δ = -0.01790855808991232
+2020-09-14 00:37:25,142 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:37:25,142 Δ = -0.017819015299462837
+2020-09-14 00:37:27,190 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:37:27,190 Δ = 2.0964900919200407
+2020-09-14 00:37:29,236 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:37:29,236 Δ = -3.9170574443440564
+2020-09-14 00:37:31,286 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:37:31,286 Δ = 0.008025147731064664
+2020-09-14 00:37:33,342 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:37:33,342 Δ = 9.371582211089425
+2020-09-14 00:37:35,390 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:37:35,390 Δ = 6.468982747504004
+2020-09-14 00:37:37,438 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:37:37,438 Δ = 30.82377122030396
+2020-09-14 00:37:39,484 Going from state [8, 0, 1] to state [8, 0, 1], action = warning, rewards = 0
+2020-09-14 00:37:39,484 Δ = -0.7347247967030341
+2020-09-14 00:37:39,796 Going from state [8, 0, 1] to state [0, 0, 1], action = warning, rewards = 130
+2020-09-14 00:37:39,796 Δ = -8.105117271951983
+2020-09-14 00:37:41,830 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:37:41,830 Δ = 1.272130255572927
+2020-09-14 00:37:43,865 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:37:43,865 Δ = -0.028212370682565435
+2020-09-14 00:37:45,913 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:37:45,913 Δ = -0.8765922036490057
+2020-09-14 00:37:47,969 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:37:47,969 Δ = -1.9545562740451512
+2020-09-14 00:37:50,021 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:37:50,021 Δ = 4.642945768354798
+2020-09-14 00:37:52,070 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:37:52,070 Δ = 7.887937565559195
+2020-09-14 00:37:54,118 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:37:54,119 Δ = 18.492258127802458
+2020-09-14 00:37:56,170 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:37:56,170 Δ = 11.036163786167762
+2020-09-14 00:37:58,205 Going from state [8, 0, 1] to state [8, 0, 1], action = warning, rewards = 0
+2020-09-14 00:37:58,206 Δ = -0.6905255863597546
+2020-09-14 00:38:00,255 Going from state [8, 0, 1] to state [5, 0, 1], action = warning, rewards = 60
+2020-09-14 00:38:00,255 Δ = 3.3246208490475055
+2020-09-14 00:38:00,564 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:38:00,564 Δ = -25.111335073632898
+2020-09-14 00:38:02,606 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:38:02,607 Δ = -0.023688347810908006
+2020-09-14 00:38:04,645 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:38:04,645 Δ = -0.023569906071853275
+2020-09-14 00:38:06,685 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:38:06,685 Δ = -1.3821723305354716
+2020-09-14 00:38:08,726 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:38:08,727 Δ = 1.3209800183130485
+2020-09-14 00:38:12,027 Going from state [3, 0, 1] to state [5, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:38:12,027 Δ = 7.13287047508075
+2020-09-14 00:38:14,064 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:38:14,064 Δ = 3.914883981812146
+2020-09-14 00:38:16,105 Going from state [6, 0, 1] to state [8, 0, 1], action = no warning, rewards = -50
+2020-09-14 00:38:16,106 Δ = 32.16591020464668
+2020-09-14 00:38:18,148 Going from state [8, 0, 1] to state [9, 0, 1], action = warning, rewards = -10
+2020-09-14 00:38:18,148 Δ = -17.246137554136517
+2020-09-14 00:38:20,182 Going from state [9, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:38:20,182 Δ = 7.418497657588141
+2020-09-14 00:38:22,239 Going from state [8, 0, 1] to state [5, 0, 1], action = warning, rewards = 60
+2020-09-14 00:38:22,240 Δ = -0.20686408885926255
+2020-09-14 00:38:22,545 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:38:22,545 Δ = -15.220677667009546
+2020-09-14 00:38:24,593 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:38:24,593 Δ = -0.016541194888816557
+2020-09-14 00:38:26,641 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:38:26,641 Δ = 4.229167995489176
+2020-09-14 00:38:28,688 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:38:28,689 Δ = 2.6595667415888258
+2020-09-14 00:38:30,741 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:38:30,741 Δ = -0.239342801358017
+2020-09-14 00:38:32,785 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:38:32,785 Δ = -4.809170778900171
+2020-09-14 00:38:34,825 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:38:34,825 Δ = 9.567780824410846
+2020-09-14 00:38:36,866 Going from state [6, 0, 1] to state [7, 0, 1], action = warning, rewards = -30
+2020-09-14 00:38:36,866 Δ = 12.957735935968593
+2020-09-14 00:38:37,176 Going from state [7, 0, 1] to state [0, 0, 1], action = no warning, rewards = 60
+2020-09-14 00:38:37,176 Δ = 30.0
+2020-09-14 00:38:39,211 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:38:39,212 Δ = 1.565868990502488
+2020-09-14 00:38:41,264 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:38:41,264 Δ = -0.03760432889181864
+2020-09-14 00:38:43,326 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:38:43,326 Δ = -2.1247122920570467
+2020-09-14 00:38:45,371 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:38:45,371 Δ = 5.507746431407963
+2020-09-14 00:38:47,425 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:38:47,425 Δ = -1.1692308514333902
+2020-09-14 00:38:49,463 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:38:49,463 Δ = 2.33146611863328
+2020-09-14 00:38:51,503 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:38:51,503 Δ = 28.133704105264002
+2020-09-14 00:38:53,550 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:38:53,550 Δ = -1.8172767651686001
+2020-09-14 00:38:55,588 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:38:55,588 Δ = 24.62285420038659
+2020-09-14 00:38:57,650 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:38:57,650 Δ = -14.267639777536381
+2020-09-14 00:38:57,958 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:38:57,959 Δ = -25.446177759414706
+2020-09-14 00:39:00,007 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:39:00,007 Δ = -0.026792745787074246
+2020-09-14 00:39:02,037 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:39:02,038 Δ = -0.02665878205813854
+2020-09-14 00:39:04,088 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:39:04,088 Δ = 1.6907041014410247
+2020-09-14 00:39:06,137 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:39:06,137 Δ = 2.1751039442444533
+2020-09-14 00:39:08,193 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:39:08,193 Δ = 0.5694603030067782
+2020-09-14 00:39:10,229 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:39:10,229 Δ = 2.4960586005120398
+2020-09-14 00:39:12,277 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:39:12,278 Δ = 18.827907243700402
+2020-09-14 00:39:14,319 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:39:14,319 Δ = 18.413494335375248
+2020-09-14 00:39:16,370 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:39:16,371 Δ = -3.7247553058023755
+2020-09-14 00:39:18,421 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 00:39:18,422 Δ = -13.792027674441016
+2020-09-14 00:39:18,733 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:39:18,734 Δ = -8.602346832585825
+2020-09-14 00:39:20,779 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:39:20,779 Δ = -0.03497900865505299
+2020-09-14 00:39:22,822 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:39:22,822 Δ = -0.03480411361177804
+2020-09-14 00:39:24,889 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:39:24,889 Δ = 1.956920064254931
+2020-09-14 00:39:26,942 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:39:26,942 Δ = -2.888726860019398
+2020-09-14 00:39:29,000 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:39:29,000 Δ = 5.821452575049758
+2020-09-14 00:39:31,040 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:39:31,040 Δ = 10.567843385887727
+2020-09-14 00:39:33,092 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:39:33,092 Δ = 18.528633317860937
+2020-09-14 00:39:35,136 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:39:35,137 Δ = 7.362993291315448
+2020-09-14 00:39:37,186 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:39:37,187 Δ = 19.87068443842587
+2020-09-14 00:39:39,226 Going from state [7, 0, 1] to state [4, 0, 1], action = warning, rewards = 30
+2020-09-14 00:39:39,226 Δ = -28.87310637431787
+2020-09-14 00:39:39,535 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:39:39,535 Δ = -14.710652755054879
+2020-09-14 00:39:41,581 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:39:41,581 Δ = -0.044414693364993596
+2020-09-14 00:39:43,624 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:39:43,624 Δ = -0.04419261989816903
+2020-09-14 00:39:45,677 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:39:45,677 Δ = -0.4071561069505547
+2020-09-14 00:39:47,721 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:39:47,721 Δ = 1.4372555946399288
+2020-09-14 00:39:49,761 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:39:49,762 Δ = 0.8600356497871378
+2020-09-14 00:39:51,800 Going from state [4, 0, 1] to state [5, 0, 1], action = warning, rewards = -30
+2020-09-14 00:39:51,800 Δ = 24.162052461889726
+2020-09-14 00:39:53,843 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:39:53,844 Δ = -1.3831893171557326
+2020-09-14 00:39:55,887 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:39:55,887 Δ = 27.954038629837484
+2020-09-14 00:39:57,931 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:39:57,932 Δ = 9.480403685695137
+2020-09-14 00:39:58,238 Going from state [7, 0, 1] to state [0, 0, 1], action = warning, rewards = 90
+2020-09-14 00:39:58,238 Δ = -27.230202826285023
+2020-09-14 00:40:00,294 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:00,294 Δ = 1.2117576850898026
+2020-09-14 00:40:02,336 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:40:02,336 Δ = -0.04193587626392503
+2020-09-14 00:40:04,388 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:40:04,388 Δ = 1.7711713034454633
+2020-09-14 00:40:06,430 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:06,430 Δ = 0.430017824893568
+2020-09-14 00:40:08,477 Going from state [4, 0, 1] to state [4, 0, 1], action = warning, rewards = -20
+2020-09-14 00:40:08,477 Δ = -9.94741914207422
+2020-09-14 00:40:10,529 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:10,529 Δ = 21.126242850820375
+2020-09-14 00:40:12,578 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:12,579 Δ = -14.95952279346588
+2020-09-14 00:40:14,626 Going from state [6, 0, 1] to state [7, 0, 1], action = warning, rewards = -30
+2020-09-14 00:40:14,626 Δ = 4.238320559248855
+2020-09-14 00:40:16,671 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:40:16,671 Δ = -8.14144132442594
+2020-09-14 00:40:16,981 Going from state [5, 0, 1] to state [0, 0, 1], action = no warning, rewards = 40
+2020-09-14 00:40:16,981 Δ = -20.882484938097548
+2020-09-14 00:40:19,032 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:19,032 Δ = 1.4618503789997634
+2020-09-14 00:40:21,070 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:40:21,070 Δ = -0.05058205339983246
+2020-09-14 00:40:23,113 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:23,113 Δ = -0.33146322101936576
+2020-09-14 00:40:25,163 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:25,163 Δ = 1.3572042672869138
+2020-09-14 00:40:27,226 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:27,226 Δ = 10.672499123602869
+2020-09-14 00:40:29,268 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:29,268 Δ = -7.178672401713708
+2020-09-14 00:40:31,348 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:40:31,348 Δ = 13.557694474371473
+2020-09-14 00:40:33,414 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:40:33,414 Δ = 36.355641214693314
+2020-09-14 00:40:35,458 Going from state [8, 0, 1] to state [8, 0, 1], action = warning, rewards = 0
+2020-09-14 00:40:35,458 Δ = -0.8676769895517538
+2020-09-14 00:40:37,511 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:40:37,511 Δ = -20.833168242205943
+2020-09-14 00:40:39,041 Going from state [6, 0, 1] to state [2, 0, 1], action = warning, rewards = 60
+2020-09-14 00:40:39,042 Δ = -0.5365229148156416
+2020-09-14 00:40:41,083 Going from state [2, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:40:41,084 Δ = -0.4780476813848633
+2020-09-14 00:40:43,132 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:43,132 Δ = 0.5418127786623784
+2020-09-14 00:40:45,168 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:40:45,169 Δ = -0.04867182702773665
+2020-09-14 00:40:47,217 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:47,217 Δ = 0.29378681302570087
+2020-09-14 00:40:49,258 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:40:49,258 Δ = 6.200513040519308
+2020-09-14 00:40:51,301 Going from state [3, 0, 1] to state [5, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:40:51,301 Δ = 5.191790949362328
+2020-09-14 00:40:53,352 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:40:53,352 Δ = 24.774889638458923
+2020-09-14 00:40:55,403 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 00:40:55,403 Δ = -10.727222013582761
+2020-09-14 00:40:57,440 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:40:57,440 Δ = -8.247131171275484
+2020-09-14 00:40:57,746 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:40:57,746 Δ = -29.667691731649043
+2020-09-14 00:40:59,803 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:40:59,804 Δ = -0.049897401957726295
+2020-09-14 00:41:01,854 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:41:01,854 Δ = -0.04964791494793808
+2020-09-14 00:41:04,075 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:41:04,076 Δ = 3.2659200200227394
+2020-09-14 00:41:06,124 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:41:06,124 Δ = 5.670193040194009
+2020-09-14 00:41:08,153 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:41:08,153 Δ = -0.8130887517280172
+2020-09-14 00:41:10,204 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:41:10,205 Δ = 0.6997855278279204
+2020-09-14 00:41:12,249 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:41:12,249 Δ = 17.828985858549153
+2020-09-14 00:41:14,301 Going from state [7, 0, 1] to state [9, 0, 1], action = no warning, rewards = -50
+2020-09-14 00:41:14,301 Δ = 21.79562505368949
+2020-09-14 00:41:16,358 Going from state [9, 0, 1] to state [10, 0, 1], action = warning, rewards = -10
+2020-09-14 00:41:16,358 Δ = -16.324241962233103
+2020-09-14 00:41:18,398 Going from state [10, 0, 1] to state [10, 0, 1], action = warning, rewards = 0
+2020-09-14 00:41:18,398 Δ = -0.5161169830739567
+2020-09-14 00:41:20,448 Going from state [10, 0, 1] to state [7, 0, 1], action = warning, rewards = 60
+2020-09-14 00:41:20,448 Δ = 41.24903470232969
+2020-09-14 00:41:21,963 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:41:21,964 Δ = -22.18098331705615
+2020-09-14 00:41:24,022 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:41:24,022 Δ = -0.06572927547331187
+2020-09-14 00:41:26,073 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:41:26,073 Δ = -0.06540062909594546
+2020-09-14 00:41:28,128 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:41:28,128 Δ = 4.5052705171920335
+2020-09-14 00:41:30,175 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:41:30,175 Δ = -0.16174376881049213
+2020-09-14 00:41:32,222 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:41:32,222 Δ = 2.691793422393964
+2020-09-14 00:41:34,290 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:41:34,290 Δ = -1.8043459780469995
+2020-09-14 00:41:36,364 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:41:36,364 Δ = 20.004984587802646
+2020-09-14 00:41:38,444 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:41:38,444 Δ = 16.923078810055735
+2020-09-14 00:41:40,481 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:41:40,481 Δ = 15.062322189870429
+2020-09-14 00:41:42,524 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:41:42,524 Δ = -19.522383768830544
+2020-09-14 00:41:42,830 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:41:42,830 Δ = -18.927784349181124
+2020-09-14 00:41:44,879 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:41:44,879 Δ = 4.846996615398142
+2020-09-14 00:41:46,909 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:41:46,910 Δ = -0.9533017987224532
+2020-09-14 00:41:48,944 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:41:48,945 Δ = -0.281738860201056
+2020-09-14 00:41:50,976 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:41:50,976 Δ = -0.22808944080532
+2020-09-14 00:41:53,025 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:41:53,026 Δ = 2.0988233256623303
+2020-09-14 00:41:55,073 Going from state [6, 0, 1] to state [7, 0, 1], action = warning, rewards = -30
+2020-09-14 00:41:55,073 Δ = 5.674489901616248
+2020-09-14 00:41:57,128 Going from state [7, 0, 1] to state [6, 0, 1], action = warning, rewards = 10
+2020-09-14 00:41:57,128 Δ = -13.891386409800589
+2020-09-14 00:41:59,175 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 00:41:59,175 Δ = -5.343663534113858
+2020-09-14 00:41:59,480 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:41:59,480 Δ = -7.297136859537531
+2020-09-14 00:42:01,510 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:42:01,510 Δ = -0.11183496161341644
+2020-09-14 00:42:03,551 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:42:03,551 Δ = -0.11127578680534889
+2020-09-14 00:42:05,581 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:42:05,581 Δ = 1.1930669036301467
+2020-09-14 00:42:07,642 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:42:07,642 Δ = -2.9163743746387922
+2020-09-14 00:42:09,673 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:42:09,674 Δ = 2.919552521409379
+2020-09-14 00:42:11,708 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:42:11,708 Δ = 0.9248728258002004
+2020-09-14 00:42:13,764 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:42:13,764 Δ = 10.254080578215905
+2020-09-14 00:42:15,803 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:42:15,803 Δ = 32.624273978329285
+2020-09-14 00:42:17,853 Going from state [8, 0, 1] to state [8, 0, 1], action = warning, rewards = 0
+2020-09-14 00:42:17,853 Δ = -0.8344843743423098
+2020-09-14 00:42:19,907 Going from state [8, 0, 1] to state [5, 0, 1], action = warning, rewards = 60
+2020-09-14 00:42:19,908 Δ = -14.111580665440343
+2020-09-14 00:42:20,223 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:42:20,223 Δ = -12.76095250507797
+2020-09-14 00:42:22,270 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:42:22,270 Δ = -0.11668474238947368
+2020-09-14 00:42:24,317 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:42:24,318 Δ = -0.11610131867752571
+2020-09-14 00:42:26,352 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:42:26,352 Δ = -0.7306788330976275
+2020-09-14 00:42:28,392 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:42:28,392 Δ = -0.1598121452052137
+2020-09-14 00:42:30,442 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:42:30,442 Δ = 2.196285751758662
+2020-09-14 00:42:32,473 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:42:32,473 Δ = -0.7784651908966218
+2020-09-14 00:42:34,536 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:42:34,536 Δ = 27.656532160919937
+2020-09-14 00:42:36,592 Going from state [7, 0, 1] to state [9, 0, 1], action = warning, rewards = 0
+2020-09-14 00:42:36,592 Δ = -17.586690788339922
+2020-09-14 00:42:38,655 Going from state [9, 0, 1] to state [10, 0, 1], action = warning, rewards = -10
+2020-09-14 00:42:38,655 Δ = 12.000673289915035
+2020-09-14 00:42:40,708 Going from state [10, 0, 1] to state [9, 0, 1], action = warning, rewards = 10
+2020-09-14 00:42:40,708 Δ = -7.322698606131723
+2020-09-14 00:42:42,767 Going from state [9, 0, 1] to state [6, 0, 1], action = warning, rewards = 60
+2020-09-14 00:42:42,767 Δ = 10.140833476876722
+2020-09-14 00:42:44,301 Going from state [6, 0, 1] to state [2, 0, 1], action = warning, rewards = 60
+2020-09-14 00:42:44,302 Δ = 6.022514964830137
+2020-09-14 00:42:46,341 Going from state [2, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:42:46,342 Δ = -6.999451323798155
+2020-09-14 00:42:48,393 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:42:48,393 Δ = 6.52726988753163
+2020-09-14 00:42:50,444 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:42:50,444 Δ = -2.8220133865849437
+2020-09-14 00:42:52,497 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:42:52,497 Δ = -0.1349972566189912
+2020-09-14 00:42:54,564 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:42:54,565 Δ = 4.280026896594075
+2020-09-14 00:42:56,614 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:42:56,614 Δ = 13.300750824207057
+2020-09-14 00:42:58,655 Going from state [5, 0, 1] to state [6, 0, 1], action = warning, rewards = -30
+2020-09-14 00:42:58,655 Δ = 13.625397317389515
+2020-09-14 00:43:00,698 Going from state [6, 0, 1] to state [4, 0, 1], action = warning, rewards = 20
+2020-09-14 00:43:00,699 Δ = 0.477926260021043
+2020-09-14 00:43:01,006 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:43:01,006 Δ = -14.964573351570898
+2020-09-14 00:43:03,057 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:43:03,058 Δ = -0.09775735098572547
+2020-09-14 00:43:05,101 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:43:05,101 Δ = -0.09726856423079688
+2020-09-14 00:43:07,150 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:43:07,150 Δ = 0.7382959361034569
+2020-09-14 00:43:09,201 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:43:09,202 Δ = 0.39596534941305706
+2020-09-14 00:43:11,242 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:43:11,242 Δ = 0.7086558889368604
+2020-09-14 00:43:13,295 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:43:13,295 Δ = 14.132662087888978
+2020-09-14 00:43:15,353 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:43:15,353 Δ = 5.122854140231702
+2020-09-14 00:43:17,403 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:43:17,403 Δ = 17.707180188642198
+2020-09-14 00:43:19,455 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:43:19,455 Δ = -7.3588140807655975
+2020-09-14 00:43:19,767 Going from state [6, 0, 1] to state [1, 0, 1], action = warning, rewards = 70
+2020-09-14 00:43:19,767 Δ = 0.8897339497702319
+2020-09-14 00:43:21,804 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:43:21,804 Δ = -0.10047370109016107
+2020-09-14 00:43:23,850 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:43:23,850 Δ = 1.3218572378524769
+2020-09-14 00:43:25,909 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:43:25,909 Δ = 7.349995677973478
+2020-09-14 00:43:27,967 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:43:27,967 Δ = 9.60214384335918
+2020-09-14 00:43:30,011 Going from state [5, 0, 1] to state [5, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:43:30,012 Δ = -0.49321958899673035
+2020-09-14 00:43:32,052 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:43:32,052 Δ = 11.573091057992102
+2020-09-14 00:43:34,093 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 00:43:34,094 Δ = -10.713620607708748
+2020-09-14 00:43:36,146 Going from state [7, 0, 1] to state [6, 0, 1], action = warning, rewards = 10
+2020-09-14 00:43:36,147 Δ = -16.948241328310445
+2020-09-14 00:43:38,197 Going from state [6, 0, 1] to state [4, 0, 1], action = warning, rewards = 20
+2020-09-14 00:43:38,197 Δ = 4.135361282065652
+2020-09-14 00:43:38,504 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:43:38,504 Δ = -18.47618613037315
+2020-09-14 00:43:40,551 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:43:40,551 Δ = -0.10658061877397174
+2020-09-14 00:43:42,602 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:43:42,602 Δ = -0.10604771568010207
+2020-09-14 00:43:44,653 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:43:44,653 Δ = 0.0607732148570701
+2020-09-14 00:43:46,689 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:43:46,689 Δ = 4.187015200327144
+2020-09-14 00:43:48,740 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:43:48,740 Δ = -0.7176530930851719
+2020-09-14 00:43:50,777 Going from state [4, 0, 1] to state [6, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:43:50,778 Δ = 6.314438649523048
+2020-09-14 00:43:52,829 Going from state [6, 0, 1] to state [6, 0, 1], action = warning, rewards = -20
+2020-09-14 00:43:52,829 Δ = -10.465697100740734
+2020-09-14 00:43:54,879 Going from state [6, 0, 1] to state [5, 0, 1], action = warning, rewards = 10
+2020-09-14 00:43:54,879 Δ = 17.97641416412545
+2020-09-14 00:43:55,194 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:43:55,194 Δ = -29.385581659747665
+2020-09-14 00:43:57,238 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:43:57,239 Δ = -0.10582134317598779
+2020-09-14 00:43:59,284 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:43:59,285 Δ = -0.10529223646010699
+2020-09-14 00:44:01,324 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:44:01,325 Δ = 2.2085159214085195
+2020-09-14 00:44:03,370 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:44:03,370 Δ = 1.7382693190864131
+2020-09-14 00:44:05,405 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:44:05,405 Δ = 2.7668205849713274
+2020-09-14 00:44:07,457 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:44:07,457 Δ = 1.8206191176822486
+2020-09-14 00:44:09,500 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:44:09,500 Δ = 6.786714700540379
+2020-09-14 00:44:11,541 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:44:11,541 Δ = 19.041908092351733
+2020-09-14 00:44:13,584 Going from state [8, 0, 1] to state [8, 0, 1], action = warning, rewards = 0
+2020-09-14 00:44:13,585 Δ = -0.7229599787395671
+2020-09-14 00:44:15,633 Going from state [8, 0, 1] to state [5, 0, 1], action = warning, rewards = 60
+2020-09-14 00:44:15,633 Δ = 1.192318658433976
+2020-09-14 00:44:15,943 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:44:15,943 Δ = -17.097434020966674
+2020-09-14 00:44:17,986 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:44:17,987 Δ = -0.11580835488484986
+2020-09-14 00:44:20,047 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:44:20,048 Δ = -0.11522931311042406
+2020-09-14 00:44:22,094 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:44:22,094 Δ = 2.0802201076496694
+2020-09-14 00:44:24,136 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:44:24,136 Δ = -0.18732865416300015
+2020-09-14 00:44:26,183 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:44:26,183 Δ = 4.879331086119883
+2020-09-14 00:44:28,223 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:44:28,223 Δ = -4.1934965047698896
+2020-09-14 00:44:30,278 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:44:30,279 Δ = 21.367818866467623
+2020-09-14 00:44:33,575 Going from state [7, 0, 1] to state [9, 0, 1], action = warning, rewards = 0
+2020-09-14 00:44:33,575 Δ = -2.3769127170953936
+2020-09-14 00:44:35,633 Going from state [9, 0, 1] to state [9, 0, 1], action = warning, rewards = 0
+2020-09-14 00:44:35,633 Δ = -0.6532845568883374
+2020-09-14 00:44:37,675 Going from state [9, 0, 1] to state [7, 0, 1], action = warning, rewards = 50
+2020-09-14 00:44:37,676 Δ = 25.203177805198592
+2020-09-14 00:44:39,729 Going from state [7, 0, 1] to state [3, 0, 1], action = warning, rewards = 40
+2020-09-14 00:44:39,729 Δ = -19.892051225089787
+2020-09-14 00:44:40,041 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:44:40,041 Δ = -8.853542978370967
+2020-09-14 00:44:42,073 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:44:42,073 Δ = -0.1250542670831205
+2020-09-14 00:44:44,120 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:44:44,120 Δ = -0.12442899574770472
+2020-09-14 00:44:46,168 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:44:46,168 Δ = 3.4873928890589028
+2020-09-14 00:44:48,209 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:44:48,209 Δ = -0.21078866632278448
+2020-09-14 00:44:50,262 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:44:50,262 Δ = 0.4692791063602435
+2020-09-14 00:44:52,308 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:44:52,308 Δ = 8.480322086516534
+2020-09-14 00:44:54,351 Going from state [5, 0, 1] to state [6, 0, 1], action = warning, rewards = -30
+2020-09-14 00:44:54,352 Δ = 13.254499243539378
+2020-09-14 00:44:56,392 Going from state [6, 0, 1] to state [5, 0, 1], action = warning, rewards = 10
+2020-09-14 00:44:56,392 Δ = -0.08439156422191019
+2020-09-14 00:44:56,695 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:44:56,695 Δ = -16.714515871105327
+2020-09-14 00:44:58,741 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:44:58,741 Δ = -0.14124381521426166
+2020-09-14 00:45:00,789 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:45:00,789 Δ = -2.464687122708689
+2020-09-14 00:45:02,843 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:45:02,843 Δ = 8.833366907888447
+2020-09-14 00:45:04,899 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:45:04,899 Δ = -4.033524312938873
+2020-09-14 00:45:06,960 Going from state [5, 0, 1] to state [5, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:45:06,960 Δ = -0.373403956417647
+2020-09-14 00:45:09,003 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:45:09,003 Δ = 8.204732195613637
+2020-09-14 00:45:11,033 Going from state [7, 0, 1] to state [8, 0, 1], action = no warning, rewards = -40
+2020-09-14 00:45:11,034 Δ = 25.907557914821282
+2020-09-14 00:45:13,074 Going from state [8, 0, 1] to state [9, 0, 1], action = warning, rewards = -10
+2020-09-14 00:45:13,074 Δ = -0.7033089239444763
+2020-09-14 00:45:15,111 Going from state [9, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:45:15,111 Δ = -1.1461697886759623
+2020-09-14 00:45:17,165 Going from state [8, 0, 1] to state [4, 0, 1], action = warning, rewards = 70
+2020-09-14 00:45:17,165 Δ = -3.5351064484336803
+2020-09-14 00:45:17,473 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:45:17,473 Δ = -11.290551949876313
+2020-09-14 00:45:19,525 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:45:19,525 Δ = -0.12821416052464585
+2020-09-14 00:45:21,560 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:45:21,560 Δ = -0.12757308972202352
+2020-09-14 00:45:23,591 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:45:23,591 Δ = 3.3025083064328022
+2020-09-14 00:45:25,628 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:45:25,628 Δ = -0.24652274178200173
+2020-09-14 00:45:27,674 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:45:27,674 Δ = -3.168734296149296
+2020-09-14 00:45:29,725 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:45:29,726 Δ = 7.50502129687073
+2020-09-14 00:45:31,777 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:45:31,777 Δ = 4.102366097806822
+2020-09-14 00:45:33,843 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:45:33,843 Δ = 18.789752954390018
+2020-09-14 00:45:35,887 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:45:35,887 Δ = 14.247884043977407
+2020-09-14 00:45:37,942 Going from state [7, 0, 1] to state [4, 0, 1], action = warning, rewards = 30
+2020-09-14 00:45:37,942 Δ = -18.542399724983447
+2020-09-14 00:45:38,254 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:45:38,254 Δ = -7.889659700561381
+2020-09-14 00:45:40,321 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:45:40,321 Δ = -0.14344776580557728
+2020-09-14 00:45:42,367 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:45:42,367 Δ = -0.14273052697654975
+2020-09-14 00:45:44,435 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:45:44,435 Δ = 1.6723145424253758
+2020-09-14 00:45:46,499 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:45:46,499 Δ = -1.6917848474849038
+2020-09-14 00:45:48,571 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:45:48,571 Δ = -1.7747631579015248
+2020-09-14 00:45:50,632 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:45:50,632 Δ = 9.728011717130435
+2020-09-14 00:45:52,687 Going from state [5, 0, 1] to state [6, 0, 1], action = warning, rewards = -30
+2020-09-14 00:45:52,687 Δ = 6.585475797479848
+2020-09-14 00:45:54,736 Going from state [6, 0, 1] to state [4, 0, 1], action = warning, rewards = 20
+2020-09-14 00:45:54,736 Δ = -7.602809945292911
+2020-09-14 00:45:55,046 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:45:55,046 Δ = -8.122698265272497
+2020-09-14 00:45:57,096 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:45:57,097 Δ = -0.150378447053793
+2020-09-14 00:45:59,147 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:45:59,148 Δ = -0.14962655481852494
+2020-09-14 00:46:01,202 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:46:01,202 Δ = 0.14872627264381855
+2020-09-14 00:46:03,263 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:46:03,263 Δ = -0.2023895805766358
+2020-09-14 00:46:05,322 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:46:05,322 Δ = -1.4784360303231416
+2020-09-14 00:46:07,367 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:46:07,367 Δ = 8.92535499120147
+2020-09-14 00:46:09,409 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:46:09,409 Δ = 2.1736228974596585
+2020-09-14 00:46:11,450 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:46:11,450 Δ = 25.718778941455554
+2020-09-14 00:46:13,498 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:46:13,499 Δ = 10.676249734142374
+2020-09-14 00:46:15,539 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:46:15,540 Δ = -14.950554246974079
+2020-09-14 00:46:15,851 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:46:15,852 Δ = -14.581470971638321
+2020-09-14 00:46:17,886 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:46:17,886 Δ = -0.14962205340765067
+2020-09-14 00:46:19,930 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:46:19,930 Δ = -0.14887394314061275
+2020-09-14 00:46:21,974 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:46:21,974 Δ = -0.6083975427993522
+2020-09-14 00:46:24,025 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:46:24,025 Δ = -0.8839873814538173
+2020-09-14 00:46:26,054 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:46:26,054 Δ = 4.325299300363643
+2020-09-14 00:46:28,100 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:46:28,100 Δ = -1.6792073011176996
+2020-09-14 00:46:30,145 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:46:30,145 Δ = 13.707818158317316
+2020-09-14 00:46:32,198 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 00:46:32,198 Δ = -10.61425390839893
+2020-09-14 00:46:34,239 Going from state [7, 0, 1] to state [6, 0, 1], action = warning, rewards = 10
+2020-09-14 00:46:34,239 Δ = -5.101610713194937
+2020-09-14 00:46:36,078 Going from state [6, 0, 1] to state [2, 0, 1], action = warning, rewards = 60
+2020-09-14 00:46:36,078 Δ = 2.2855181948634424
+2020-09-14 00:46:38,131 Going from state [2, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:46:38,131 Δ = 0.4071194238935334
+2020-09-14 00:46:40,203 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:46:40,203 Δ = 1.1468224533486513
+2020-09-14 00:46:42,258 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:46:42,259 Δ = 1.331442036128557
+2020-09-14 00:46:44,314 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:46:44,314 Δ = -0.3257188923600367
+2020-09-14 00:46:46,367 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:46:46,367 Δ = 6.108625783988252
+2020-09-14 00:46:48,423 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:46:48,423 Δ = -1.8092431733794143
+2020-09-14 00:46:50,471 Going from state [6, 0, 1] to state [7, 0, 1], action = warning, rewards = -30
+2020-09-14 00:46:50,472 Δ = -9.5924430046353
+2020-09-14 00:46:52,511 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:46:52,511 Δ = -0.9453783261068125
+2020-09-14 00:46:52,819 Going from state [5, 0, 1] to state [0, 0, 1], action = no warning, rewards = 40
+2020-09-14 00:46:52,819 Δ = -20.269479229766798
+2020-09-14 00:46:54,871 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:46:54,871 Δ = 7.120108669607393
+2020-09-14 00:46:56,922 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:46:56,922 Δ = -0.15082169797765665
+2020-09-14 00:46:58,962 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:46:58,963 Δ = -1.0382487880775138
+2020-09-14 00:47:01,020 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:47:01,020 Δ = 2.1545335588899697
+2020-09-14 00:47:03,072 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:47:03,072 Δ = 3.5282599294202477
+2020-09-14 00:47:05,115 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:47:05,115 Δ = -7.874654697563258
+2020-09-14 00:47:07,156 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:47:07,156 Δ = 9.645955021619933
+2020-09-14 00:47:09,193 Going from state [7, 0, 1] to state [9, 0, 1], action = no warning, rewards = -50
+2020-09-14 00:47:09,193 Δ = 12.40842276020961
+2020-09-14 00:47:11,238 Going from state [9, 0, 1] to state [10, 0, 1], action = warning, rewards = -10
+2020-09-14 00:47:11,238 Δ = -14.396677633333184
+2020-09-14 00:47:13,299 Going from state [10, 0, 1] to state [9, 0, 1], action = warning, rewards = 10
+2020-09-14 00:47:13,299 Δ = 5.816850952007158
+2020-09-14 00:47:15,343 Going from state [9, 0, 1] to state [6, 0, 1], action = warning, rewards = 60
+2020-09-14 00:47:15,343 Δ = 2.5677467896764625
+2020-09-14 00:47:17,084 Going from state [6, 0, 1] to state [2, 0, 1], action = warning, rewards = 60
+2020-09-14 00:47:17,084 Δ = 7.206998826227206
+2020-09-14 00:47:19,124 Going from state [2, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:47:19,125 Δ = -3.9297972255441707
+2020-09-14 00:47:21,185 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:47:21,185 Δ = 2.9714644442063864
+2020-09-14 00:47:23,241 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:47:23,241 Δ = -0.14487634554738094
+2020-09-14 00:47:25,285 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:47:25,286 Δ = -1.325441736258897
+2020-09-14 00:47:27,328 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:47:27,329 Δ = 2.938275739599298
+2020-09-14 00:47:29,373 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:47:29,373 Δ = 0.8374203869202432
+2020-09-14 00:47:31,427 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:47:31,427 Δ = 4.822977510809963
+2020-09-14 00:47:33,482 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:47:33,482 Δ = 33.950031686465636
+2020-09-14 00:47:35,526 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:47:35,527 Δ = -11.90634660603105
+2020-09-14 00:47:37,575 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 00:47:37,575 Δ = -3.3703713618496067
+2020-09-14 00:47:37,885 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:47:37,885 Δ = -9.729628531592958
+2020-09-14 00:47:39,932 Going from state [1, 0, 1] to state [0, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:47:39,933 Δ = -0.9740197866183085
+2020-09-14 00:47:41,979 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:47:41,979 Δ = 0.2757849772330232
+2020-09-14 00:47:45,335 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:47:45,335 Δ = 1.2787355162813583
+2020-09-14 00:47:47,378 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:47:47,378 Δ = -1.4966499356580698
+2020-09-14 00:47:49,420 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:47:49,420 Δ = 3.1455132467383073
+2020-09-14 00:47:51,462 Going from state [4, 0, 1] to state [6, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:47:51,462 Δ = 2.354130460032003
+2020-09-14 00:47:53,505 Going from state [6, 0, 1] to state [7, 0, 1], action = warning, rewards = -30
+2020-09-14 00:47:53,506 Δ = 9.622768178871162
+2020-09-14 00:47:55,561 Going from state [7, 0, 1] to state [6, 0, 1], action = warning, rewards = 10
+2020-09-14 00:47:55,561 Δ = -16.007658974205803
+2020-09-14 00:47:57,612 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 00:47:57,613 Δ = -9.755706836363437
+2020-09-14 00:47:57,920 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:47:57,920 Δ = -6.2867366029824225
+2020-09-14 00:47:59,979 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:47:59,979 Δ = -0.1390483337866648
+2020-09-14 00:48:02,017 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:48:02,017 Δ = -0.13835309211773072
+2020-09-14 00:48:04,054 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:48:04,054 Δ = 0.03722675294213218
+2020-09-14 00:48:06,089 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:48:06,089 Δ = -2.30323052916987
+2020-09-14 00:48:08,132 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:48:08,132 Δ = 5.881419502576197
+2020-09-14 00:48:10,188 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:48:10,188 Δ = 1.6290188312950562
+2020-09-14 00:48:12,223 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:48:12,223 Δ = 11.292963247973582
+2020-09-14 00:48:14,263 Going from state [7, 0, 1] to state [9, 0, 1], action = no warning, rewards = -50
+2020-09-14 00:48:14,263 Δ = 0.34889061249472775
+2020-09-14 00:48:16,328 Going from state [9, 0, 1] to state [10, 0, 1], action = warning, rewards = -10
+2020-09-14 00:48:16,328 Δ = -5.6028709902612945
+2020-09-14 00:48:16,640 Going from state [10, 0, 1] to state [0, 0, 1], action = warning, rewards = 150
+2020-09-14 00:48:16,641 Δ = 11.689735950985451
+2020-09-14 00:48:18,709 Going from state [0, 0, 1] to state [3, 0, 1], action = no warning, rewards = -30
+2020-09-14 00:48:18,709 Δ = 1.6064459909785036
+2020-09-14 00:48:20,770 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:48:20,771 Δ = 3.7470740727791494
+2020-09-14 00:48:22,837 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:48:22,837 Δ = -0.33936300172160117
+2020-09-14 00:48:24,887 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:48:24,887 Δ = 6.574207724255253
+2020-09-14 00:48:26,947 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:48:26,947 Δ = 5.646481623986787
+2020-09-14 00:48:28,996 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 00:48:28,996 Δ = -10.620659557221728
+2020-09-14 00:48:31,039 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:48:31,039 Δ = 1.3802088558661723
+2020-09-14 00:48:31,352 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:48:31,352 Δ = -19.975156771193866
+2020-09-14 00:48:33,405 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:48:33,405 Δ = -0.13784746042185247
+2020-09-14 00:48:35,452 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:48:35,452 Δ = -0.13715822311974435
+2020-09-14 00:48:37,490 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:48:37,490 Δ = -0.9839828936972221
+2020-09-14 00:48:39,545 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:48:39,545 Δ = 3.6144890552159623
+2020-09-14 00:48:41,579 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:48:41,579 Δ = 4.959785174043734
+2020-09-14 00:48:43,621 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:48:43,621 Δ = -3.805590335739879
+2020-09-14 00:48:45,671 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:48:45,671 Δ = 8.236796100419333
+2020-09-14 00:48:47,720 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:48:47,720 Δ = 23.70542911102813
+2020-09-14 00:48:49,758 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:48:49,759 Δ = -7.687311762589744
+2020-09-14 00:48:51,810 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 00:48:51,810 Δ = -0.7685900557054737
+2020-09-14 00:48:52,117 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:48:52,118 Δ = -11.179593485040286
+2020-09-14 00:48:54,165 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:48:54,165 Δ = -0.131552517535658
+2020-09-14 00:48:56,209 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:48:56,209 Δ = -0.13089475494798108
+2020-09-14 00:48:58,262 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:48:58,262 Δ = 1.4284042717251104
+2020-09-14 00:49:00,303 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:49:00,304 Δ = -1.2715605863353083
+2020-09-14 00:49:02,368 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:49:02,369 Δ = 6.18592211335077
+2020-09-14 00:49:04,442 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:49:04,443 Δ = 2.174418901837633
+2020-09-14 00:49:06,491 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:49:06,491 Δ = 15.852585460168584
+2020-09-14 00:49:08,535 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:49:08,535 Δ = 8.047495233032151
+2020-09-14 00:49:10,583 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:49:10,583 Δ = 19.512263385725035
+2020-09-14 00:49:12,634 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:49:12,634 Δ = -13.149816473346995
+2020-09-14 00:49:12,944 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:49:12,944 Δ = -22.078319796999583
+2020-09-14 00:49:14,983 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:49:14,983 Δ = -0.13738230253186678
+2020-09-14 00:49:17,023 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:49:17,024 Δ = -0.1366953910192077
+2020-09-14 00:49:19,083 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:49:19,083 Δ = 0.22181849240211804
+2020-09-14 00:49:21,121 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:49:21,121 Δ = -0.19013141311932458
+2020-09-14 00:49:23,173 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:49:23,173 Δ = 6.95767984293791
+2020-09-14 00:49:25,212 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:49:25,212 Δ = -1.994529045812527
+2020-09-14 00:49:27,257 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:49:27,257 Δ = 16.43980361462824
+2020-09-14 00:49:29,310 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:49:29,311 Δ = 20.257226229123447
+2020-09-14 00:49:31,360 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:49:31,360 Δ = 13.27429952197187
+2020-09-14 00:49:31,665 Going from state [7, 0, 1] to state [1, 0, 1], action = no warning, rewards = 50
+2020-09-14 00:49:31,665 Δ = -6.655268524521546
+2020-09-14 00:49:33,711 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:49:33,711 Δ = -0.13712100652612058
+2020-09-14 00:49:35,779 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:49:35,779 Δ = -0.13643540149349143
+2020-09-14 00:49:37,843 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:49:37,843 Δ = 3.597623922971067
+2020-09-14 00:49:39,886 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:49:39,886 Δ = -0.9575230619683204
+2020-09-14 00:49:41,931 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:49:41,931 Δ = 3.1820065354078153
+2020-09-14 00:49:43,976 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:49:43,977 Δ = 7.140438266334719
+2020-09-14 00:49:46,016 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:49:46,016 Δ = 18.24722879073022
+2020-09-14 00:49:48,070 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:49:48,070 Δ = 16.6993913779378
+2020-09-14 00:49:50,127 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:49:50,127 Δ = 14.903348493065138
+2020-09-14 00:49:52,175 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:49:52,175 Δ = -18.81190429906647
+2020-09-14 00:49:52,483 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:49:52,483 Δ = -26.76313098584679
+2020-09-14 00:49:54,529 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:49:54,529 Δ = -0.15374134410087947
+2020-09-14 00:49:56,586 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:49:56,586 Δ = 2.71722196186294
+2020-09-14 00:49:58,637 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:49:58,637 Δ = 5.125520209539591
+2020-09-14 00:50:00,678 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:50:00,678 Δ = -0.3881109142673651
+2020-09-14 00:50:02,733 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:50:02,733 Δ = -0.4510969962816489
+2020-09-14 00:50:04,766 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:50:04,766 Δ = 21.45948599232981
+2020-09-14 00:50:06,812 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 00:50:06,812 Δ = -10.758196409608487
+2020-09-14 00:50:08,862 Going from state [7, 0, 1] to state [4, 0, 1], action = warning, rewards = 30
+2020-09-14 00:50:08,862 Δ = -17.432970159296957
+2020-09-14 00:50:09,172 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:50:09,173 Δ = -11.9021714996829
+2020-09-14 00:50:11,211 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:50:11,211 Δ = -0.16655874718968988
+2020-09-14 00:50:13,260 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:50:13,260 Δ = -0.16572595345374097
+2020-09-14 00:50:15,300 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:50:15,300 Δ = 0.20924008725189935
+2020-09-14 00:50:17,350 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:50:17,351 Δ = 3.6334642077648063
+2020-09-14 00:50:19,408 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:50:19,408 Δ = -3.7442227032950157
+2020-09-14 00:50:21,449 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:50:21,449 Δ = 16.347982817903883
+2020-09-14 00:50:23,494 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:50:23,494 Δ = -3.224884455443288
+2020-09-14 00:50:25,541 Going from state [7, 0, 1] to state [9, 0, 1], action = warning, rewards = 0
+2020-09-14 00:50:25,542 Δ = 5.907214660279621
+2020-09-14 00:50:27,586 Going from state [9, 0, 1] to state [10, 0, 1], action = warning, rewards = -10
+2020-09-14 00:50:27,586 Δ = 2.9849838006071536
+2020-09-14 00:50:29,648 Going from state [10, 0, 1] to state [9, 0, 1], action = warning, rewards = 10
+2020-09-14 00:50:29,648 Δ = -2.9612619974780756
+2020-09-14 00:50:31,708 Going from state [9, 0, 1] to state [6, 0, 1], action = warning, rewards = 60
+2020-09-14 00:50:31,708 Δ = 4.045690871499318
+2020-09-14 00:50:32,017 Going from state [6, 0, 1] to state [1, 0, 1], action = warning, rewards = 70
+2020-09-14 00:50:32,017 Δ = 7.132854066437858
+2020-09-14 00:50:34,065 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:50:34,065 Δ = -0.1659435241227314
+2020-09-14 00:50:36,106 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:50:36,106 Δ = -0.1651138065021165
+2020-09-14 00:50:38,156 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:50:38,156 Δ = 2.068713491781949
+2020-09-14 00:50:40,206 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:50:40,207 Δ = -0.23734886099740038
+2020-09-14 00:50:42,254 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:50:42,254 Δ = 6.592037530025507
+2020-09-14 00:50:44,297 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:50:44,297 Δ = 6.577673603507513
+2020-09-14 00:50:46,336 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:50:46,337 Δ = 1.3116290291167587
+2020-09-14 00:50:48,390 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 00:50:48,390 Δ = -10.646776650065362
+2020-09-14 00:50:50,444 Going from state [7, 0, 1] to state [6, 0, 1], action = warning, rewards = 10
+2020-09-14 00:50:50,444 Δ = -6.970914645120928
+2020-09-14 00:50:52,486 Going from state [6, 0, 1] to state [2, 0, 1], action = warning, rewards = 60
+2020-09-14 00:50:52,486 Δ = 8.781126274980103
+2020-09-14 00:50:55,872 Going from state [2, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:50:55,872 Δ = -8.20207037777282
+2020-09-14 00:50:57,915 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:50:57,916 Δ = 3.4904072167299436
+2020-09-14 00:50:59,975 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:50:59,975 Δ = 0.11990280006234144
+2020-09-14 00:51:02,031 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:51:02,031 Δ = -0.228111952453677
+2020-09-14 00:51:04,080 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:51:04,080 Δ = 10.767058363862219
+2020-09-14 00:51:06,135 Going from state [4, 0, 1] to state [5, 0, 1], action = warning, rewards = -30
+2020-09-14 00:51:06,135 Δ = 21.3327563220006
+2020-09-14 00:51:08,188 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:51:08,188 Δ = -8.064942676558829
+2020-09-14 00:51:10,245 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:51:10,245 Δ = 45.08362694447543
+2020-09-14 00:51:12,292 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:51:12,292 Δ = 0.7048635701230097
+2020-09-14 00:51:14,331 Going from state [7, 0, 1] to state [4, 0, 1], action = warning, rewards = 30
+2020-09-14 00:51:14,331 Δ = -19.946435198177248
+2020-09-14 00:51:14,635 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:51:14,635 Δ = -16.555329358372322
+2020-09-14 00:51:16,670 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:51:16,671 Δ = -0.17523131892883015
+2020-09-14 00:51:18,716 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:51:18,716 Δ = -0.1743551623341837
+2020-09-14 00:51:20,761 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:51:20,762 Δ = 5.451523114309904
+2020-09-14 00:51:22,811 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:51:22,811 Δ = -4.382440485580542
+2020-09-14 00:51:24,863 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:51:24,863 Δ = 1.2812005445568353
+2020-09-14 00:51:26,908 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:51:26,909 Δ = 8.223611225456096
+2020-09-14 00:51:28,952 Going from state [5, 0, 1] to state [6, 0, 1], action = warning, rewards = -30
+2020-09-14 00:51:28,952 Δ = 5.2427133458187924
+2020-09-14 00:51:31,012 Going from state [6, 0, 1] to state [5, 0, 1], action = warning, rewards = 10
+2020-09-14 00:51:31,012 Δ = 1.5966314861747577
+2020-09-14 00:51:31,320 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:51:31,320 Δ = -14.469243296320371
+2020-09-14 00:51:33,375 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:51:33,376 Δ = -0.20074100209406254
+2020-09-14 00:51:35,432 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:51:35,433 Δ = -0.6413074733122102
+2020-09-14 00:51:37,503 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:51:37,503 Δ = 4.711287828879186
+2020-09-14 00:51:39,550 Going from state [4, 0, 1] to state [5, 0, 1], action = warning, rewards = -30
+2020-09-14 00:51:39,550 Δ = -0.4880438955749007
+2020-09-14 00:51:41,616 Going from state [5, 0, 1] to state [5, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:51:41,617 Δ = -0.4210798085547225
+2020-09-14 00:51:43,660 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:51:43,660 Δ = 15.855600128575723
+2020-09-14 00:51:45,712 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 00:51:45,712 Δ = -10.684374152320913
+2020-09-14 00:51:47,757 Going from state [7, 0, 1] to state [4, 0, 1], action = warning, rewards = 30
+2020-09-14 00:51:47,757 Δ = -8.755230998721693
+2020-09-14 00:51:48,066 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:51:48,066 Δ = -10.2808256538821
+2020-09-14 00:51:50,121 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:51:50,121 Δ = -0.1965307597170316
+2020-09-14 00:51:52,154 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:51:52,154 Δ = -0.19554810591844785
+2020-09-14 00:51:54,206 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:51:54,206 Δ = 1.1735171873134576
+2020-09-14 00:51:56,246 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:51:56,246 Δ = 0.7750615020605593
+2020-09-14 00:51:58,284 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:51:58,284 Δ = -2.733364784232048
+2020-09-14 00:52:00,336 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:00,336 Δ = 9.730030566400913
+2020-09-14 00:52:02,389 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:52:02,389 Δ = -1.6948044854782225
+2020-09-14 00:52:04,432 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:52:04,432 Δ = 42.58374111405854
+2020-09-14 00:52:06,480 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:52:06,480 Δ = -19.7537425896532
+2020-09-14 00:52:08,526 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 00:52:08,526 Δ = -7.73936659336151
+2020-09-14 00:52:08,833 Going from state [3, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:52:08,833 Δ = -10.179759221891324
+2020-09-14 00:52:10,881 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:10,881 Δ = 4.300012101658535
+2020-09-14 00:52:12,926 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:52:12,927 Δ = -0.20043795132542286
+2020-09-14 00:52:14,977 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:14,977 Δ = 1.0706330128394157
+2020-09-14 00:52:17,004 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:17,004 Δ = -6.004465632000787
+2020-09-14 00:52:19,047 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:19,047 Δ = 8.53956234919809
+2020-09-14 00:52:21,102 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:21,102 Δ = 4.026087062888735
+2020-09-14 00:52:23,149 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:52:23,149 Δ = 20.23154960871986
+2020-09-14 00:52:25,184 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:52:25,184 Δ = 11.513767975150927
+2020-09-14 00:52:27,235 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:52:27,235 Δ = -13.707857758540541
+2020-09-14 00:52:29,181 Going from state [6, 0, 1] to state [2, 0, 1], action = warning, rewards = 60
+2020-09-14 00:52:29,181 Δ = 3.8608212430503173
+2020-09-14 00:52:31,238 Going from state [2, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:52:31,238 Δ = -0.7083285242279977
+2020-09-14 00:52:33,285 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:33,285 Δ = 2.580752606278695
+2020-09-14 00:52:35,326 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:35,326 Δ = -2.787516600913545
+2020-09-14 00:52:37,381 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:52:37,381 Δ = -0.22920581881197677
+2020-09-14 00:52:39,410 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:52:39,411 Δ = 8.254287713244693
+2020-09-14 00:52:41,449 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:41,449 Δ = 12.0276605877607
+2020-09-14 00:52:43,488 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:52:43,488 Δ = 15.815089952059637
+2020-09-14 00:52:45,539 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 00:52:45,540 Δ = -10.857663672011753
+2020-09-14 00:52:47,578 Going from state [7, 0, 1] to state [6, 0, 1], action = warning, rewards = 10
+2020-09-14 00:52:47,579 Δ = -24.737063185419494
+2020-09-14 00:52:49,426 Going from state [6, 0, 1] to state [2, 0, 1], action = warning, rewards = 60
+2020-09-14 00:52:49,426 Δ = 5.5522035397764995
+2020-09-14 00:52:51,476 Going from state [2, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:52:51,476 Δ = -3.0892326692223975
+2020-09-14 00:52:53,517 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:53,518 Δ = -0.08944441431285455
+2020-09-14 00:52:55,555 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:52:55,555 Δ = -0.19085134362842382
+2020-09-14 00:52:57,591 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:57,591 Δ = 1.1449127378365453
+2020-09-14 00:52:59,637 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:52:59,637 Δ = -0.8889098036384979
+2020-09-14 00:53:01,681 Going from state [3, 0, 1] to state [5, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:53:01,682 Δ = 26.533574553294912
+2020-09-14 00:53:03,730 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:53:03,730 Δ = -9.711844818398646
+2020-09-14 00:53:05,775 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 00:53:05,776 Δ = -10.679690037724598
+2020-09-14 00:53:06,087 Going from state [7, 0, 1] to state [0, 0, 1], action = warning, rewards = 90
+2020-09-14 00:53:06,087 Δ = -3.82954357949054
+2020-09-14 00:53:08,144 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:53:08,144 Δ = 0.42753818297659585
+2020-09-14 00:53:10,190 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:53:10,190 Δ = -0.19562165059946324
+2020-09-14 00:53:12,229 Going from state [1, 0, 1] to state [4, 0, 1], action = no warning, rewards = -30
+2020-09-14 00:53:12,229 Δ = 12.54960444133112
+2020-09-14 00:53:14,264 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:53:14,264 Δ = -0.4748884714745216
+2020-09-14 00:53:16,309 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:53:16,309 Δ = -0.4725140291171499
+2020-09-14 00:53:18,361 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:53:18,361 Δ = 9.50863788533838
+2020-09-14 00:53:20,402 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:53:20,402 Δ = -13.796423211995112
+2020-09-14 00:53:22,472 Going from state [6, 0, 1] to state [7, 0, 1], action = warning, rewards = -30
+2020-09-14 00:53:22,472 Δ = -8.780446736028118
+2020-09-14 00:53:24,531 Going from state [7, 0, 1] to state [4, 0, 1], action = warning, rewards = 30
+2020-09-14 00:53:24,531 Δ = 5.5373832275755035
+2020-09-14 00:53:24,837 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:53:24,837 Δ = -16.287699949066564
+2020-09-14 00:53:26,890 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:53:26,890 Δ = -0.2573915645531244
+2020-09-14 00:53:28,940 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:53:28,940 Δ = -0.2561046067303572
+2020-09-14 00:53:30,987 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:53:30,987 Δ = -5.787797293606872
+2020-09-14 00:53:33,034 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:53:33,034 Δ = 12.689664502061731
+2020-09-14 00:53:35,065 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:53:35,065 Δ = -4.87500097431527
+2020-09-14 00:53:37,129 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:53:37,129 Δ = 6.068939427264894
+2020-09-14 00:53:39,185 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:53:39,185 Δ = -2.3987767460733735
+2020-09-14 00:53:41,254 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:53:41,254 Δ = 21.254783020633326
+2020-09-14 00:53:43,296 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:53:43,296 Δ = 12.82607084336668
+2020-09-14 00:53:45,340 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:53:45,340 Δ = -10.603310284705373
+2020-09-14 00:53:45,644 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:53:45,644 Δ = -16.68501153926158
+2020-09-14 00:53:47,687 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:53:47,687 Δ = -0.22588509722866945
+2020-09-14 00:53:49,739 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:53:49,740 Δ = -0.2247556717425283
+2020-09-14 00:53:51,777 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:53:51,777 Δ = 3.6128056662027213
+2020-09-14 00:53:53,828 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:53:53,828 Δ = 3.931706768744803
+2020-09-14 00:53:55,886 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:53:55,886 Δ = 0.5666245293384833
+2020-09-14 00:53:57,934 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:53:57,934 Δ = -6.412005487608354
+2020-09-14 00:53:59,970 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:53:59,971 Δ = 12.415596400878442
+2020-09-14 00:54:02,021 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:54:02,021 Δ = 22.27795172013586
+2020-09-14 00:54:04,067 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:54:04,067 Δ = 12.191982932221421
+2020-09-14 00:54:06,119 Going from state [7, 0, 1] to state [4, 0, 1], action = warning, rewards = 30
+2020-09-14 00:54:06,119 Δ = -21.928249788902136
+2020-09-14 00:54:09,533 Going from state [1, 0, 1] to state [0, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:54:09,534 Δ = -5.158345596802761
+2020-09-14 00:54:11,588 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:54:11,589 Δ = 2.221740861491977
+2020-09-14 00:54:13,637 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:54:13,637 Δ = 6.331770482031423
+2020-09-14 00:54:15,683 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:54:15,683 Δ = -0.332547372273865
+2020-09-14 00:54:17,722 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:54:17,722 Δ = -0.06892252448034242
+2020-09-14 00:54:19,772 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:54:19,772 Δ = 2.9397174746306547
+2020-09-14 00:54:21,815 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:54:21,816 Δ = 6.380900656399923
+2020-09-14 00:54:23,866 Going from state [7, 0, 1] to state [9, 0, 1], action = no warning, rewards = -50
+2020-09-14 00:54:23,866 Δ = 4.208842391021506
+2020-09-14 00:54:25,922 Going from state [9, 0, 1] to state [10, 0, 1], action = warning, rewards = -10
+2020-09-14 00:54:25,922 Δ = -1.9961782241977346
+2020-09-14 00:54:27,973 Going from state [10, 0, 1] to state [9, 0, 1], action = warning, rewards = 10
+2020-09-14 00:54:27,973 Δ = -0.46612223832475763
+2020-09-14 00:54:30,017 Going from state [9, 0, 1] to state [5, 0, 1], action = warning, rewards = 70
+2020-09-14 00:54:30,017 Δ = 18.720680409022435
+2020-09-14 00:54:30,321 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:54:30,321 Δ = -15.594637355952187
+2020-09-14 00:54:32,373 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:54:32,373 Δ = -0.24756304614097147
+2020-09-14 00:54:34,416 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:54:34,416 Δ = -0.2463252309102657
+2020-09-14 00:54:36,460 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:54:36,460 Δ = 3.2141017806479972
+2020-09-14 00:54:38,500 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:54:38,500 Δ = 2.447067474772055
+2020-09-14 00:54:40,544 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:54:40,545 Δ = -1.4354703017547195
+2020-09-14 00:54:42,595 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:54:42,595 Δ = -3.090940928963036
+2020-09-14 00:54:44,642 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:54:44,642 Δ = 10.987769006176052
+2020-09-14 00:54:46,693 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:54:46,693 Δ = 28.138132305968597
+2020-09-14 00:54:48,735 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:54:48,735 Δ = 9.169883312058616
+2020-09-14 00:54:50,776 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:54:50,776 Δ = -20.780786762674737
+2020-09-14 00:54:52,629 Lane invasion
+2020-09-14 00:54:52,629 Going from state [5, 0, 1] to state [1, 0, 1], action = warning, rewards = -10
+2020-09-14 00:54:52,629 Δ = -13.253415617351301
+2020-09-14 00:54:55,015 Going from state [1, 0, 1] to state [4, 0, 1], action = no warning, rewards = -30
+2020-09-14 00:54:55,015 Δ = 1.8282740409793945
+2020-09-14 00:54:55,323 Lane invasion
+2020-09-14 00:54:55,324 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:54:55,324 Δ = -26.618227205433097
+2020-09-14 00:54:57,363 Lane invasion
+2020-09-14 00:54:57,363 Going from state [1, 0, 1] to state [5, 0, 1], action = no warning, rewards = -90
+2020-09-14 00:54:57,363 Δ = -19.75860308485513
+2020-09-14 00:54:59,406 Going from state [5, 0, 1] to state [4, 0, 1], action = warning, rewards = 10
+2020-09-14 00:54:59,407 Δ = 7.286707879273312
+2020-09-14 00:54:59,717 Going from state [4, 0, 1] to state [0, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:54:59,717 Δ = 0.04165179588066792
+2020-09-14 00:55:01,772 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:01,772 Δ = -3.2839103730865506
+2020-09-14 00:55:03,822 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:55:03,823 Δ = -0.1715124684395768
+2020-09-14 00:55:05,866 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:05,866 Δ = 11.869270046493824
+2020-09-14 00:55:07,907 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:07,907 Δ = 0.5129759380174406
+2020-09-14 00:55:09,957 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:09,957 Δ = -15.403155738442514
+2020-09-14 00:55:12,002 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:12,002 Δ = 17.181762898351842
+2020-09-14 00:55:14,043 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:55:14,043 Δ = 9.135770547018495
+2020-09-14 00:55:16,078 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:55:16,078 Δ = 28.99855177379068
+2020-09-14 00:55:18,135 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:55:18,136 Δ = -23.634771289928295
+2020-09-14 00:55:18,450 Going from state [6, 0, 1] to state [1, 0, 1], action = warning, rewards = 70
+2020-09-14 00:55:18,451 Δ = 8.27265791442747
+2020-09-14 00:55:20,507 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:55:20,507 Δ = -0.23000125632984947
+2020-09-14 00:55:22,566 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:55:22,566 Δ = -0.22885125004819784
+2020-09-14 00:55:24,633 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:24,633 Δ = 6.41798436575457
+2020-09-14 00:55:26,695 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:26,696 Δ = -7.368074121520323
+2020-09-14 00:55:28,753 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:28,753 Δ = 0.8033947654628975
+2020-09-14 00:55:30,809 Going from state [4, 0, 1] to state [6, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:55:30,810 Δ = 4.4163936128926125
+2020-09-14 00:55:32,864 Going from state [6, 0, 1] to state [6, 0, 1], action = warning, rewards = -20
+2020-09-14 00:55:32,864 Δ = -10.536337954194416
+2020-09-14 00:55:34,913 Going from state [6, 0, 1] to state [4, 0, 1], action = warning, rewards = 20
+2020-09-14 00:55:34,913 Δ = 2.1147416098684815
+2020-09-14 00:55:35,226 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:55:35,227 Δ = -5.169366011754164
+2020-09-14 00:55:37,278 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:55:37,278 Δ = -0.2597969156267297
+2020-09-14 00:55:39,323 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:55:39,323 Δ = -0.2584979310485984
+2020-09-14 00:55:41,356 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:41,356 Δ = -0.17905708393761088
+2020-09-14 00:55:43,398 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:43,398 Δ = -3.2863566518560248
+2020-09-14 00:55:45,451 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:45,451 Δ = 0.0289760452949821
+2020-09-14 00:55:47,493 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:55:47,493 Δ = 13.48957406938085
+2020-09-14 00:55:49,546 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:55:49,547 Δ = 18.92216840153563
+2020-09-14 00:55:51,599 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:55:51,599 Δ = 2.800064098380844
+2020-09-14 00:55:53,646 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:55:53,647 Δ = 21.856152710194365
+2020-09-14 00:55:55,709 Going from state [7, 0, 1] to state [3, 0, 1], action = warning, rewards = 40
+2020-09-14 00:55:55,709 Δ = -35.983673203744026
+2020-09-14 00:55:56,017 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:55:56,017 Δ = -2.5323384123537593
+2020-09-14 00:55:58,052 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:55:58,053 Δ = -0.25631015597366513
+2020-09-14 00:56:00,104 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:56:00,105 Δ = -0.25502860519379666
+2020-09-14 00:56:02,152 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:56:02,152 Δ = -1.4606057040538047
+2020-09-14 00:56:04,204 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:56:04,204 Δ = -2.882342697622107
+2020-09-14 00:56:06,253 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:56:06,253 Δ = 7.9579963931678925
+2020-09-14 00:56:08,299 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:56:08,299 Δ = 16.111260393450557
+2020-09-14 00:56:10,335 Going from state [5, 0, 1] to state [5, 0, 1], action = warning, rewards = -20
+2020-09-14 00:56:10,335 Δ = 25.0353160805155
+2020-09-14 00:56:12,377 Going from state [5, 0, 1] to state [4, 0, 1], action = warning, rewards = 10
+2020-09-14 00:56:12,377 Δ = 13.930977894689086
+2020-09-14 00:56:12,685 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:56:12,685 Δ = -18.706401953230724
+2020-09-14 00:56:14,725 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:56:14,725 Δ = -0.24645043364755992
+2020-09-14 00:56:16,786 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:56:16,786 Δ = -0.2452181814793235
+2020-09-14 00:56:18,841 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:56:18,841 Δ = -1.9112281797864057
+2020-09-14 00:56:20,899 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:56:20,899 Δ = -0.2776563724990524
+2020-09-14 00:56:22,956 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:56:22,956 Δ = 5.687466904990885
+2020-09-14 00:56:24,997 Going from state [4, 0, 1] to state [5, 0, 1], action = warning, rewards = -30
+2020-09-14 00:56:24,997 Δ = 24.22970208635926
+2020-09-14 00:56:27,044 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:56:27,044 Δ = -6.964802306386943
+2020-09-14 00:56:29,085 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:56:29,085 Δ = 30.21066424260863
+2020-09-14 00:56:31,125 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:56:31,125 Δ = -22.819186522861074
+2020-09-14 00:56:33,165 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 00:56:33,165 Δ = 0.8406768684339667
+2020-09-14 00:56:33,470 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:56:33,470 Δ = -7.410713826527434
+2020-09-14 00:56:35,517 Lane invasion
+2020-09-14 00:56:35,517 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -70
+2020-09-14 00:56:35,517 Δ = -26.848224195718174
+2020-09-14 00:56:37,456 Going from state [3, 0, 1] to state [2, 0, 1], action = warning, rewards = 30
+2020-09-14 00:56:37,456 Δ = 41.376583145590935
+2020-09-14 00:56:39,512 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:56:39,512 Δ = -0.30470542516151156
+2020-09-14 00:56:41,551 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:56:41,551 Δ = -3.7228190319891823
+2020-09-14 00:56:43,585 Going from state [3, 0, 1] to state [3, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:56:43,585 Δ = -0.3191451593088992
+2020-09-14 00:56:45,632 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:56:45,632 Δ = 6.559332617410931
+2020-09-14 00:56:47,679 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:56:47,679 Δ = -0.4375179390772388
+2020-09-14 00:56:49,727 Going from state [4, 0, 1] to state [6, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:56:49,728 Δ = -4.188132613504855
+2020-09-14 00:56:51,777 Going from state [6, 0, 1] to state [6, 0, 1], action = warning, rewards = -20
+2020-09-14 00:56:51,777 Δ = -10.49843335681495
+2020-09-14 00:56:53,830 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 00:56:53,830 Δ = 5.09014456025389
+2020-09-14 00:56:54,137 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:56:54,137 Δ = -20.11532161919523
+2020-09-14 00:56:56,183 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:56:56,183 Δ = -0.1001948286944021
+2020-09-14 00:56:58,240 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:56:58,240 Δ = -0.09969385455092983
+2020-09-14 00:57:00,293 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:00,293 Δ = 13.252673956882415
+2020-09-14 00:57:02,342 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:57:02,342 Δ = -0.2845678028757561
+2020-09-14 00:57:04,402 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:57:04,402 Δ = 2.7100825589805346
+2020-09-14 00:57:06,447 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:06,447 Δ = 16.274079307970148
+2020-09-14 00:57:08,482 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:57:08,482 Δ = 11.471877646897788
+2020-09-14 00:57:10,533 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:57:10,534 Δ = 3.8098347924880898
+2020-09-14 00:57:12,577 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:57:12,577 Δ = 21.365898403047296
+2020-09-14 00:57:12,881 Going from state [7, 0, 1] to state [0, 0, 1], action = no warning, rewards = 60
+2020-09-14 00:57:12,882 Δ = -0.5215624374167618
+2020-09-14 00:57:14,935 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:14,935 Δ = -2.241272810865194
+2020-09-14 00:57:18,395 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:57:18,396 Δ = -0.16545875506258767
+2020-09-14 00:57:20,436 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:20,436 Δ = 7.909696160244366
+2020-09-14 00:57:22,493 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:57:22,493 Δ = 9.41071053693549
+2020-09-14 00:57:24,534 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:24,534 Δ = 13.815619089199487
+2020-09-14 00:57:26,595 Going from state [5, 0, 1] to state [5, 0, 1], action = warning, rewards = -20
+2020-09-14 00:57:26,595 Δ = 7.78317138646608
+2020-09-14 00:57:26,903 Going from state [5, 0, 1] to state [0, 0, 1], action = no warning, rewards = 40
+2020-09-14 00:57:26,903 Δ = -36.70640926849031
+2020-09-14 00:57:28,954 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:28,954 Δ = 2.712761110132382
+2020-09-14 00:57:30,999 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:57:30,999 Δ = -0.20417994208849777
+2020-09-14 00:57:33,037 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:33,037 Δ = 8.715239766949502
+2020-09-14 00:57:35,095 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:35,095 Δ = -14.647713572255864
+2020-09-14 00:57:37,145 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:37,145 Δ = 25.94203080137391
+2020-09-14 00:57:39,191 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:39,191 Δ = -7.528776565447139
+2020-09-14 00:57:41,238 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:57:41,238 Δ = 25.975011679975665
+2020-09-14 00:57:43,277 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:57:43,277 Δ = 12.481037105752463
+2020-09-14 00:57:45,331 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:57:45,331 Δ = -24.353510367377112
+2020-09-14 00:57:47,389 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 00:57:47,389 Δ = 5.4292933253053945
+2020-09-14 00:57:47,699 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:57:47,699 Δ = -8.521175370963046
+2020-09-14 00:57:49,755 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:57:49,755 Δ = -0.24673524121280366
+2020-09-14 00:57:51,797 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:57:51,797 Δ = -0.24550156500673737
+2020-09-14 00:57:53,834 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:53,834 Δ = -2.646879931682129
+2020-09-14 00:57:55,878 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:55,879 Δ = 1.2994666519254494
+2020-09-14 00:57:57,927 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:57,927 Δ = 13.504858686272144
+2020-09-14 00:57:59,970 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:57:59,971 Δ = 5.360156021008564
+2020-09-14 00:58:02,018 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:58:02,019 Δ = 19.165619207335297
+2020-09-14 00:58:04,062 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:58:04,062 Δ = -5.814469078975435
+2020-09-14 00:58:06,095 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 00:58:06,096 Δ = 26.159655558466824
+2020-09-14 00:58:08,140 Going from state [7, 0, 1] to state [4, 0, 1], action = warning, rewards = 30
+2020-09-14 00:58:08,140 Δ = -21.06783106579786
+2020-09-14 00:58:08,448 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 00:58:08,449 Δ = -22.526581462992212
+2020-09-14 00:58:10,495 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:58:10,495 Δ = -0.23103965752329358
+2020-09-14 00:58:12,541 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:58:12,541 Δ = 7.04696192603042
+2020-09-14 00:58:14,593 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:58:14,593 Δ = -1.7449512506458333
+2020-09-14 00:58:16,637 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:58:16,638 Δ = -0.4413621682630193
+2020-09-14 00:58:18,679 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:58:18,679 Δ = 23.65103133376286
+2020-09-14 00:58:20,732 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:58:20,733 Δ = -3.7239289679951213
+2020-09-14 00:58:22,785 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 00:58:22,785 Δ = -10.803794280151195
+2020-09-14 00:58:24,849 Going from state [7, 0, 1] to state [5, 0, 1], action = warning, rewards = 20
+2020-09-14 00:58:24,850 Δ = 5.745691361732312
+2020-09-14 00:58:25,153 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 00:58:25,153 Δ = -30.19079060124851
+2020-09-14 00:58:27,216 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:58:27,217 Δ = -0.2651192688658277
+2020-09-14 00:58:29,259 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:58:29,259 Δ = -0.2637936725215013
+2020-09-14 00:58:31,309 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:58:31,310 Δ = -3.823708636697866
+2020-09-14 00:58:33,377 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:58:33,377 Δ = 6.4708875065977445
+2020-09-14 00:58:35,430 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:58:35,431 Δ = 10.616310611599502
+2020-09-14 00:58:37,486 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:58:37,486 Δ = -4.962270519894155
+2020-09-14 00:58:39,541 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:58:39,542 Δ = 10.72966987200936
+2020-09-14 00:58:41,603 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 00:58:41,603 Δ = 23.104761954061715
+2020-09-14 00:58:43,650 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 00:58:43,650 Δ = -22.56908276689579
+2020-09-14 00:58:45,705 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 00:58:45,705 Δ = 9.572892787402758
+2020-09-14 00:58:46,014 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:58:46,014 Δ = -15.783225652596894
+2020-09-14 00:58:48,068 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:58:48,068 Δ = -0.24335616097540225
+2020-09-14 00:58:50,106 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:58:50,106 Δ = -0.24213938017052783
+2020-09-14 00:58:52,151 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:58:52,151 Δ = 1.5339827679899152
+2020-09-14 00:58:54,191 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:58:54,191 Δ = -0.3093621322722946
+2020-09-14 00:58:56,244 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 00:58:56,244 Δ = 11.945784826520537
+2020-09-14 00:58:58,291 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:58:58,291 Δ = 2.830051326697557
+2020-09-14 00:59:00,344 Going from state [5, 0, 1] to state [5, 0, 1], action = warning, rewards = -20
+2020-09-14 00:59:00,344 Δ = -3.410074205581708
+2020-09-14 00:59:00,656 Going from state [5, 0, 1] to state [0, 0, 1], action = no warning, rewards = 40
+2020-09-14 00:59:00,656 Δ = -27.988178479767967
+2020-09-14 00:59:02,698 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:59:02,698 Δ = 5.753827402157686
+2020-09-14 00:59:04,749 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 00:59:04,749 Δ = -0.2485985971096234
+2020-09-14 00:59:06,790 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:59:06,790 Δ = 6.651319916202645
+2020-09-14 00:59:08,825 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:59:08,825 Δ = -5.140390539118954
+2020-09-14 00:59:10,868 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:59:10,869 Δ = 12.144319631465876
+2020-09-14 00:59:12,917 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 00:59:12,917 Δ = -7.407887279646303
+2020-09-14 00:59:14,963 Going from state [5, 0, 1] to state [6, 0, 1], action = warning, rewards = -30
+2020-09-14 00:59:14,963 Δ = -13.701123082420288
+2020-09-14 00:59:17,023 Going from state [6, 0, 1] to state [5, 0, 1], action = warning, rewards = 10
+2020-09-14 00:59:17,023 Δ = -2.4044652112513987
+2020-09-14 00:59:18,965 Going from state [5, 0, 1] to state [2, 0, 1], action = warning, rewards = 50
+2020-09-14 00:59:18,965 Δ = 12.897943974362995
+2020-09-14 00:59:21,007 Going from state [2, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 00:59:21,007 Δ = -1.40362113799047
+2020-09-14 01:05:08,923 Lane invasion
+2020-09-14 01:05:08,923 Going from state [11, 2, 1] to state [3, 0, 1], action = warning, rewards = 60
+2020-09-14 01:05:08,924 Δ = 52.481976688421845
+2020-09-14 01:05:10,976 Going from state [3, 0, 1] to state [3, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:05:10,976 Δ = -0.4305603257859616
+2020-09-14 01:05:13,038 Going from state [3, 0, 1] to state [3, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:05:13,038 Δ = -0.42840752415703065
+2020-09-14 01:05:15,067 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:05:15,067 Δ = 2.8347395372795177
+2020-09-14 01:05:17,134 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:05:17,134 Δ = -0.50970998172631
+2020-09-14 01:05:19,195 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:05:19,195 Δ = -3.846662307448355
+2020-09-14 01:05:21,249 Going from state [5, 0, 1] to state [5, 0, 1], action = warning, rewards = -20
+2020-09-14 01:05:21,249 Δ = -10.523934150245651
+2020-09-14 01:05:21,557 Going from state [5, 0, 1] to state [0, 0, 1], action = no warning, rewards = 40
+2020-09-14 01:05:21,557 Δ = -11.145944675815933
+2020-09-14 01:05:23,601 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:05:23,601 Δ = 6.046260754029891
+2020-09-14 01:05:25,659 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:05:25,659 Δ = -0.28061220370508977
+2020-09-14 01:05:27,731 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:05:27,731 Δ = 0.22668027978470562
+2020-09-14 01:05:29,781 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:05:29,781 Δ = 5.1210605022429405
+2020-09-14 01:05:31,837 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:05:31,837 Δ = -0.7390345145017037
+2020-09-14 01:05:33,896 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:05:33,896 Δ = -7.132678558095769
+2020-09-14 01:05:35,947 Going from state [5, 0, 1] to state [6, 0, 1], action = warning, rewards = -30
+2020-09-14 01:05:35,947 Δ = -9.227776732838251
+2020-09-14 01:05:38,020 Going from state [6, 0, 1] to state [5, 0, 1], action = warning, rewards = 10
+2020-09-14 01:05:38,020 Δ = -6.345667746750529
+2020-09-14 01:05:39,550 Going from state [5, 0, 1] to state [2, 0, 1], action = warning, rewards = 50
+2020-09-14 01:05:39,550 Δ = 18.164959914028422
+2020-09-14 01:05:41,615 Going from state [2, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 01:05:41,615 Δ = -3.2890371224572945
+2020-09-14 01:05:43,666 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:05:43,666 Δ = -0.2803425440854852
+2020-09-14 01:05:45,712 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:05:45,712 Δ = 1.1603629849289803
+2020-09-14 01:05:47,746 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:05:47,747 Δ = -0.34398430425692084
+2020-09-14 01:05:49,790 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:05:49,791 Δ = 0.5477697479421266
+2020-09-14 01:05:51,852 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:05:51,852 Δ = 0.8575663956412427
+2020-09-14 01:05:53,907 Going from state [5, 0, 1] to state [7, 0, 1], action = warning, rewards = -40
+2020-09-14 01:05:53,908 Δ = 16.90869041757422
+2020-09-14 01:05:55,961 Going from state [7, 0, 1] to state [9, 0, 1], action = no warning, rewards = -50
+2020-09-14 01:05:55,961 Δ = 10.643830995707354
+2020-09-14 01:05:58,007 Going from state [9, 0, 1] to state [10, 0, 1], action = warning, rewards = -10
+2020-09-14 01:05:58,007 Δ = -10.589159824580847
+2020-09-14 01:06:00,057 Going from state [10, 0, 1] to state [9, 0, 1], action = warning, rewards = 10
+2020-09-14 01:06:00,057 Δ = 3.7920415701362202
+2020-09-14 01:06:02,100 Going from state [9, 0, 1] to state [6, 0, 1], action = warning, rewards = 60
+2020-09-14 01:06:02,100 Δ = 4.8651406640944685
+2020-09-14 01:06:03,742 Going from state [6, 0, 1] to state [2, 0, 1], action = warning, rewards = 60
+2020-09-14 01:06:03,743 Δ = 13.890102055491198
+2020-09-14 01:06:05,787 Going from state [2, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 01:06:05,787 Δ = -4.940420135643496
+2020-09-14 01:06:07,841 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:06:07,842 Δ = 3.4320441928918903
+2020-09-14 01:06:09,907 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:06:09,907 Δ = -1.764452680054859
+2020-09-14 01:06:11,957 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:06:11,957 Δ = -0.32030113079712663
+2020-09-14 01:06:14,004 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:06:14,004 Δ = 3.328740873033791
+2020-09-14 01:06:16,060 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:06:16,060 Δ = 8.79858495451986
+2020-09-14 01:06:18,120 Going from state [5, 0, 1] to state [5, 0, 1], action = warning, rewards = -20
+2020-09-14 01:06:18,120 Δ = -10.60054384748824
+2020-09-14 01:06:20,173 Going from state [5, 0, 1] to state [4, 0, 1], action = warning, rewards = 10
+2020-09-14 01:06:20,174 Δ = -0.20010988524480666
+2020-09-14 01:06:20,995 Going from state [4, 0, 1] to state [2, 0, 1], action = warning, rewards = 40
+2020-09-14 01:06:20,996 Δ = 14.153215583437863
+2020-09-14 01:06:23,045 Going from state [2, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 01:06:23,045 Δ = -1.2182150447774518
+2020-09-14 01:06:25,107 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:06:25,107 Δ = -0.2759203828894279
+2020-09-14 01:06:27,147 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:06:27,147 Δ = -0.2745407809749807
+2020-09-14 01:06:29,201 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:06:29,201 Δ = 0.27916546714708446
+2020-09-14 01:06:31,244 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:06:31,244 Δ = 5.312431724921325
+2020-09-14 01:06:33,292 Going from state [3, 0, 1] to state [5, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:06:33,292 Δ = 0.43311613861932585
+2020-09-14 01:06:35,330 Going from state [5, 0, 1] to state [5, 0, 1], action = warning, rewards = -20
+2020-09-14 01:06:35,330 Δ = -10.546540578824576
+2020-09-14 01:06:37,387 Going from state [5, 0, 1] to state [4, 0, 1], action = warning, rewards = 10
+2020-09-14 01:06:37,387 Δ = 5.173215346789881
+2020-09-14 01:06:37,693 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 01:06:37,693 Δ = -12.872721887897512
+2020-09-14 01:06:39,751 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:06:39,751 Δ = -0.27456390440584144
+2020-09-14 01:06:41,800 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:06:41,801 Δ = -0.2731910848838126
+2020-09-14 01:06:43,847 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:06:43,847 Δ = 3.043113932054421
+2020-09-14 01:06:45,900 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:06:45,900 Δ = 2.870608351077223
+2020-09-14 01:06:47,950 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:06:47,950 Δ = -3.229801223015677
+2020-09-14 01:06:49,997 Going from state [4, 0, 1] to state [5, 0, 1], action = warning, rewards = -30
+2020-09-14 01:06:49,997 Δ = -9.674660515827867
+2020-09-14 01:06:52,042 Going from state [5, 0, 1] to state [6, 0, 1], action = warning, rewards = -30
+2020-09-14 01:06:52,042 Δ = -10.329229067009955
+2020-09-14 01:06:54,094 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 01:06:54,095 Δ = -0.356970851726075
+2020-09-14 01:06:54,401 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 01:06:54,402 Δ = -8.859029409968528
+2020-09-14 01:06:56,449 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:06:56,449 Δ = -1.2359914333137212
+2020-09-14 01:06:58,482 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:06:58,482 Δ = 0.3354616874946714
+2020-09-14 01:07:00,528 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:07:00,529 Δ = -0.4361818748012709
+2020-09-14 01:07:02,580 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:07:02,580 Δ = -2.0653436171206394
+2020-09-14 01:07:04,636 Going from state [5, 0, 1] to state [5, 0, 1], action = warning, rewards = -20
+2020-09-14 01:07:04,636 Δ = -10.468027807329356
+2020-09-14 01:07:04,941 Going from state [5, 0, 1] to state [0, 0, 1], action = no warning, rewards = 40
+2020-09-14 01:07:04,941 Δ = -0.8812113891816864
+2020-09-14 01:07:06,998 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:07:06,998 Δ = 1.3317135671219837
+2020-09-14 01:07:09,047 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:07:09,048 Δ = -0.2808607419530986
+2020-09-14 01:07:11,112 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:07:11,112 Δ = 3.700934187443842
+2020-09-14 01:07:13,169 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:07:13,169 Δ = -4.382613452478708
+2020-09-14 01:07:15,230 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:07:15,231 Δ = -1.070524274754014
+2020-09-14 01:07:17,283 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:07:17,284 Δ = -6.085047858022662
+2020-09-14 01:07:19,336 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:07:19,336 Δ = 36.809359375648015
+2020-09-14 01:07:21,367 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 01:07:21,367 Δ = 0.3806850074174548
+2020-09-14 01:07:23,415 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 01:07:23,415 Δ = -4.17837532203076
+2020-09-14 01:07:25,455 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 01:07:25,455 Δ = -4.927560964490837
+2020-09-14 01:07:25,762 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 01:07:25,762 Δ = -2.980862815326958
+2020-09-14 01:07:27,806 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:07:27,806 Δ = -0.29796110918055163
+2020-09-14 01:07:29,852 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:07:29,852 Δ = -0.29647130363465024
+2020-09-14 01:07:31,900 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:07:31,900 Δ = -0.021710358847435884
+2020-09-14 01:07:33,954 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:07:33,955 Δ = -0.3482543874020223
+2020-09-14 01:07:35,994 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:07:35,994 Δ = -3.779110490528261
+2020-09-14 01:07:38,054 Going from state [4, 0, 1] to state [5, 0, 1], action = warning, rewards = -30
+2020-09-14 01:07:38,054 Δ = 3.217958195399568
+2020-09-14 01:07:40,112 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:07:40,112 Δ = 18.593118766495657
+2020-09-14 01:07:42,158 Going from state [7, 0, 1] to state [9, 0, 1], action = no warning, rewards = -50
+2020-09-14 01:07:42,158 Δ = 2.4885260134129368
+2020-09-14 01:07:44,214 Going from state [9, 0, 1] to state [10, 0, 1], action = warning, rewards = -10
+2020-09-14 01:07:44,214 Δ = -5.85008966712023
+2020-09-14 01:07:46,261 Going from state [10, 0, 1] to state [9, 0, 1], action = warning, rewards = 10
+2020-09-14 01:07:46,262 Δ = 1.4084710285703608
+2020-09-14 01:07:48,313 Going from state [9, 0, 1] to state [7, 0, 1], action = warning, rewards = 50
+2020-09-14 01:07:48,314 Δ = 39.29221851992807
+2020-09-14 01:07:50,360 Going from state [7, 0, 1] to state [3, 0, 1], action = warning, rewards = 40
+2020-09-14 01:07:50,360 Δ = -33.96440463227665
+2020-09-14 01:07:50,667 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 01:07:50,667 Δ = -1.7954220796364808
+2020-09-14 01:07:52,706 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:07:52,706 Δ = -0.2948803953222381
+2020-09-14 01:07:54,758 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:07:54,758 Δ = -0.2934059933456261
+2020-09-14 01:07:56,811 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:07:56,811 Δ = -1.7597575996652708
+2020-09-14 01:07:58,867 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:07:58,867 Δ = -0.32761756301236744
+2020-09-14 01:08:00,908 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:08:00,908 Δ = -0.13285715703516132
+2020-09-14 01:08:02,964 Going from state [4, 0, 1] to state [5, 0, 1], action = warning, rewards = -30
+2020-09-14 01:08:02,964 Δ = 10.812572887115138
+2020-09-14 01:08:05,009 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:08:05,009 Δ = -7.515820909729129
+2020-09-14 01:08:07,058 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 01:08:07,058 Δ = 15.10424903544181
+2020-09-14 01:08:09,110 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 01:08:09,110 Δ = -4.528330338438337
+2020-09-14 01:08:11,165 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 01:08:11,165 Δ = -4.828041505252315
+2020-09-14 01:08:11,479 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 01:08:11,479 Δ = -2.0599928140431487
+2020-09-14 01:08:13,536 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:08:13,536 Δ = -0.28314017538057357
+2020-09-14 01:08:15,586 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:08:15,587 Δ = -0.2817244745036689
+2020-09-14 01:08:17,642 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:08:17,642 Δ = -0.8253814613140413
+2020-09-14 01:08:20,945 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:08:20,945 Δ = -3.811253909211956
+2020-09-14 01:08:23,006 Going from state [3, 0, 1] to state [5, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:08:23,006 Δ = 20.925398436490497
+2020-09-14 01:08:25,063 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:08:25,063 Δ = -19.01025679286745
+2020-09-14 01:08:27,117 Going from state [6, 0, 1] to state [7, 0, 1], action = warning, rewards = -30
+2020-09-14 01:08:27,117 Δ = 12.207409788270816
+2020-09-14 01:08:29,171 Going from state [7, 0, 1] to state [6, 0, 1], action = warning, rewards = 10
+2020-09-14 01:08:29,171 Δ = -17.48791198773486
+2020-09-14 01:08:31,227 Going from state [6, 0, 1] to state [2, 0, 1], action = warning, rewards = 60
+2020-09-14 01:08:31,227 Δ = 2.06194594502697
+2020-09-14 01:08:33,297 Going from state [2, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 01:08:33,297 Δ = 1.7168135510262843
+2020-09-14 01:08:35,366 Going from state [1, 0, 1] to state [3, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:08:35,367 Δ = 6.45944277560595
+2020-09-14 01:08:37,431 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:08:37,431 Δ = -1.706259046125865
+2020-09-14 01:08:39,491 Going from state [4, 0, 1] to state [4, 0, 1], action = warning, rewards = -20
+2020-09-14 01:08:39,491 Δ = -10.483003171129475
+2020-09-14 01:08:41,556 Going from state [4, 0, 1] to state [5, 0, 1], action = warning, rewards = -30
+2020-09-14 01:08:41,556 Δ = -2.4826204336630084
+2020-09-14 01:08:43,609 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:08:43,609 Δ = -2.4417973084513207
+2020-09-14 01:08:45,669 Going from state [6, 0, 1] to state [6, 0, 1], action = warning, rewards = -20
+2020-09-14 01:08:45,669 Δ = -10.592886600942279
+2020-09-14 01:08:47,733 Going from state [6, 0, 1] to state [4, 0, 1], action = warning, rewards = 20
+2020-09-14 01:08:47,733 Δ = -2.592886536311191
+2020-09-14 01:08:48,665 Going from state [4, 0, 1] to state [2, 0, 1], action = warning, rewards = 40
+2020-09-14 01:08:48,665 Δ = 9.351950463948327
+2020-09-14 01:08:50,724 Going from state [2, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 01:08:50,725 Δ = 4.055830949438093
+2020-09-14 01:08:52,778 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:08:52,778 Δ = -0.3084861587026104
+2020-09-14 01:08:54,848 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:08:54,848 Δ = -2.517280696438746
+2020-09-14 01:08:56,906 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:08:56,906 Δ = -0.3351221423683981
+2020-09-14 01:08:58,953 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:08:58,953 Δ = 2.683892571444538
+2020-09-14 01:09:01,023 Going from state [4, 0, 1] to state [5, 0, 1], action = warning, rewards = -30
+2020-09-14 01:09:01,023 Δ = -7.125975116489066
+2020-09-14 01:09:03,093 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:09:03,093 Δ = 5.78820343440978
+2020-09-14 01:09:05,164 Going from state [7, 0, 1] to state [7, 0, 1], action = warning, rewards = -20
+2020-09-14 01:09:05,164 Δ = -10.714190662443642
+2020-09-14 01:09:07,237 Going from state [7, 0, 1] to state [6, 0, 1], action = warning, rewards = 10
+2020-09-14 01:09:07,238 Δ = -8.89315512279773
+2020-09-14 01:09:09,091 Going from state [6, 0, 1] to state [2, 0, 1], action = warning, rewards = 60
+2020-09-14 01:09:09,091 Δ = 11.643959931262785
+2020-09-14 01:09:11,146 Going from state [2, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 01:09:11,146 Δ = -2.768636348279788
+2020-09-14 01:09:13,197 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:09:13,198 Δ = 2.0020184484678296
+2020-09-14 01:09:15,259 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:09:15,259 Δ = -0.29435732442690465
+2020-09-14 01:09:17,305 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:09:17,305 Δ = -1.319295316011722
+2020-09-14 01:09:19,353 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:09:19,354 Δ = 4.931457752994149
+2020-09-14 01:09:21,400 Going from state [3, 0, 1] to state [5, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:09:21,400 Δ = 3.5622226611882297
+2020-09-14 01:09:23,456 Going from state [5, 0, 1] to state [6, 0, 1], action = warning, rewards = -30
+2020-09-14 01:09:23,456 Δ = 1.3638091270494357
+2020-09-14 01:09:25,530 Going from state [6, 0, 1] to state [5, 0, 1], action = warning, rewards = 10
+2020-09-14 01:09:25,530 Δ = 3.714912634836459
+2020-09-14 01:09:25,840 Going from state [5, 0, 1] to state [0, 0, 1], action = no warning, rewards = 40
+2020-09-14 01:09:25,840 Δ = -14.901811629626664
+2020-09-14 01:09:27,886 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:09:27,886 Δ = 0.2022511672167937
+2020-09-14 01:09:29,954 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:09:29,955 Δ = -0.28628906122471065
+2020-09-14 01:09:32,002 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:09:32,002 Δ = 1.9245684603385982
+2020-09-14 01:09:34,045 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:09:34,045 Δ = 4.229029093785243
+2020-09-14 01:09:36,100 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:09:36,100 Δ = -7.950366741036994
+2020-09-14 01:09:38,149 Going from state [4, 0, 1] to state [4, 0, 1], action = warning, rewards = -20
+2020-09-14 01:09:38,149 Δ = -10.429304929842807
+2020-09-14 01:09:38,455 Going from state [4, 0, 1] to state [0, 0, 1], action = no warning, rewards = 30
+2020-09-14 01:09:38,455 Δ = -1.3158242422932673
+2020-09-14 01:09:40,504 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:09:40,505 Δ = 0.9120738861697717
+2020-09-14 01:09:42,539 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:09:42,539 Δ = -0.29448045822028135
+2020-09-14 01:09:44,603 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:09:44,603 Δ = 3.202893860703135
+2020-09-14 01:09:46,673 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:09:46,673 Δ = -1.8209169899206827
+2020-09-14 01:09:48,749 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:09:48,749 Δ = -8.19605262778802
+2020-09-14 01:09:50,814 Going from state [4, 0, 1] to state [6, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:09:50,814 Δ = 11.104469026555812
+2020-09-14 01:09:52,860 Going from state [6, 0, 1] to state [6, 0, 1], action = warning, rewards = -20
+2020-09-14 01:09:52,860 Δ = -10.60375209808651
+2020-09-14 01:09:54,903 Going from state [6, 0, 1] to state [5, 0, 1], action = warning, rewards = 10
+2020-09-14 01:09:54,903 Δ = -0.21706439020370993
+2020-09-14 01:09:55,211 Going from state [5, 0, 1] to state [1, 0, 1], action = no warning, rewards = 30
+2020-09-14 01:09:55,211 Δ = -4.766638051865854
+2020-09-14 01:09:57,254 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:09:57,254 Δ = -0.30902252523269524
+2020-09-14 01:09:59,307 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:09:59,307 Δ = -0.3074774126065307
+2020-09-14 01:10:01,372 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:10:01,372 Δ = 1.0083429892604414
+2020-09-14 01:10:03,419 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:10:03,419 Δ = -4.967504545715414
+2020-09-14 01:10:05,459 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:10:05,460 Δ = 1.39868585425112
+2020-09-14 01:10:07,511 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:10:07,511 Δ = -1.722439663556159
+2020-09-14 01:10:09,552 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:10:09,552 Δ = 3.0226903942566565
+2020-09-14 01:10:11,592 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 01:10:11,592 Δ = 23.858229886682054
+2020-09-14 01:10:13,631 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 01:10:13,631 Δ = 11.522575092511914
+2020-09-14 01:10:15,537 Lane invasion
+2020-09-14 01:10:15,537 Going from state [7, 0, 1] to state [1, 0, 1], action = warning, rewards = 10
+2020-09-14 01:10:15,537 Δ = -37.757315986594556
+2020-09-14 01:10:17,579 Lane invasion
+2020-09-14 01:10:17,579 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = -50
+2020-09-14 01:10:17,580 Δ = -25.3109817404898
+2020-09-14 01:10:19,648 Going from state [1, 0, 1] to state [0, 0, 1], action = no warning, rewards = 10
+2020-09-14 01:10:19,648 Δ = 10.017869957780473
+2020-09-14 01:10:21,712 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:10:21,712 Δ = -5.480426444673721
+2020-09-14 01:10:23,761 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:10:23,762 Δ = -0.23451618157625376
+2020-09-14 01:10:25,830 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:10:25,830 Δ = -0.23334360066837334
+2020-09-14 01:10:27,881 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:10:27,881 Δ = -0.2321768826650299
+2020-09-14 01:10:29,941 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:10:29,941 Δ = -0.23101599825170638
+2020-09-14 01:10:32,004 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:10:32,004 Δ = 6.157338967436445
+2020-09-14 01:10:34,056 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:10:34,056 Δ = -1.5638906009562632
+2020-09-14 01:10:36,096 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:10:36,096 Δ = 0.6350119133789676
+2020-09-14 01:10:38,141 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:10:38,141 Δ = -5.368702422328354
+2020-09-14 01:10:40,198 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 01:10:40,199 Δ = 36.51144760743169
+2020-09-14 01:10:42,250 Going from state [8, 0, 1] to state [7, 0, 1], action = warning, rewards = 40
+2020-09-14 01:10:42,251 Δ = 5.144582698570346
+2020-09-14 01:10:44,288 Going from state [7, 0, 1] to state [4, 0, 1], action = warning, rewards = 30
+2020-09-14 01:10:44,288 Δ = -14.682819876527816
+2020-09-14 01:10:44,593 Going from state [4, 0, 1] to state [1, 0, 1], action = no warning, rewards = 20
+2020-09-14 01:10:44,593 Δ = -7.871395625532244
+2020-09-14 01:10:46,630 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:10:46,630 Δ = -0.2606476130976283
+2020-09-14 01:10:48,658 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:10:48,658 Δ = -0.2593443750321427
+2020-09-14 01:10:50,702 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:10:50,702 Δ = 2.5645396303097527
+2020-09-14 01:10:52,748 Going from state [2, 0, 1] to state [3, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:10:52,749 Δ = -1.00945747452527
+2020-09-14 01:10:54,804 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:10:54,804 Δ = -3.735274643850609
+2020-09-14 01:10:56,842 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:10:56,842 Δ = 1.595696070403072
+2020-09-14 01:10:58,886 Going from state [5, 0, 1] to state [7, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:10:58,886 Δ = 8.120819515633244
+2020-09-14 01:11:00,926 Going from state [7, 0, 1] to state [8, 0, 1], action = warning, rewards = 10
+2020-09-14 01:11:00,926 Δ = 28.14370217777207
+2020-09-14 01:11:02,974 Going from state [8, 0, 1] to state [6, 0, 1], action = warning, rewards = 50
+2020-09-14 01:11:02,974 Δ = -10.204913466302798
+2020-09-14 01:11:04,833 Going from state [6, 0, 1] to state [2, 0, 1], action = warning, rewards = 60
+2020-09-14 01:11:04,833 Δ = 7.9048219316123465
+2020-09-14 01:11:06,881 Going from state [2, 0, 1] to state [0, 0, 1], action = no warning, rewards = 20
+2020-09-14 01:11:06,881 Δ = -2.4538978486663297
+2020-09-14 01:11:08,927 Going from state [0, 0, 1] to state [1, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:11:08,927 Δ = 0.8588495811583883
+2020-09-14 01:11:10,974 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:11:10,974 Δ = -0.2708703513085311
+2020-09-14 01:11:13,018 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:11:13,018 Δ = -0.2966558941707049
+2020-09-14 01:11:15,061 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:11:15,062 Δ = -1.8424080215486711
+2020-09-14 01:11:17,104 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:11:17,104 Δ = 4.8176536954399936
+2020-09-14 01:11:19,202 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:11:19,202 Δ = 2.4640876372580394
+2020-09-14 01:11:21,239 Going from state [6, 0, 1] to state [7, 0, 1], action = warning, rewards = -30
+2020-09-14 01:11:21,239 Δ = 4.938282573252643
+2020-09-14 01:11:23,277 Going from state [7, 0, 1] to state [6, 0, 1], action = warning, rewards = 10
+2020-09-14 01:11:23,277 Δ = -13.879524977356965
+2020-09-14 01:11:25,322 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 01:11:25,323 Δ = -10.538403607838134
+2020-09-14 01:11:25,630 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 01:11:25,630 Δ = -4.6748114282302495
+2020-09-14 01:11:27,673 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:11:27,673 Δ = -0.2680327200811341
+2020-09-14 01:11:29,718 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:11:29,719 Δ = -0.2666925564807272
+2020-09-14 01:11:31,762 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:11:31,762 Δ = -0.7929572794710147
+2020-09-14 01:11:33,836 Going from state [2, 0, 1] to state [2, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:11:33,837 Δ = -0.31053486959961063
+2020-09-14 01:11:37,104 Going from state [2, 0, 1] to state [5, 0, 1], action = no warning, rewards = -30
+2020-09-14 01:11:37,105 Δ = 5.676817095354515
+2020-09-14 01:11:39,139 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:11:39,139 Δ = -1.5400160934907987
+2020-09-14 01:11:41,193 Going from state [6, 0, 1] to state [7, 0, 1], action = warning, rewards = -30
+2020-09-14 01:11:41,193 Δ = 0.8679782267536993
+2020-09-14 01:11:43,228 Going from state [7, 0, 1] to state [6, 0, 1], action = warning, rewards = 10
+2020-09-14 01:11:43,228 Δ = -11.726623052315276
+2020-09-14 01:11:45,271 Going from state [6, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-14 01:11:45,271 Δ = -8.017222574269887
+2020-09-14 01:11:45,576 Going from state [3, 0, 1] to state [1, 0, 1], action = no warning, rewards = 10
+2020-09-14 01:11:45,576 Δ = -2.9946085793514
+2020-09-14 01:11:47,614 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:11:47,614 Δ = -0.2613943073009679
+2020-09-14 01:11:49,668 Going from state [1, 0, 1] to state [1, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:11:49,669 Δ = -0.26008733576446375
+2020-09-14 01:11:51,714 Going from state [1, 0, 1] to state [2, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:11:51,714 Δ = 2.520571883545884
+2020-09-14 01:11:53,753 Going from state [2, 0, 1] to state [4, 0, 1], action = no warning, rewards = -20
+2020-09-14 01:11:53,753 Δ = -1.2196065444089896
+2020-09-14 01:11:55,792 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-14 01:11:55,792 Δ = -0.4294648639235277
+2020-09-14 01:11:57,842 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:11:57,842 Δ = 3.080974693846535
+2020-09-14 01:11:59,884 Going from state [5, 0, 1] to state [6, 0, 1], action = no warning, rewards = -10
+2020-09-14 01:11:59,884 Δ = -4.308883998765907
+2020-09-14 01:12:01,921 Going from state [6, 0, 1] to state [6, 0, 1], action = warning, rewards = -20
+2020-09-14 01:12:01,921 Δ = -10.525425298392605

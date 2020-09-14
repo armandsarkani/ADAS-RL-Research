@@ -258,7 +258,7 @@ def q_learning(thread, episode, step_size= alpha):
             np.save(output_file, q_values)
             sock.close()
             conn.close()
-            print("Disconnected.")
+            print("Disconnected.\n")
             main()
         send_action(action, init_state)
         for j in range(0, vector_size): # generic response time
@@ -413,7 +413,7 @@ def generate_statistics(statistics_file, episode, time_elapsed):
             data["avg_warning_dl"] = (new_data_percentage * data["avg_warning_dl"]) + (old_data_percentage * old_data["avg_warning_dl"])
             data["total_time_run_seconds"] += old_data["total_time_run_seconds"]
             data["total_time_run"] = convert(data["total_time_run_seconds"])
-            data["total_num_episodes"] += old_data["total_num_episodes"]
+            data["total_num_episodes"] = old_data["total_num_episodes"] + 1
             data["num_corrections"] += old_data["num_corrections"]
             data["num_invasions"] += old_data["num_invasions"]
             data["num_warning_states"] += old_data["num_warning_states"]
@@ -440,6 +440,9 @@ def main():
     global output_file
     global logger
     global driver_name
+    global warning_states
+    global num_corrections
+    global num_invasions
     argparser = argparse.ArgumentParser(
         description='Q-learning LDW Server')
     argparser.add_argument(
@@ -516,6 +519,9 @@ def main():
                 time_elapsed = time.time() - init_time
                 init_time = time.time()
                 generate_statistics(statistics_file, episode, time_elapsed)
+                warning_states = []
+                num_corrections = 0
+                num_invasions = 0
             episode += 1
             print("\n")
         if(conn_reset):
