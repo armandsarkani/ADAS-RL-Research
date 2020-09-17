@@ -150,7 +150,7 @@ def main():
             default='fast',
             help='type of driver response time (fast, slow, cautious)')
         args = argparser.parse_args()
-        hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+        hostname_to_IP = {'iMac': '192.168.0.8', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
         IP = hostname_to_IP.get(args.hostname)
         if(IP is None):
              IP = args.hostname

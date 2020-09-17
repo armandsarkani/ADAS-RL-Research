@@ -22,10 +22,10 @@ from datetime import datetime, date
 epsilon = 0.1
 
 # step size
-alpha = 0.5
+alpha = 0.6
 
 # gamma for Q-Learning
-gamma = 0.99
+gamma = 0.8
 
 # rate at which state transitions are measured
 sampling_rate = 0.1
@@ -46,7 +46,7 @@ num_human_states = 3
 # q-value lookup table, initialized to zeros
 q_values = np.zeros((num_distance_states, num_speed_states, num_human_states, 2))
 
-# iterations for episode
+# iterations per episode
 iterations = 100
 
 # actions
@@ -68,10 +68,12 @@ conn_reset = False
 
 # miscellaneous
 warning_states = []
+state_counts = {3: [], 4: [], 5: [], 6: [], 7: [], 8: []}
 num_corrections = 0
 num_invasions = 0
 driver_name = None
 block_thread = False
+control = False
 
 # class definitions
 class LaneDepartureData:
@@ -186,8 +188,6 @@ def define_rewards(state, action, next_state):
         reward += 50
     if(is_unsafe(state.value) and is_intermediate(next_state.value)): # if corrective action taken after warning from unsafe to intermediate state (warning implied)
         reward += 30
-    if(is_intermediate(state.value) and is_safe(next_state.value) and action == warning): # if corrective action taken after warning from intermediate to safe state
-        reward += 20
     if(is_intermediate(state.value) and is_safe(next_state.value) and action == no_warning): # if corrective action taken after no warning from intermediate to safe state
         reward -= 10
     if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == no_warning): # if no warning issued, but next state was unsafe
@@ -206,7 +206,7 @@ def define_rewards(state, action, next_state):
         reward += 5
     return reward
 def is_safe(state_value):
-    if(state_value[0] < 3 and state_value[1] <= 1 and state_value[2] <= 1):
+    if(state_value[0] < 3):
         return True
     else:
         return False
@@ -216,7 +216,7 @@ def is_intermediate(state_value):
     else:
         return False
 def is_unsafe(state_value):
-    if(state_value[0] >= 8):
+    if(state_value[0] > 8):
         return True
     else:
         return False
@@ -245,7 +245,11 @@ def q_learning(thread, episode, step_size= alpha):
     plot_data = {}
     for i in trange(iterations):
         state_vector = []
-        if(is_safe(init_state.value)):
+        if(control and init_state.value[0] == 11): # only when invaded
+            action = warning
+        elif(control and init_state.value[0] != 11):
+            action = no_warning
+        elif(is_safe(init_state.value)):
             action = no_warning
         elif(is_unsafe(init_state.value)):
             action = warning
@@ -348,6 +352,7 @@ def receive_human_state():
 
 # helper functions
 def plot(plot_data, episode):
+    global state_counts
     # manage directories
     if(not(os.path.exists('Plots'))):
           os.mkdir('Plots')
@@ -355,16 +360,16 @@ def plot(plot_data, episode):
     if(not(os.path.exists(driver_name))):
         os.mkdir(driver_name)
     os.chdir(driver_name)
-    # plot figures based on data
+    # distance/iteration plot
     plt.axis([0, iterations, 11, 0])
     dt = datetime.now()
-    timestamp = dt.strftime("%d-%b-%Y (%H:%M)")
-    timestamp_alt = dt.strftime("%d-%b-%Y_%H%M")
-    file_name = driver_name + "_" + timestamp_alt + "_ep" + str(episode) + ".png"
+    timestamp = dt.strftime('%d-%b-%Y (%H:%M)')
+    timestamp_alt = dt.strftime('%d-%b-%Y_%H%M')
+    file_name = driver_name + '_' + timestamp_alt + '_ep' + str(episode) + '.png'
     title = driver_name + " plot for episode " + str(episode) + " on " + timestamp
     plt.title(title)
     plt.xlabel("Iterations")
-    plt.ylabel("Distance state (higher is closer to lane)")
+    plt.ylabel("Distance state (lower is safer)")
     i = 1
     for key in plot_data:
         y = key.value[0]
@@ -374,6 +379,29 @@ def plot(plot_data, episode):
             plt.plot(i, y, 'go') # plot (iteration, state) no warning as green
         i += 1
     plt.savefig(file_name, dpi=600)
+    plt.clf()
+    # warning frequency plot
+    for i in range(3, 9): # initialization
+        state_counts[i].append(0) # add zero entry for this episode
+    episode = len(state_counts[3])
+    for key in plot_data:
+        if(plot_data[key] == warning and key.value[0] >= 3 and key.value[0] <= 8):
+            state_counts[key.value[0]][episode-1] += 1
+    timestamp = dt.strftime('%d-%b-%Y')
+    file_name = driver_name + '_warning_frequency_plot_' + timestamp + '.png'
+    title = driver_name + " warning frequency plot"
+    plt.title(title)
+    plt.xlabel("Episodes")
+    plt.ylabel("Number of warnings")
+    plt.axis([1, episode+1, 0, 10])
+    plt.xticks(range(1, episode+1))
+    plt.yticks(range(0, 10))
+    state_colors = {3: '#9EC384', 4: '#BBD5AB', 5: '#FAE6A2', 6: '#F9DB79', 7: '#DE9C9A', 8: '#D16D69'}
+    for key in state_counts:
+        plt.plot([ep_num for ep_num in range(1, episode+1)], state_counts[key], state_colors[key], label = 'State ' + str(key))
+    plt.legend(title = "Distance states (lower is safer)", loc='best')
+    plt.savefig(file_name, dpi=600)
+    plt.clf()
     os.chdir('../..')
         
 def generate_statistics(statistics_file, episode, time_elapsed):
@@ -388,6 +416,8 @@ def generate_statistics(statistics_file, episode, time_elapsed):
     warning_state_values = []
     dr = []
     dl = []
+    if(len(warning_states) == 0):
+        return
     for state in warning_states:
         warning_state_values.append(str(state.value))
         dr.append(state.metrics.get("dr"))
@@ -399,7 +429,7 @@ def generate_statistics(statistics_file, episode, time_elapsed):
     avg_dr = statistics.mean(dr)
     avg_dl = statistics.mean(dl)
     total_time_run = convert(time_elapsed)
-    data = {"q_table_name": output_file, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": num_corrections, "num_invasions": num_invasions, "num_warning_states": len(warning_states)}
+    data = {"q_table_name": output_file, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": num_corrections, "num_invasions": num_invasions, "num_warning_states": len(warning_states), "state_counts": state_counts}
     # write to file
     if(not os.path.exists(statistics_file)):
         with open(statistics_file, 'w') as file:
@@ -421,13 +451,25 @@ def generate_statistics(statistics_file, episode, time_elapsed):
             with open(statistics_file, 'w') as file:
                 json.dump(data, file, indent = 4)
     os.chdir('../..')
+def update_state_count(statistics_file):
+    statistics_path = 'Statistics/' + driver_name + '/' + statistics_file
+    if(os.path.exists(statistics_path)):
+        os.chdir('Statistics/' + driver_name)
+        with open(statistics_file) as file:
+            stats_data = json.load(file)
+            i = 3
+            for key in stats_data["state_counts"]:
+                state_counts[i] = stats_data["state_counts"][key] # load in state_counts dictionary if it already exists for plotting frequency graphs
+                i += 1
+            file.close()
+        os.chdir('../..')
 def convert(seconds):
     seconds = seconds % (24 * 3600)
     hour = seconds // 3600
     seconds %= 3600
     minutes = seconds // 60
     seconds %= 60
-    return "%d:%02d:%02d" % (hour, minutes, seconds)
+    return '%d:%02d:%02d' % (hour, minutes, seconds)
 
 
 # main function
@@ -443,6 +485,9 @@ def main():
     global warning_states
     global num_corrections
     global num_invasions
+    global control
+    global state_counts
+    global epsilon
     argparser = argparse.ArgumentParser(
         description='Q-learning LDW Server')
     argparser.add_argument(
@@ -470,13 +515,22 @@ def main():
         metavar='STATISTICS.json',
         default= None,
         help='output statistics about simulations')
+    argparser.add_argument(
+        '-c', '--control',
+        metavar='ON/OFF',
+        default= 'off',
+        help='make this a control experiment (warning only issued with lane invasion)')
     args = argparser.parse_args()
     input_file = args.input
     output_file = args.output
     log_file = args.log
+    if(args.control == 'off'):
+        control = False
+    else:
+        control = True
     statistics_file = args.statistics
     driver_name = output_file.replace('.npy', '')
-    hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.0.8', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
         IP = args.hostname
@@ -508,6 +562,8 @@ def main():
     else:
         np.save(output_file, q_values) # custom file
         initialize_q_table()
+        epsilon = 0.15
+    update_state_count(statistics_file)
     episode = 1
     init_time = time.time()
     try:

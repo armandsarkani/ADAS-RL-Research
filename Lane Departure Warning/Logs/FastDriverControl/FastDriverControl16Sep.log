@@ -1,0 +1,13 @@
+2020-09-16 19:51:17,737 Lane invasion
+2020-09-16 19:51:17,737 Going from state [11, 0, 1] to state [3, 0, 1], action = warning, rewards = 30
+2020-09-16 19:51:17,738 Δ = -6.171056604171434
+2020-09-16 19:51:19,812 Going from state [3, 0, 1] to state [3, 0, 1], action = no warning, rewards = 0
+2020-09-16 19:51:19,812 Δ = 0.4770069489250668
+2020-09-16 19:51:21,887 Going from state [3, 0, 1] to state [3, 0, 1], action = no warning, rewards = 0
+2020-09-16 19:51:21,887 Δ = 0.1908027795700267
+2020-09-16 19:51:23,966 Going from state [3, 0, 1] to state [4, 0, 1], action = no warning, rewards = -10
+2020-09-16 19:51:23,966 Δ = -5.923678888171989
+2020-09-16 19:51:26,052 Going from state [4, 0, 1] to state [4, 0, 1], action = no warning, rewards = 0
+2020-09-16 19:51:26,052 Δ = 3.0055075293843947
+2020-09-16 19:51:28,120 Going from state [4, 0, 1] to state [5, 0, 1], action = no warning, rewards = -10
+2020-09-16 19:51:28,121 Δ = -4.797796988246242
