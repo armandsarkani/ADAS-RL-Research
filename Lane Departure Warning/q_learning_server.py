@@ -16,6 +16,7 @@ import argparse
 import json
 import logging
 import statistics
+import uuid
 from datetime import datetime, date
 
 # probability for exploration
@@ -74,6 +75,7 @@ num_invasions = 0
 driver_name = None
 block_thread = False
 control = False
+driver_id = None
 
 # class definitions
 class LaneDepartureData:
@@ -458,7 +460,7 @@ def generate_statistics(statistics_file, episode, time_elapsed):
     avg_dr = statistics.mean(dr)
     avg_dl = statistics.mean(dl)
     total_time_run = convert(time_elapsed)
-    data = {"q_table_name": output_file, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": num_corrections, "num_invasions": num_invasions, "num_warning_states": len(warning_states), "state_counts": state_counts}
+    data = {"q_table_name": output_file, "driver_id": driver_id, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": num_corrections, "num_invasions": num_invasions, "num_warning_states": len(warning_states), "state_counts": state_counts}
     # write to file
     if(not os.path.exists(statistics_file)):
         with open(statistics_file, 'w') as file:
@@ -476,6 +478,8 @@ def generate_statistics(statistics_file, episode, time_elapsed):
             data["num_corrections"] += old_data["num_corrections"]
             data["num_invasions"] += old_data["num_invasions"]
             data["num_warning_states"] += old_data["num_warning_states"]
+            if(old_data.get("driver_id") is not None):
+                data["driver_id"] = old_data["driver_id"]
             file.close()
             with open(statistics_file, 'w') as file:
                 json.dump(data, file, indent = 4)
@@ -503,7 +507,7 @@ def convert(seconds):
 
 # main function
 def main():
-    global conn_reset, conn, q_values, sock, input_file, output_file, logger, driver_name, warning_states, num_corrections, num_invasions, control, state_counts, epsilon
+    global conn_reset, conn, q_values, sock, input_file, output_file, logger, driver_name, warning_states, num_corrections, num_invasions, control, state_counts, epsilon, driver_id
     args = parse_arguments()
     input_file = args.input
     output_file = args.output
@@ -549,6 +553,7 @@ def main():
         epsilon = 0.15
     update_state_count(statistics_file)
     episode = 1
+    driver_id = uuid.uuid4().hex
     init_time = time.time()
     try:
         while(True):
