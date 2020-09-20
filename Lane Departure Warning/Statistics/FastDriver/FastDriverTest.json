@@ -1,0 +1,74 @@
+{
+    "q_table_name": "FastDriver.npy",
+    "warning_most_common_state": "[9, 0, 1]",
+    "avg_warning_dr": 1.403014184397163,
+    "avg_warning_dl": 2.2775886524822697,
+    "total_time_run": "0:30:04",
+    "total_time_run_seconds": 1804.3825755119324,
+    "total_num_episodes": 13,
+    "num_corrections": 78,
+    "num_invasions": 10,
+    "num_warning_states": 282,
+    "state_counts": {
+        "3": [
+            4,
+            1,
+            0,
+            6,
+            2,
+            2,
+            2,
+            0
+        ],
+        "4": [
+            1,
+            0,
+            0,
+            4,
+            1,
+            1,
+            0,
+            0
+        ],
+        "5": [
+            1,
+            0,
+            0,
+            2,
+            0,
+            0,
+            5,
+            0
+        ],
+        "6": [
+            0,
+            0,
+            1,
+            2,
+            2,
+            2,
+            1,
+            5
+        ],
+        "7": [
+            6,
+            9,
+            5,
+            7,
+            4,
+            10,
+            11,
+            7
+        ],
+        "8": [
+            2,
+            4,
+            6,
+            0,
+            2,
+            6,
+            4,
+            0
+        ]
+    }
+}

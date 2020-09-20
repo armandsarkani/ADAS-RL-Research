@@ -95,11 +95,11 @@ class LaneDepartureData:
     lane_id = 0
 class State:
     def __init__(self):
-        self.metrics = receive_metrics()
+        self.metrics = calculate_metrics()
         self.value = enumerate_state(self.metrics)
         
 # Q-learning functions
-def receive_metrics():
+def calculate_metrics():
     while True:
         if(d is not None):
             dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
@@ -234,12 +234,7 @@ def send_action(action, state):
         string = "Safe. State: " + str(state.value)
         conn.send(string.encode())
 def q_learning(thread, episode, step_size= alpha):
-    global q_values
-    global rewards
-    global vector_size
-    global warning_states
-    global num_corrections
-    global block_thread
+    global q_values, rewards, vector_size, warning_states, num_corrections, block_thread
     iteration_rewards = 0
     init_state = State()
     plot_data = {}
@@ -318,9 +313,8 @@ def left_lane_distance(location_x, location_y, left_x, left_y, left_lane_width):
                return(lane_marking_x - location_x)
 
 # data management functions
-def ThreadFunction(conn):
-    global d
-    global conn_reset
+def receive_data(conn):
+    global d, conn_reset
     while True:
         try:
             data = conn.recv(4096)
@@ -351,6 +345,41 @@ def receive_human_state():
             return human_state # return last value
 
 # helper functions
+def parse_arguments():
+    argparser = argparse.ArgumentParser(
+        description='Q-learning LDW Server')
+    argparser.add_argument(
+        '-n', '--hostname',
+        metavar='HOSTNAME',
+        default='localhost',
+        help='computer hostname or IP address')
+    argparser.add_argument(
+        '-i', '--input',
+        metavar='INPUT.json',
+        default='HumanStates.json',
+        help='specify an input JSON file name for human state data (default is HumanStates.json)')
+    argparser.add_argument(
+        '-o', '--output',
+        metavar='OUTPUT.npy',
+        default='DriverQValues.npy',
+        help='specify the output NumPy file for this driver. If it does not exist, it will be created (default is DriverQValues.npy).')
+    argparser.add_argument(
+        '-l', '--log',
+        metavar='LOG.log',
+        default='ServerOutput.log',
+        help='specify the output log file for this driver (default is ServerOutput.log)')
+    argparser.add_argument(
+        '-s', '--statistics',
+        metavar='STATISTICS.json',
+        default= None,
+        help='output statistics about simulations')
+    argparser.add_argument(
+        '-c', '--control',
+        metavar='ON/OFF',
+        default= 'off',
+        help='make this a control experiment (warning only issued with lane invasion)')
+    args = argparser.parse_args()
+    return args
 def plot(plot_data, episode):
     global state_counts
     # manage directories
@@ -474,61 +503,16 @@ def convert(seconds):
 
 # main function
 def main():
-    global conn_reset
-    global conn
-    global q_values
-    global sock
-    global input_file
-    global output_file
-    global logger
-    global driver_name
-    global warning_states
-    global num_corrections
-    global num_invasions
-    global control
-    global state_counts
-    global epsilon
-    argparser = argparse.ArgumentParser(
-        description='Q-learning LDW Server')
-    argparser.add_argument(
-        '-n', '--hostname',
-        metavar='HOSTNAME',
-        default='localhost',
-        help='computer hostname or IP address')
-    argparser.add_argument(
-        '-i', '--input',
-        metavar='INPUT.json',
-        default='HumanStates.json',
-        help='specify an input JSON file name for human state data (default is HumanStates.json)')
-    argparser.add_argument(
-        '-o', '--output',
-        metavar='OUTPUT.npy',
-        default='DriverQValues.npy',
-        help='specify the output NumPy file for this driver. If it does not exist, it will be created (default is DriverQValues.npy).')
-    argparser.add_argument(
-        '-l', '--log',
-        metavar='LOG.log',
-        default='ServerOutput.log',
-        help='specify the output log file for this driver (default is ServerOutput.log)')
-    argparser.add_argument(
-        '-s', '--statistics',
-        metavar='STATISTICS.json',
-        default= None,
-        help='output statistics about simulations')
-    argparser.add_argument(
-        '-c', '--control',
-        metavar='ON/OFF',
-        default= 'off',
-        help='make this a control experiment (warning only issued with lane invasion)')
-    args = argparser.parse_args()
+    global conn_reset, conn, q_values, sock, input_file, output_file, logger, driver_name, warning_states, num_corrections, num_invasions, control, state_counts, epsilon
+    args = parse_arguments()
     input_file = args.input
     output_file = args.output
     log_file = args.log
+    statistics_file = args.statistics
     if(args.control == 'off'):
         control = False
     else:
         control = True
-    statistics_file = args.statistics
     driver_name = output_file.replace('.npy', '')
     hostname_to_IP = {'iMac': '192.168.0.8', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
@@ -551,7 +535,7 @@ def main():
     sock.listen(1)
     conn, addr = sock.accept()
     print("Connected by", addr)
-    thread = threading.Thread(target=ThreadFunction, args=(conn,))
+    thread = threading.Thread(target=receive_data, args=(conn,))
     thread.start()
     if(os.path.exists(output_file)):
         print("Existing Q-table loaded ...")
