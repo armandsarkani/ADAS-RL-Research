@@ -282,6 +282,7 @@ def q_learning(thread, episode, step_size= alpha):
         init_state = final_state
     block_thread = True
     plot(plot_data, episode)
+    save_plot_data(plot_data)
     block_thread = False
 def right_lane_distance(location_x, location_y, right_x, right_y, right_lane_width):
     if(abs(location_x - right_x) <= 1): # if x are negligibly similar
@@ -382,6 +383,38 @@ def parse_arguments():
         help='make this a control experiment (warning only issued with lane invasion)')
     args = argparser.parse_args()
     return args
+def save_plot_data(plot_data):
+    if(not(os.path.exists('Data'))):
+          os.mkdir('Data')
+    os.chdir('Data')
+    if(not(os.path.exists(driver_name))):
+        os.mkdir(driver_name)
+    os.chdir(driver_name)
+    iterations_data_file_name = driver_name + '_iterations_data.json'
+    wf_data_file_name = driver_name + '_warning_frequency_data.json'
+    plot_data_values = {}
+    for state in plot_data:
+        if(str(state.value) in plot_data_values):
+            value = plot_data_values[str(state.value)]
+            value.append(int(plot_data[state]))
+            plot_data_values.update({str(state.value): value})
+        else:
+            plot_data_values.update({str(state.value): [int(plot_data[state])]})
+    dt = datetime.now()
+    timestamp = dt.strftime('%d-%b-%Y (%H:%M)')
+    iterations_data = {timestamp: plot_data_values}
+    if(not os.path.exists(iterations_data_file_name)):
+        with open(iterations_data_file_name, 'w') as file:
+            json.dump(iterations_data, file)
+    else:
+        with open(iterations_data_file_name, 'r') as file:
+            data = json.load(file)
+            data.update(iterations_data)
+            with open(iterations_data_file_name, 'w') as file:
+                json.dump(data, file)
+    with open(wf_data_file_name, 'w') as file:
+        json.dump(state_counts, file)
+    os.chdir('../..')
 def plot(plot_data, episode):
     global state_counts
     # manage directories
@@ -460,7 +493,7 @@ def generate_statistics(statistics_file, episode, time_elapsed):
     avg_dr = statistics.mean(dr)
     avg_dl = statistics.mean(dl)
     total_time_run = convert(time_elapsed)
-    data = {"q_table_name": output_file, "driver_id": driver_id, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": num_corrections, "num_invasions": num_invasions, "num_warning_states": len(warning_states), "state_counts": state_counts}
+    data = {"q_table_name": output_file, "driver_id": driver_id, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": num_corrections, "num_invasions": num_invasions, "num_warning_states": len(warning_states)}
     # write to file
     if(not os.path.exists(statistics_file)):
         with open(statistics_file, 'w') as file:
@@ -484,15 +517,15 @@ def generate_statistics(statistics_file, episode, time_elapsed):
             with open(statistics_file, 'w') as file:
                 json.dump(data, file, indent = 4)
     os.chdir('../..')
-def update_state_count(statistics_file):
-    statistics_path = 'Statistics/' + driver_name + '/' + statistics_file
-    if(os.path.exists(statistics_path)):
-        os.chdir('Statistics/' + driver_name)
-        with open(statistics_file) as file:
-            stats_data = json.load(file)
+def load_state_counts(data_file): # state counts need to be loaded to form warning frequency plot of all data, iteration data is write-only
+    data_path = 'Data/' + driver_name + '/' + data_file
+    if(os.path.exists(data_path)):
+        os.chdir('Data/' + driver_name)
+        with open(data_file) as file:
+            data = json.load(file)
             i = 3
-            for key in stats_data["state_counts"]:
-                state_counts[i] = stats_data["state_counts"][key] # load in state_counts dictionary if it already exists for plotting frequency graphs
+            for key in data:
+                state_counts[i] = data[key] # load in state_counts dictionary if it already exists for plotting frequency graphs
                 i += 1
             file.close()
         os.chdir('../..')
@@ -551,7 +584,8 @@ def main():
         np.save(output_file, q_values) # custom file
         initialize_q_table()
         epsilon = 0.15
-    update_state_count(statistics_file)
+    data_file_stc = driver_name + "_warning_frequency_data.json"
+    load_state_counts(data_file_stc)
     episode = 1
     driver_id = uuid.uuid4().hex
     init_time = time.time()
