@@ -457,13 +457,23 @@ def plot(plot_data, episode):
     plt.title(title)
     plt.xlabel("Episodes")
     plt.ylabel("Number of warnings")
-    plt.axis([1, episode+1, 0, 10])
+    plt.axis([0, episode+1, 0, 10])
     plt.xticks(range(1, episode+1))
     plt.yticks(range(0, 10))
     state_colors = {3: '#9EC384', 4: '#BBD5AB', 5: '#FAE6A2', 6: '#F9DB79', 7: '#DE9C9A', 8: '#D16D69'}
-    for key in state_counts:
-        plt.plot([ep_num for ep_num in range(1, episode+1)], state_counts[key], state_colors[key], label = 'State ' + str(key))
-    plt.legend(title = "Distance states (lower is safer)", loc='best')
+    #ax = plt.subplot(111)
+    '''for key in state_counts:
+        plt.plot([ep_num for ep_num in range(1, episode+1)], state_counts[key], state_colors[key], label = 'State ' + str(key))'''
+    width = 0.1
+    for x in range(1, episode+1):
+        offset = 0.3
+        for key in state_counts:
+            y = state_counts[key][x-1]
+            plt.bar(x-offset, y, width = width, color = state_colors[key], align = 'center')
+            offset -= 0.1
+    labels = list(state_colors.keys())
+    handles = [plt.Rectangle((0,0),1,1, color=state_colors[label]) for label in labels]
+    plt.legend(handles, labels, title = "Distance state number (lower is safer)", loc='best')
     plt.savefig(file_name, dpi=600)
     plt.clf()
     os.chdir('../..')
