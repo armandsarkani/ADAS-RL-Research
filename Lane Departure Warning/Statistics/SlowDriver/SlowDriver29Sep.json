@@ -1,0 +1,13 @@
+{
+    "q_table_name": "SlowDriver.npy",
+    "driver_id": "9cd97f036706495096110bfa3867fe05",
+    "warning_most_common_state": "[9, 0, 1]",
+    "avg_warning_dr": 0.7912195121951219,
+    "avg_warning_dl": 2.7201219512195123,
+    "total_time_run": "0:17:40",
+    "total_time_run_seconds": 1060.9206926822662,
+    "total_num_episodes": 5,
+    "num_corrections": 28,
+    "num_invasions": 2,
+    "num_warning_states": 82
+}

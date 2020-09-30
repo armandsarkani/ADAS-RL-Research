@@ -1,0 +1,13 @@
+{
+    "q_table_name": "FastDriverControl.npy",
+    "driver_id": "1384a24b774e4860a2fb5a08132cad74",
+    "warning_most_common_state": "[11, 0, 1]",
+    "avg_warning_dr": 0.6793670886075949,
+    "avg_warning_dl": 2.848860759493671,
+    "total_time_run": "0:14:41",
+    "total_time_run_seconds": 881.0829620361328,
+    "total_num_episodes": 6,
+    "num_corrections": 39,
+    "num_invasions": 35,
+    "num_warning_states": 79
+}

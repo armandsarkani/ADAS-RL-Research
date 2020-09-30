@@ -111,16 +111,15 @@ def send_data(): # send data to server
     
 # driver scenarios
 def slow_driver(throttle):
-    for i in range(0, 3):
-        vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.005,-0.01)))
+    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.005,-0.015)))
 def cautious_driver(throttle):
     init_time = time.time()
     while(time.time() - init_time < cautious_time):
         vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0))
     for i in range(0, 3):
-        vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.005,-0.01)))
+        vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.005,-0.015)))
 def fast_driver(throttle):
-    vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=random.uniform(-0.01,-0.02)))
+    vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=random.uniform(-0.005,-0.025)))
 
 # main function
 def main():
