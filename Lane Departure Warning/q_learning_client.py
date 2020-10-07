@@ -120,6 +120,8 @@ def cautious_driver(throttle):
         vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.005,-0.015)))
 def fast_driver(throttle):
     vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=random.uniform(-0.005,-0.025)))
+def drowsy_driver(throttle):
+    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.015,0.015)))
 
 # main function
 def main():
@@ -154,7 +156,7 @@ def main():
         if(IP is None):
              IP = args.hostname
         worldset = args.mode
-        throttle = float(args.throttle)
+        throttle, orig_throttle = float(args.throttle), float(args.throttle)
         driver = args.driver
         port = 50007
         global sock
@@ -178,7 +180,7 @@ def main():
         thread.start()
         time.sleep(3)
         secondary_corrective_percentage = 0.85
-        threshold_dict = {"slow": 1.2, "cautious": 1.1, "fast": 0.65}
+        threshold_dict = {"drowsy": 1.3, "slow": 1.2, "cautious": 1.1, "fast": 0.65}
         threshold = threshold_dict.get(driver)
         while(True):
             response = sock.recv(4096)
@@ -198,6 +200,8 @@ def main():
                     slow_driver(throttle)
                 if(driver == "cautious"):
                     cautious_driver(throttle)
+                if(driver == "drowsy"):
+                    drowsy_driver(throttle)
                 if(driver == "fast"):
                     fast_driver(throttle)
                 flag = True
@@ -209,7 +213,13 @@ def main():
                 vehicle.set_transform(lane_center.transform) # quick adjust wheels
             if(vehicle.get_location().x >= 630.0):
                 vehicle.set_transform(carla.Transform(carla.Location(151.071,140.458,2.5),carla.Rotation(0,0.234757,0))) # reset position to the beginning of the road to continue testing when the vehicle reaches end of road
-            vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0.001))
+            if(driver == "drowsy"):
+                throttle *= 0.95
+                if(throttle < orig_throttle*0.5):
+                    throttle = orig_throttle
+                vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.0005, 0.001)))
+            else:
+                vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0.001))
     except KeyboardInterrupt:
         for actor in actor_list:
             actor.destroy()

@@ -69,6 +69,7 @@ conn_reset = False
 
 # miscellaneous
 warning_states = []
+all_states = {0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: [], 10: [], 11: []}
 state_counts = {3: [], 4: [], 5: [], 6: [], 7: [], 8: []}
 num_corrections = 0
 num_invasions = 0
@@ -218,7 +219,9 @@ def is_intermediate(state_value):
     else:
         return False
 def is_unsafe(state_value):
-    if(state_value[0] > 8):
+    if(state_value[0] > 8 and state_value[2] != unattentive):
+        return True
+    elif(state_value[0] >= 7 and state_value[2] == unattentive):
         return True
     else:
         return False
@@ -236,7 +239,7 @@ def send_action(action, state):
         string = "Safe. State: " + str(state.value)
         conn.send(string.encode())
 def q_learning(thread, episode, step_size= alpha):
-    global q_values, rewards, vector_size, warning_states, num_corrections, block_thread
+    global q_values, rewards, vector_size, warning_states, all_states, num_corrections, block_thread
     iteration_rewards = 0
     init_state = State()
     plot_data = {}
@@ -255,6 +258,7 @@ def q_learning(thread, episode, step_size= alpha):
         if(action == warning):
             warning_states.append(init_state)
         plot_data.update({init_state: action})
+        all_states[init_state.value[0]].append(action)
         if(not thread.is_alive()):
             np.save(output_file, q_values)
             sock.close()
@@ -488,6 +492,7 @@ def generate_statistics(statistics_file, episode, time_elapsed):
     os.chdir(driver_name)
     # get data
     warning_state_values = []
+    warning_ratios = {}
     dr = []
     dl = []
     if(len(warning_states) == 0):
@@ -496,6 +501,16 @@ def generate_statistics(statistics_file, episode, time_elapsed):
         warning_state_values.append(str(state.value))
         dr.append(state.metrics.get("dr"))
         dl.append(state.metrics.get("dl"))
+    for dist_state in all_states:
+        num_warnings = 0
+        if(len(all_states[dist_state]) == 0):
+            warning_ratios.update({dist_state: "N/A"})
+            continue
+        for action in all_states[dist_state]:
+            if(action == warning):
+                num_warnings += 1
+        ratio = "{0:.1%}".format(num_warnings/len(all_states[dist_state]))
+        warning_ratios.update({dist_state: ratio})
     try:
         most_common_state = statistics.mode(warning_state_values)
     except statistics.StatisticsError:
@@ -503,8 +518,9 @@ def generate_statistics(statistics_file, episode, time_elapsed):
     avg_dr = statistics.mean(dr)
     avg_dl = statistics.mean(dl)
     total_time_run = convert(time_elapsed)
-    data = {"q_table_name": output_file, "driver_id": driver_id, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": num_corrections, "num_invasions": num_invasions, "num_warning_states": len(warning_states)}
-    # write to file
+    data = {"q_table_name": output_file, "driver_id": driver_id, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": num_corrections, "num_invasions": num_invasions, "num_warning_states": len(warning_states), "warning_ratio_dist_states": warning_ratios}
+    write_statistics(data, statistics_file)
+def write_statistics(data, statistics_file):
     if(not os.path.exists(statistics_file)):
         with open(statistics_file, 'w') as file:
             json.dump(data, file, indent = 4)
@@ -521,6 +537,13 @@ def generate_statistics(statistics_file, episode, time_elapsed):
             data["num_corrections"] += old_data["num_corrections"]
             data["num_invasions"] += old_data["num_invasions"]
             data["num_warning_states"] += old_data["num_warning_states"]
+            for dist_state in old_data["warning_ratio_dist_states"]:
+                if(old_data["warning_ratio_dist_states"][dist_state] == "N/A"):
+                    continue # sets data to new value
+                if(data["warning_ratio_dist_states"][int(dist_state)] == "N/A"):
+                    data["warning_ratio_dist_states"][int(dist_state)] == old_data["warning_ratio_dist_states"][dist_state] # data does not change
+                    continue
+                data["warning_ratio_dist_states"][int(dist_state)] = "{0:.1%}".format((new_data_percentage * float(data["warning_ratio_dist_states"][int(dist_state)].strip('%')) + (old_data_percentage * float(old_data["warning_ratio_dist_states"][dist_state].strip('%'))))/100)
             if(old_data.get("driver_id") is not None):
                 data["driver_id"] = old_data["driver_id"]
             file.close()
