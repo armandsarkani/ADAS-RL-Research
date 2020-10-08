@@ -25,8 +25,8 @@ yesterday = str(yesterday)
 # human states
 attentive = 0
 moderate = 1
-unattentive = 2
-dict_states = {attentive: "attentive", moderate: "moderate", unattentive: "unattentive"}
+inattentive = 2
+dict_states = {attentive: "attentive", moderate: "moderate", inattentive: "inattentive"}
 
 # functions to receive Oura ring data
 def get_userinfo(start=today, end=today):
@@ -162,7 +162,7 @@ def classify_state(userinfo, sleep_state, activity_state, readiness_state):
     elif(average_state_score > 50 and average_state_score < 75):
         return moderate
     else:
-        return unattentive
+        return inattentive
 def main():
     argparser = argparse.ArgumentParser(
         description='Oura Ring Data Server')

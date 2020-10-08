@@ -35,9 +35,9 @@ vector_size = int(2/sampling_rate)
 # human states
 attentive = 0
 moderate = 1
-unattentive = 2
+inattentive = 2
 human_state = None
-dict_human_states = {"attentive": attentive, "moderate": moderate, "unattentive": unattentive}
+dict_human_states = {"attentive": attentive, "moderate": moderate, "inattentive": inattentive}
 
 # number of states per dimension
 num_distance_states = 12
@@ -195,13 +195,13 @@ def define_rewards(state, action, next_state):
         reward -= 10
     if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == no_warning): # if no warning issued, but next state was unsafe
         reward -= 30
-        if(state.value[2] == unattentive):
+        if(state.value[2] == inattentive):
             reward -= 10
     if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == warning): # if warning issued, but next state was unsafe
         reward += 20
-        if(state.value[2] == unattentive):
+        if(state.value[2] == inattentive):
             reward += 20
-    if(state.value[2] == unattentive and action == warning): # giving warning to unattentive driver
+    if(state.value[2] == inattentive and action == warning): # giving warning to inattentive driver
         reward += 5
     if(state.value[2] == attentive and action == warning): # giving warning to attentive driver
         reward -= 5
@@ -219,9 +219,9 @@ def is_intermediate(state_value):
     else:
         return False
 def is_unsafe(state_value):
-    if(state_value[0] > 8 and state_value[2] != unattentive):
+    if(state_value[0] > 8 and state_value[2] != inattentive):
         return True
-    elif(state_value[0] >= 7 and state_value[2] == unattentive):
+    elif(state_value[0] >= 7 and state_value[2] == inattentive):
         return True
     else:
         return False
