@@ -217,7 +217,8 @@ def main():
                 throttle *= 0.95
                 if(throttle < orig_throttle*0.5):
                     throttle = orig_throttle
-                vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.0005, 0.001)))
+                steer=random.uniform(-0.0005, 0.001)
+                vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=steer))
             else:
                 vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0.001))
     except KeyboardInterrupt:

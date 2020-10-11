@@ -107,13 +107,13 @@ def calculate_metrics():
         if(d is not None):
             dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
             dl = left_lane_distance(d.location_x, d.location_y, d.left_x, d.left_y, d.left_lane_width)
-            if(dr is not None and dl is not None and d.speed_limit is not None and d.speed is not None and d.lane_id is not None):
+            if(dr is not None and dl is not None and d.speed_limit is not None and d.speed is not None and d.lane_id is not None and d.steer is not None):
                 dr *= -1
                 dl *= -1
                 dr = float('%.2f' % dr)
                 dl = float('%.2f' % dl)
                 speed = d.speed * 2.237 # m/s to mph
-                return {"dl": dl, "dr": dr, "speed": speed, "speed_limit": d.speed_limit, "lane_id": d.lane_id}
+                return {"dl": dl, "dr": dr, "speed": speed, "speed_limit": d.speed_limit, "lane_id": d.lane_id, "steer": d.steer}
 def initialize_q_table():
     for i in range(0, 3):
         q_values[i, :, :, 0] = 1
@@ -132,6 +132,7 @@ def enumerate_state(metrics):
     dr = metrics.get("dr")
     speed = metrics.get("speed")
     speed_limit = metrics.get("speed_limit")
+    steer = metrics.get("steer")
     # distance
     if(dl == 1.75 and dr == 1.75):
         state[0] = 0
@@ -207,6 +208,8 @@ def define_rewards(state, action, next_state):
         reward -= 5
     if(state.value[2] == attentive and action == no_warning): # not giving warning to attentive driver
         reward += 5
+    if(state.value[2] == inattentive and state.metrics.get("steer") > 0.0005 and action == no_warning):
+        reward -= 20
     return reward
 def is_safe(state_value):
     if(state_value[0] < 3):
