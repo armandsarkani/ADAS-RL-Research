@@ -96,6 +96,7 @@ class LaneDepartureData:
     speed = 0
     speed_limit = 0
     lane_id = 0
+    turn_signal = None
 class State:
     def __init__(self):
         self.metrics = calculate_metrics()
@@ -105,6 +106,10 @@ class State:
 def calculate_metrics():
     while True:
         if(d is not None):
+            if(d.turn_signal == True):
+                print("Turn signal activated by client ...")
+            while(d is not None and d.turn_signal == True):
+                pass
             dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
             dl = left_lane_distance(d.location_x, d.location_y, d.left_x, d.left_y, d.left_lane_width)
             if(dr is not None and dl is not None and d.speed_limit is not None and d.speed is not None and d.lane_id is not None and d.steer is not None):

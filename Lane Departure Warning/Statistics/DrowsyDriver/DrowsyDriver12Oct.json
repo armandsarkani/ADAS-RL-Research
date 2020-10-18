@@ -1,0 +1,27 @@
+{
+    "q_table_name": "DrowsyDriver.npy",
+    "driver_id": "44f20a84546c46a98faaf859b77f9f18",
+    "warning_most_common_state": "[3, 0, 2]",
+    "avg_warning_dr": 1.314,
+    "avg_warning_dl": 2.186,
+    "total_time_run": "0:00:42",
+    "total_time_run_seconds": 42.631393909454346,
+    "total_num_episodes": 1,
+    "num_corrections": 1,
+    "num_invasions": 0,
+    "num_warning_states": 5,
+    "warning_ratio_dist_states": {
+        "0": "0.0%",
+        "1": "0.0%",
+        "2": "N/A",
+        "3": "25.0%",
+        "4": "40.0%",
+        "5": "N/A",
+        "6": "N/A",
+        "7": "N/A",
+        "8": "N/A",
+        "9": "N/A",
+        "10": "N/A",
+        "11": "N/A"
+    }
+}

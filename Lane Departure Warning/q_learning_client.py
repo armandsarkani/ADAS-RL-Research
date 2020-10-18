@@ -11,10 +11,6 @@ try:
 except IndexError:
     pass
 
-
-# ==============================================================================
-# -- imports -------------------------------------------------------------------
-# ==============================================================================
 import matplotlib.pyplot as plt
 import numpy as np
 import carla
@@ -30,6 +26,7 @@ import argparse
 cautious_time = 1.5
 stop_thread = False
 corrective_percentage = 0.95
+turn_signal_status = False
 
 # lane departure data class to send to server
 class LaneDepartureData:
@@ -53,6 +50,7 @@ class LaneDepartureData:
         self.lane_id = worldmap.get_waypoint(location).lane_id
         self.speed = math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
         self.speed_limit = vehicle.get_speed_limit()
+        self.turn_signal = turn_signal_status
         if(worldmap.get_waypoint(location).get_right_lane() is not None):
             self.right_x = worldmap.get_waypoint(location).get_right_lane().transform.location.x
             self.right_y = worldmap.get_waypoint(location).get_right_lane().transform.location.y
@@ -98,7 +96,7 @@ def left_lane_distance(location_x, location_y, left_x, left_y, left_lane_width):
 
             
 # socket communication functions
-def Receive(sock):
+def send(sock):
     time_issued_warning = 0
     while(True):
         send_data()
@@ -123,34 +121,95 @@ def fast_driver(throttle):
 def drowsy_driver(throttle):
     vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.015,0.015)))
 
+# helper functions
+def quick_lane_centering(vehicle):
+    location = vehicle.get_location()
+    lane_center = worldmap.get_waypoint(location)
+    vehicle.set_transform(lane_center.transform)
+def parse_arguments():
+    argparser = argparse.ArgumentParser(
+            description='Q-learning LDW Server')
+    argparser.add_argument(
+        '-n', '--hostname',
+        metavar='NAME',
+        default='localhost',
+        help='computer hostname or IP address')
+    argparser.add_argument(
+        '-m', '--mode',
+        metavar='MODE',
+        default='continue',
+        help='world mode (set/continue)')
+    argparser.add_argument(
+        '-t', '--throttle',
+        metavar='#.#',
+        default=0.5,
+        help='constant throttle value for vehicle to drive at (range: 0.0 - 1.0)')
+    argparser.add_argument(
+        '-d', '--driver',
+        metavar='DRIVER',
+        default='fast',
+        help='type of driver response time (fast, slow, cautious)')
+    args = argparser.parse_args()
+    return args
+
+# game loop
+def script_loop(driver, throttle, threshold):
+    global turn_signal_status
+    while(True):
+        response = sock.recv(4096)
+        print(response.decode())
+        flag = False
+        d = LaneDepartureData()
+        dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
+        while(dr is None):
+            d = LaneDepartureData()
+            dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
+        dr *= -1
+        if(dr <= threshold and np.random.binomial(1, 0.1) == 1): # turn on turn signals
+            turn_signal_status = True
+            print("Turn signals on ...")
+            orig_lane_id = worldmap.get_waypoint(vehicle.get_location()).lane_id
+            while(worldmap.get_waypoint(vehicle.get_location()).lane_id == orig_lane_id):
+                vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0.05))
+            quick_lane_centering(vehicle)
+            print("Turn signals off.")
+            turn_signal_status = False
+            continue
+        secondary_corrective_percentage = 0.85
+        while(np.random.binomial(1, corrective_percentage) == 1 and "WARNING! Approaching lane." in response.decode()): # only take corrective action certain % of time
+            if(dr >= threshold and np.random.binomial(1, secondary_corrective_percentage) == 1):  # certain % of the time, if driver is at threshold or closer to the center of the lane, do not take a corrective action
+                print("Not doing corrective action.")
+                break # do not take a corrective action
+            if(driver == "slow"):
+                slow_driver(throttle)
+            if(driver == "cautious"):
+                cautious_driver(throttle)
+            if(driver == "drowsy"):
+                drowsy_driver(throttle)
+            if(driver == "fast"):
+                fast_driver(throttle)
+            flag = True
+            response = sock.recv(4096)
+            print(response.decode())
+        if(flag):
+           quick_lane_centering(vehicle)
+        if(vehicle.get_location().x >= 630.0):
+            vehicle.set_transform(carla.Transform(carla.Location(151.071,140.458,2.5),carla.Rotation(0,0.234757,0))) # reset position to the beginning of the road to continue testing when the vehicle reaches end of road
+        if(driver == "drowsy"):
+            throttle *= 0.95
+            if(throttle < orig_throttle*0.5):
+                throttle = orig_throttle
+            steer = random.uniform(-0.0005, 0.001)
+            vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=steer))
+        else:
+            vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0.001))
+    
 # main function
 def main():
     actor_list = []
     global stop_thread
     try:
-        argparser = argparse.ArgumentParser(
-            description='Q-learning LDW Server')
-        argparser.add_argument(
-            '-n', '--hostname',
-            metavar='NAME',
-            default='localhost',
-            help='computer hostname or IP address')
-        argparser.add_argument(
-            '-m', '--mode',
-            metavar='MODE',
-            default='continue',
-            help='world mode (set/continue)')
-        argparser.add_argument(
-            '-t', '--throttle',
-            metavar='#.#',
-            default=0.5,
-            help='constant throttle value for vehicle to drive at (range: 0.0 - 1.0)')
-        argparser.add_argument(
-            '-d', '--driver',
-            metavar='DRIVER',
-            default='fast',
-            help='type of driver response time (fast, slow, cautious)')
-        args = argparser.parse_args()
+        args = parse_arguments()
         hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
         IP = hostname_to_IP.get(args.hostname)
         if(IP is None):
@@ -162,7 +221,7 @@ def main():
         global sock
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((IP, port))
-        thread = threading.Thread(target=Receive, args=(sock,))
+        thread = threading.Thread(target=send, args=(sock,))
         client = carla.Client('localhost', 2000) # connect to server
         client.set_timeout(20)
         global worldmap
@@ -179,54 +238,14 @@ def main():
         actor_list.append(vehicle)
         thread.start()
         time.sleep(3)
-        secondary_corrective_percentage = 0.85
         threshold_dict = {"drowsy": 1.3, "slow": 1.2, "cautious": 1.1, "fast": 0.65}
         threshold = threshold_dict.get(driver)
-        while(True):
-            response = sock.recv(4096)
-            print(response.decode())
-            flag = False
-            d = LaneDepartureData()
-            dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
-            while(dr is None):
-                d = LaneDepartureData()
-                dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
-            dr *= -1
-            while(np.random.binomial(1, corrective_percentage) == 1 and "WARNING! Approaching lane." in response.decode()): # only take corrective action certain % of time
-                if(dr >= threshold and np.random.binomial(1, secondary_corrective_percentage) == 1):  # certain % of the time, if driver is at threshold or closer to the center of the lane, do not take a corrective action
-                    print("Not doing corrective action.")
-                    break # do not take a corrective action
-                if(driver == "slow"):
-                    slow_driver(throttle)
-                if(driver == "cautious"):
-                    cautious_driver(throttle)
-                if(driver == "drowsy"):
-                    drowsy_driver(throttle)
-                if(driver == "fast"):
-                    fast_driver(throttle)
-                flag = True
-                response = sock.recv(4096)
-                print(response.decode())
-            if(flag):
-                location = vehicle.get_location()
-                lane_center = worldmap.get_waypoint(location)
-                vehicle.set_transform(lane_center.transform) # quick adjust wheels
-            if(vehicle.get_location().x >= 630.0):
-                vehicle.set_transform(carla.Transform(carla.Location(151.071,140.458,2.5),carla.Rotation(0,0.234757,0))) # reset position to the beginning of the road to continue testing when the vehicle reaches end of road
-            if(driver == "drowsy"):
-                throttle *= 0.95
-                if(throttle < orig_throttle*0.5):
-                    throttle = orig_throttle
-                steer=random.uniform(-0.0005, 0.001)
-                vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=steer))
-            else:
-                vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0.001))
+        script_loop(driver, throttle, threshold)
     except KeyboardInterrupt:
         for actor in actor_list:
             actor.destroy()
         print("Actors destroyed.")
         stop_thread = True
-        #sock.close()
         exit()
 main()
 
