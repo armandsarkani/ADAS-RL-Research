@@ -509,8 +509,7 @@ def convert(seconds):
     seconds %= 60
     return '%d:%02d:%02d' % (hour, minutes, seconds)
 
-
-# main function
+# driving functions
 def main():
     args = parse_arguments()
     hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
