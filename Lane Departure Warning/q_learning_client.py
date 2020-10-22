@@ -149,6 +149,11 @@ def parse_arguments():
         metavar='DRIVER',
         default='fast',
         help='type of driver response time (fast, slow, cautious)')
+    argparser.add_argument(
+        '-dn', '--name',
+        metavar='DRIVER_NAME',
+        default='DefaultDriver',
+        help='driver name')
     args = argparser.parse_args()
     return args
 
@@ -215,12 +220,20 @@ def main():
         if(IP is None):
              IP = args.hostname
         worldset = args.mode
+        driver_name = args.name
         throttle, orig_throttle = float(args.throttle), float(args.throttle)
         driver = args.driver
         port = 50007
         global sock
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((IP, port))
+        if(driver_name != "DefaultDriver"):
+            sock.send(driver_name.encode())
+            response = sock.recv(4096)
+            while(response is None or "Success" not in response.decode()):
+                response = sock.recv(4096)
+                if(response is not None and "Success" in response.decode()):
+                    break
         thread = threading.Thread(target=send, args=(sock,))
         client = carla.Client('localhost', 2000) # connect to server
         client.set_timeout(20)
@@ -233,7 +246,7 @@ def main():
         bp = world.get_blueprint_library().filter('model3')[0] # blueprint for Tesla Model 3
         global vehicle
         vehicle = None
-        spawn_point = carla.Transform(carla.Location(151.071,140.458,2.5),carla.Rotation(0,0.234757,0))
+        spawn_point = carla.Transform(carla.Location(151.071,143.458,2.5),carla.Rotation(0,0.234757,0))
         vehicle = world.try_spawn_actor(bp, spawn_point) # spawn the car (actor)
         actor_list.append(vehicle)
         thread.start()
