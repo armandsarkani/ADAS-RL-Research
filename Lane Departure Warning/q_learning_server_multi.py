@@ -19,6 +19,9 @@ import statistics
 import uuid
 from datetime import datetime, date
 
+# thread lock
+lock = None
+
 # step size
 alpha = 0.6
 
@@ -222,7 +225,9 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
         plot_data.update({init_state: action})
         client.all_states[init_state.value[0]].append(action)
         if(not thread.is_alive()):
+            lock.acquire()
             np.save(client.output_file, client.q_values)
+            lock.release()
             conn.close()
             print(client.driver_name, "Disconnected.\n")
             main()
@@ -241,7 +246,9 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
         final_state = state_vector[-1]
         delta = step_size * (iteration_rewards + gamma * np.max(client.q_values[final_state.value[0], final_state.value[1], final_state.value[2], :]) - client.q_values[init_state.value[0], init_state.value[1], init_state.value[2], action])
         client.q_values[init_state.value[0], init_state.value[1], init_state.value[2], action] += delta
+        lock.acquire()
         np.save(client.output_file, client.q_values) # save on each iteration
+        lock.release()
         init_state = final_state
     client.block_thread = True
     plot(client, plot_data, episode)
@@ -287,25 +294,36 @@ def receive_data(client, conn):
                 client.ldw_data = pickle.loads(data)
         except pickle.UnpicklingError:
             continue
+        except ValueError:
+            continue
         except ConnectionResetError:
             client.conn_reset = True
+            lock.acquire()
             np.save(client.output_file, client.q_values) # custom file
+            lock.release()
             break
         except EOFError:
             client.conn_reset = True
+            lock.acquire()
             np.save(client.output_file, client.q_values) # custom file
+            lock.release()
             break
         except BrokenPipeError:
             client.conn_reset = True
+            lock.acquire()
             np.save(client.output_file, client.q_values) # custom file
+            lock.release()
             break
 def receive_human_state(client, input_file):
+    lock.acquire()
     with open(input_file) as file:
         try:
             data = json.load(file)
             client.human_state = data.get(list(data)[-1])
+            lock.release()
             return client.human_state
         except ValueError:
+            lock.release()
             return client.human_state # return last value
 
 # helper functions
@@ -320,6 +338,7 @@ def parse_arguments():
     args = argparser.parse_args()
     return args
 def save_plot_data(client, plot_data):
+    lock.acquire()
     if(not(os.path.exists('Data'))):
           os.mkdir('Data')
     os.chdir('Data')
@@ -352,7 +371,9 @@ def save_plot_data(client, plot_data):
     with open(wf_data_file_name, 'w') as file:
         json.dump(client.state_counts, file)
     os.chdir('../..')
+    lock.release()
 def plot(client, plot_data, episode):
+    lock.acquire()
     state_counts = client.state_counts
     driver_name = client.driver_name
     # manage directories
@@ -414,8 +435,9 @@ def plot(client, plot_data, episode):
     plt.clf()
     client.state_counts = state_counts
     os.chdir('../..')
-        
+    lock.release()
 def generate_statistics(client, episode, time_elapsed):
+    lock.acquire()
     # manage directories
     if(not(os.path.exists('Statistics'))):
           os.mkdir('Statistics')
@@ -456,6 +478,7 @@ def generate_statistics(client, episode, time_elapsed):
     data = {"q_table_name": client.output_file, "driver_id": client.driver_id, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": client.num_corrections, "num_invasions": client.num_invasions, "num_warning_states": len(warning_states), "warning_ratio_dist_states": warning_ratios}
     statistics_file = client.statistics_file
     write_statistics(data, statistics_file)
+    lock.release()
 def write_statistics(data, statistics_file):
     if(not os.path.exists(statistics_file)):
         with open(statistics_file, 'w') as file:
@@ -487,6 +510,7 @@ def write_statistics(data, statistics_file):
                 json.dump(data, file, indent = 4)
     os.chdir('../..')
 def load_state_counts(client): # state counts need to be loaded to form warning frequency plot of all data, iteration data is write-only
+    lock.acquire()
     data_file = client.driver_name + "_warning_frequency_data.json"
     data_path = 'Data/' + client.driver_name + '/' + data_file
     state_counts = {3: [], 4: [], 5: [], 6: [], 7: [], 8: []}
@@ -500,6 +524,7 @@ def load_state_counts(client): # state counts need to be loaded to form warning 
                 i += 1
             file.close()
         os.chdir('../..')
+    lock.release()
     return state_counts
 def convert(seconds):
     seconds = seconds % (24 * 3600)
@@ -511,6 +536,7 @@ def convert(seconds):
 
 # driving functions
 def main():
+    global lock
     args = parse_arguments()
     hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
@@ -519,6 +545,7 @@ def main():
     port = 50007
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((IP, port))
+    lock = threading.Lock()
     while True:
         try:
             sock.listen(1)

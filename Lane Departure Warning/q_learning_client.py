@@ -27,6 +27,9 @@ cautious_time = 1.5
 stop_thread = False
 corrective_percentage = 0.95
 turn_signal_status = False
+locationx = 0
+locationy = 0
+locationz = 0
 
 # lane departure data class to send to server
 class LaneDepartureData:
@@ -150,6 +153,26 @@ def parse_arguments():
         default='fast',
         help='type of driver response time (fast, slow, cautious)')
     argparser.add_argument(
+        '-x', '--locationx',
+        metavar='LOCATIONX',
+        default=151.071,
+        help='x-coordinate of spawn location')
+    argparser.add_argument(
+        '-y', '--locationy',
+        metavar='LOCATIONY',
+        default=143.458,
+        help='y-coordinate of spawn location')
+    argparser.add_argument(
+        '-z', '--locationz',
+        metavar='LOCATIONZ',
+        default=2.5,
+        help='z-coordinate of spawn location')
+    argparser.add_argument(
+        '-a', '--autonomous',
+        metavar='AUTO',
+        default='off',
+        help='turn on/off autonomous driving')
+    argparser.add_argument(
         '-dn', '--name',
         metavar='DRIVER_NAME',
         default='DefaultDriver',
@@ -199,7 +222,7 @@ def script_loop(driver, throttle, threshold):
         if(flag):
            quick_lane_centering(vehicle)
         if(vehicle.get_location().x >= 630.0):
-            vehicle.set_transform(carla.Transform(carla.Location(151.071,140.458,2.5),carla.Rotation(0,0.234757,0))) # reset position to the beginning of the road to continue testing when the vehicle reaches end of road
+            vehicle.set_transform(carla.Transform(carla.Location(locationx,locationy,locationz),carla.Rotation(0,0.234757,0))) # reset position to the beginning of the road to continue testing when the vehicle reaches end of road
         if(driver == "drowsy"):
             throttle *= 0.95
             if(throttle < orig_throttle*0.5):
@@ -213,8 +236,12 @@ def script_loop(driver, throttle, threshold):
 def main():
     actor_list = []
     global stop_thread
+    global locationx, locationy, locationz
     try:
         args = parse_arguments()
+        locationx = float(args.locationx)
+        locationy = float(args.locationy)
+        locationz = float(args.locationz)
         hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
         IP = hostname_to_IP.get(args.hostname)
         if(IP is None):
@@ -246,9 +273,16 @@ def main():
         bp = world.get_blueprint_library().filter('model3')[0] # blueprint for Tesla Model 3
         global vehicle
         vehicle = None
-        spawn_point = carla.Transform(carla.Location(151.071,143.458,2.5),carla.Rotation(0,0.234757,0))
+        spawn_point = carla.Transform(carla.Location(locationx,locationy,locationz),carla.Rotation(0,0.234757,0))
         vehicle = world.try_spawn_actor(bp, spawn_point) # spawn the car (actor)
         actor_list.append(vehicle)
+        if(args.autonomous == 'on'):
+            vehicle.set_autopilot(True)
+            thread.start()
+            while True:
+                response = sock.recv(4096)
+                if(response is not None):
+                    print(response.decode())
         thread.start()
         time.sleep(3)
         threshold_dict = {"drowsy": 1.3, "slow": 1.2, "cautious": 1.1, "fast": 0.65}

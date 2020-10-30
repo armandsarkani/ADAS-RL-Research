@@ -1,0 +1,27 @@
+{
+    "q_table_name": "AutonomousDriver.npy",
+    "driver_id": "f6ccacebbf774dcbbbad06ee9ad4431e",
+    "warning_most_common_state": "[11, 0, 1]",
+    "avg_warning_dr": 1.0071544715447156,
+    "avg_warning_dl": 2.5195121951219512,
+    "total_time_run": "0:11:38",
+    "total_time_run_seconds": 698.1293330192566,
+    "total_num_episodes": 3,
+    "num_corrections": 3,
+    "num_invasions": 34,
+    "num_warning_states": 123,
+    "warning_ratio_dist_states": {
+        "0": "0.0%",
+        "1": "0.0%",
+        "2": "0.0%",
+        "3": "21.6%",
+        "4": "19.5%",
+        "5": "16.9%",
+        "6": "81.7%",
+        "7": "59.5%",
+        "8": "18.2%",
+        "9": "100.0%",
+        "10": "100.0%",
+        "11": "100.0%"
+    }
+}

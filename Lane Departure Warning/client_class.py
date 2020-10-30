@@ -53,7 +53,7 @@ class Client:
             self.initialize_q_table()
             epsilon = 0.15
         self.driver_id = uuid.uuid4().hex
-    def initialize_q_table():
+    def initialize_q_table(self):
         for i in range(0, 3):
             self.q_values[i, :, :, 0] = 1
             self.q_values[i, :, :, 1] = 0
