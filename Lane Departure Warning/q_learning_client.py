@@ -177,6 +177,11 @@ def parse_arguments():
         metavar='DRIVER_NAME',
         default='DefaultDriver',
         help='driver name')
+    argparser.add_argument(
+        '-v', '--vehicle',
+        metavar='VEHICLE',
+        default='model3',
+        help='vehicle blueprint')
     args = argparser.parse_args()
     return args
 
@@ -270,7 +275,10 @@ def main():
         else: # otherwise, continue using Town06
             world = client.get_world()
         worldmap = world.get_map()
-        bp = world.get_blueprint_library().filter('model3')[0] # blueprint for Tesla Model 3
+        if(args.vehicle == 'random'):
+            bp = random.choice(world.get_blueprint_library().filter('vehicle.*')) # blueprint for random vehicle
+        else:
+            bp = world.get_blueprint_library().filter(args.vehicle)[0] # blueprint for other vehicle
         global vehicle
         vehicle = None
         spawn_point = carla.Transform(carla.Location(locationx,locationy,locationz),carla.Rotation(0,0.234757,0))
