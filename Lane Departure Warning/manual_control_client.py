@@ -905,6 +905,7 @@ class CameraManager(object):
         if not self:
             return
         if self.sensors[self.index][0].startswith('sensor.lidar'):
+            # LiDAR Data Here
             points = np.frombuffer(image.raw_data, dtype=np.dtype('f4'))
             points = np.reshape(points, (int(points.shape[0] / 3), 3))
             lidar_data = np.array(points[:, :2])
@@ -1027,6 +1028,11 @@ def main():
         default='localhost',
         help='computer hostname or IP address')
     argparser.add_argument(
+        '-dn', '--name',
+        metavar='DRIVER_NAME',
+        default='DefaultDriver',
+        help='driver name')
+    argparser.add_argument(
         '--mode',
         metavar='MODE',
         default='continue',
@@ -1071,9 +1077,9 @@ def main():
     logging.info('listening to server %s:%s', args.host, args.port)
 
     print(__doc__)
-    
+    driver_name = args.name
     worldset = args.mode
-    hostname_to_IP = {'iMac': '192.168.0.8', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
          IP = args.hostname
@@ -1082,6 +1088,13 @@ def main():
         global sock
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((IP, port))
+        if(driver_name != "DefaultDriver"):
+            sock.send(driver_name.encode())
+            response = sock.recv(4096)
+            while(response is None or "Success" not in response.decode()):
+                response = sock.recv(4096)
+                if(response is not None and "Success" in response.decode()):
+                    break
         thread = threading.Thread(target=Receive, args=(sock,))
         thread.start()
         game_loop(args)

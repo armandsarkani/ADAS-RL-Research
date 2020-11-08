@@ -21,6 +21,8 @@ import pickle
 import socket
 import threading
 import argparse
+from datetime import datetime, date
+import raycast_sensor_testing as raycast
 
 # miscellaneous
 cautious_time = 1.5
@@ -185,6 +187,11 @@ def parse_arguments():
     args = argparser.parse_args()
     return args
 
+# process sensory data
+def process_lidar(measurement):
+    for detection in measurement:
+        print(detection)
+
 # game loop
 def script_loop(driver, throttle, threshold):
     global turn_signal_status
@@ -283,6 +290,11 @@ def main():
         vehicle = None
         spawn_point = carla.Transform(carla.Location(locationx,locationy,locationz),carla.Rotation(0,0.234757,0))
         vehicle = world.try_spawn_actor(bp, spawn_point) # spawn the car (actor)
+        #spawn_point_lidar = carla.Transform(carla.Location(x=0, z=2.4))
+        #display_manager = raycast.DisplayManager(grid_size=[2, 2], window_size=[600, 400], show_window=True)
+        #sensor = raycast.SensorManager(world, display_manager, 'LiDAR', carla.Transform(carla.Location(x=0, z=2.4)), vehicle, {'channels' : '64', 'range' : '200', 'points_per_second': 100000, 'rotation_frequency': '20'}, [1, 1])
+        #lidar_thread = threading.Thread(target=raycast.pygame_loop, args=(display_manager, client, world))
+        #lidar_thread.start()
         actor_list.append(vehicle)
         if(args.autonomous == 'on'):
             vehicle.set_autopilot(True)
