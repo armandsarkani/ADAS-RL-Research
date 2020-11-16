@@ -29,6 +29,7 @@ import pickle
 import socket
 import threading
 
+
 IM_WIDTH = 640 # x
 IM_HEIGHT = 480 # y
 VEHICLE_X = 320

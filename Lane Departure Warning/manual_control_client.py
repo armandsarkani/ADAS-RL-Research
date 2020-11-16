@@ -70,12 +70,13 @@ except IndexError:
 import carla
 
 from carla import ColorConverter as cc
-
+import imageio
 import pickle
 import threading
 import argparse
 import collections
 import datetime
+from datetime import datetime as dt
 import logging
 import math
 import random
@@ -83,6 +84,8 @@ import re
 import weakref
 import time
 import socket
+import matplotlib.pyplot as plt
+from PIL import Image
 
 try:
     import pygame
@@ -130,11 +133,13 @@ except ImportError:
 # ==============================================================================
 
 counter_left = 0
+counter = 0
 counter_right = 0
 player = None
 worldmap = None
 first_pass = True
 worldset = ""
+driver_name = None
 def find_weather_presets():
     rgx = re.compile('.+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)')
     name = lambda x: ' '.join(m.group(0) for m in rgx.finditer(x))
@@ -901,11 +906,13 @@ class CameraManager(object):
 
     @staticmethod
     def _parse_image(weak_self, image):
+        global counter
         self = weak_self()
         if not self:
             return
         if self.sensors[self.index][0].startswith('sensor.lidar'):
             # LiDAR Data Here
+            counter += 1
             points = np.frombuffer(image.raw_data, dtype=np.dtype('f4'))
             points = np.reshape(points, (int(points.shape[0] / 3), 3))
             lidar_data = np.array(points[:, :2])
@@ -913,11 +920,16 @@ class CameraManager(object):
             lidar_data += (0.5 * self.hud.dim[0], 0.5 * self.hud.dim[1])
             lidar_data = np.fabs(lidar_data)  # pylint: disable=E1111
             lidar_data = lidar_data.astype(np.int32)
-            lidar_data = np.reshape(lidar_data, (-1, 2))
             lidar_img_size = (self.hud.dim[0], self.hud.dim[1], 3)
             lidar_img = np.zeros(lidar_img_size)
             lidar_img[tuple(lidar_data.T)] = (255, 255, 255)
             self.surface = pygame.surfarray.make_surface(lidar_img)
+            dt_now = dt.now()
+            timestamp = dt_now.strftime('%d-%b-%Y_%H:%M')
+            fname = driver_name + '_lidar_img_' + str(counter) + '.png'
+            img_uint8 = lidar_img.astype(np.uint8)
+            if(counter % 20 == 0):
+                imageio.imwrite(fname, img_uint8)
         else:
             image.convert(self.sensors[self.index][1])
             array = np.frombuffer(image.raw_data, dtype=np.dtype("uint8"))
@@ -1012,6 +1024,7 @@ def Receive(sock):
 
 def main():
     global worldset
+    global driver_name
     if(sys.argv[1] == "help"):
        print("Format: (-d device) (-m set/none)")
        exit()
@@ -1095,6 +1108,11 @@ def main():
                 response = sock.recv(4096)
                 if(response is not None and "Success" in response.decode()):
                     break
+        if(not(os.path.exists('Sensors'))):
+            os.mkdir('Sensors')
+        if(not(os.path.exists('Sensors/' + driver_name))):
+            os.mkdir('Sensors/' + driver_name)
+        os.chdir('Sensors/' + driver_name)
         thread = threading.Thread(target=Receive, args=(sock,))
         thread.start()
         game_loop(args)

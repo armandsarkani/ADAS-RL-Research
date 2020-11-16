@@ -28,10 +28,6 @@ alpha = 0.6
 # gamma for Q-Learning
 gamma = 0.8
 
-# rate at which state transitions are measured
-sampling_rate = 0.1
-vector_size = int(2/sampling_rate)
-
 # human states
 attentive = 0
 moderate = 1
@@ -232,14 +228,15 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
             print(client.driver_name, "Disconnected.\n")
             main()
         send_action(conn, action, init_state)
-        for j in range(0, vector_size): # generic response time
+        for j in range(0, client.vector_size): # generic response time
             state = State(client)
             state_vector.append(state)
-            time.sleep(sampling_rate)
+            time.sleep(client.sampling_rate)
             next_state = State(client)
             state_vector.append(next_state)
             if(is_safe(next_state.value) and not is_safe(init_state.value) and j > 1):
                 client.num_corrections += 1
+                client.vector_size = j
                 break
         # Q-learning lookup table update
         iteration_rewards = define_rewards(client, init_state, action, state_vector[-1])

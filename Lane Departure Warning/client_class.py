@@ -33,6 +33,8 @@ class Client:
     all_states = {0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: [], 10: [], 11: []}
     num_corrections = 0
     num_invasions = 0
+    sampling_rate = 0.1  # rate at which state transitions are measured
+    vector_size = int(2/sampling_rate)
     block_thread = False
     ldw_data = None
     conn_reset = False
