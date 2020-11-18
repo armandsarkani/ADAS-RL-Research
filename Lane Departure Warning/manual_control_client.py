@@ -354,8 +354,8 @@ class World(object):
             self.player = self.world.try_spawn_actor(blueprint, spawn_point)
         while self.player is None:
             spawn_points = self.map.get_spawn_points()
-            spawn_point = random.choice(spawn_points) if spawn_points else carla.Transform()
-            #carla.Transform(carla.Location(151.8,-8.5,0.0),carla.Rotation(0,180,0))
+            #spawn_point = random.choice(spawn_points) if spawn_points else carla.Transform()
+            spawn_point = carla.Transform(carla.Location(151.071,143.458,2.5),carla.Rotation(0,0.234757,0))
             self.player = self.world.try_spawn_actor(blueprint, spawn_point)
         # Set up the sensors.
         self.collision_sensor = CollisionSensor(self.player, self.hud)
@@ -1092,7 +1092,7 @@ def main():
     print(__doc__)
     driver_name = args.name
     worldset = args.mode
-    hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.0.7', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
          IP = args.hostname

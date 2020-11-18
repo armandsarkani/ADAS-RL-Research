@@ -37,9 +37,11 @@ class Client:
     vector_size = int(2/sampling_rate)
     block_thread = False
     ldw_data = None
+    conn = None
     conn_reset = False
-    def __init__(self, driver_name):
+    def __init__(self, driver_name, conn):
         self.driver_name = driver_name
+        self.conn = conn
         dt = datetime.now()
         timestamp = dt.strftime('%d%b')
         self.input_file = driver_name + 'HumanStates.json'

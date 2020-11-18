@@ -1,0 +1,27 @@
+{
+    "q_table_name": "FastDriver.npy",
+    "driver_id": "75d202b139134fe5bc7ff400f2451f4c",
+    "warning_most_common_state": "[11, 0, 1]",
+    "avg_warning_dr": 2.147842105263158,
+    "avg_warning_dl": 1.359578947368421,
+    "total_time_run": "0:11:17",
+    "total_time_run_seconds": 677.6886219978333,
+    "total_num_episodes": 7,
+    "num_corrections": 14,
+    "num_invasions": 10,
+    "num_warning_states": 190,
+    "warning_ratio_dist_states": {
+        "0": "0.0%",
+        "1": "0.0%",
+        "2": "0.0%",
+        "3": "N/A",
+        "4": "N/A",
+        "5": "13.5%",
+        "6": "25.4%",
+        "7": "38.8%",
+        "8": "32.2%",
+        "9": "N/A",
+        "10": "100.0%",
+        "11": "100.0%"
+    }
+}

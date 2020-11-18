@@ -43,6 +43,9 @@ warning = 1
 actions = [no_warning, warning]
 dict_actions = {no_warning: "no warning", warning: "warning"}
 
+# list of clients
+clients = []
+
 
 # class definitions
 class LaneDepartureData:
@@ -236,7 +239,7 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
             state_vector.append(next_state)
             if(is_safe(next_state.value) and not is_safe(init_state.value) and j > 1):
                 client.num_corrections += 1
-                client.vector_size = j
+                #client.vector_size = j
                 break
         # Q-learning lookup table update
         iteration_rewards = define_rewards(client, init_state, action, state_vector[-1])
@@ -281,7 +284,53 @@ def left_lane_distance(location_x, location_y, left_x, left_y, left_lane_width):
            else:
                lane_marking_x = left_x + left_lane_width/2
                return(lane_marking_x - location_x)
+               
+# merging warning system
+def merging_warning():
+    while True:
+        neighbors = find_neighbors()
+        euclidean_distances = find_euclidean_distances(neighbors)
+        issue_merging_warnings(euclidean_distances)
+        time.sleep(1)
+def find_neighbors():
+    neighbors = {}
+    for c0 in clients:
+        c0_neighbors = []
+        for c1 in clients:
+            if(c0 == c1):
+                continue
+            if(c0.ldw_data is not None and c1.ldw_data is not None):
+                if(abs(c0.ldw_data.lane_id - c1.ldw_data.lane_id) == 1 or abs(c0.ldw_data.lane_id - c1.ldw_data.lane_id) == 2):
+                    c0_neighbors.append(c1)
+                    neighbors.update({c0: c0_neighbors})
+    return neighbors
+def find_euclidean_distances(neighbors):
+    euclidean_distances = {}
+    for vehicle in neighbors:
+        neighbor_distances = []
+        for neighbor in neighbors[vehicle]:
+            if(vehicle.ldw_data is not None and neighbor.ldw_data is not None):
+                vehicle_coords = np.array((vehicle.ldw_data.location_x, vehicle.ldw_data.location_y))
+                neighbor_coords = np.array((neighbor.ldw_data.location_x, neighbor.ldw_data.location_y))
+                distance = np.linalg.norm(vehicle_coords - neighbor_coords)
+                neighbor_distances.append((neighbor, distance))
+                euclidean_distances.update({vehicle: neighbor_distances})
+    return euclidean_distances
+def issue_merging_warnings(euclidean_distances):
+    for vehicle in euclidean_distances:
+        array = euclidean_distances[vehicle]
+        vehicle_state = State(vehicle)
+        for element in array:
+            neighbor = element[0]
+            distance = element[1]
+            #print("Distance between", vehicle.driver_name, "and", neighbor.driver_name, "=", distance)
+            neighbor_state = State(neighbor)
+            if(is_unsafe(vehicle_state.value) and is_unsafe(neighbor_state.value) and distance < 10):
+                warning = "WARNING! Unsafe merge onto adjacent lane!"
+                vehicle.conn.send(warning.encode())
 
+            
+                
 # data management functions
 def receive_data(client, conn):
     while True:
@@ -535,7 +584,7 @@ def convert(seconds):
 def main():
     global lock
     args = parse_arguments()
-    hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.0.7', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
         IP = args.hostname
@@ -543,6 +592,8 @@ def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((IP, port))
     lock = threading.Lock()
+    merging_thread = threading.Thread(target=merging_warning)
+    merging_thread.start()
     while True:
         try:
             sock.listen(1)
@@ -553,6 +604,7 @@ def main():
             sock.close()
             exit()
 def client_thread(conn):
+    global clients
     driver_name = None
     while True:
         data = conn.recv(4096)
@@ -561,7 +613,8 @@ def client_thread(conn):
             conn.send("Success".encode())
             break
     print("Connected by", driver_name)
-    client = client_class.Client(driver_name)
+    client = client_class.Client(driver_name, conn)
+    clients.append(client)
     client.state_counts = load_state_counts(client)
     thread = threading.Thread(target=receive_data, args=(client, conn, ))
     thread.start()
@@ -582,8 +635,8 @@ def server_loop(client, conn):
                     client.warning_states = []
                     client.num_corrections = 0
                     client.num_invasions = 0
-                episode += 1
                 print("Finished episode", episode, "for", client.driver_name)
+                episode += 1
             except BrokenPipeError:
                 print(client.driver_name, "Disconnected.\n")
                 break

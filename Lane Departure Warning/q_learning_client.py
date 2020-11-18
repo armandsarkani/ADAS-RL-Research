@@ -113,18 +113,18 @@ def send_data(): # send data to server
     sock.send(data_string)
     
 # driver scenarios
-def slow_driver(throttle):
-    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.005,-0.015)))
-def cautious_driver(throttle):
+def slow_driver(throttle, behavior):
+    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=behavior*random.uniform(-0.005,-0.015)))
+def cautious_driver(throttle, behavior):
     init_time = time.time()
     while(time.time() - init_time < cautious_time):
         vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0))
     for i in range(0, 3):
-        vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.005,-0.015)))
-def fast_driver(throttle):
-    vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=random.uniform(-0.005,-0.025)))
-def drowsy_driver(throttle):
-    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=random.uniform(-0.015,0.015)))
+        vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=behavior*random.uniform(-0.005,-0.015)))
+def fast_driver(throttle, behavior):
+    vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=behavior*random.uniform(-0.008,-0.025)))
+def drowsy_driver(throttle, behavior):
+    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=behavior*random.uniform(-0.015,0.015)))
 
 # helper functions
 def quick_lane_centering(vehicle):
@@ -184,6 +184,11 @@ def parse_arguments():
         metavar='VEHICLE',
         default='model3',
         help='vehicle blueprint')
+    argparser.add_argument(
+        '-b', '--behavior',
+        metavar='BEHAVIOR',
+        default='right',
+        help='vehicle polarity behavior (approaching left or right)')
     args = argparser.parse_args()
     return args
 
@@ -193,7 +198,7 @@ def process_lidar(measurement):
         print(detection)
 
 # game loop
-def script_loop(driver, throttle, threshold):
+def script_loop(driver, throttle, threshold, behavior):
     global turn_signal_status
     while(True):
         response = sock.recv(4096)
@@ -205,7 +210,7 @@ def script_loop(driver, throttle, threshold):
             d = LaneDepartureData()
             dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
         dr *= -1
-        if(dr <= threshold and np.random.binomial(1, 0.1) == 1): # turn on turn signals
+        if(dr <= threshold and np.random.binomial(1, 0) == 1): # turn on turn signals
             turn_signal_status = True
             print("Turn signals on ...")
             orig_lane_id = worldmap.get_waypoint(vehicle.get_location()).lane_id
@@ -221,13 +226,13 @@ def script_loop(driver, throttle, threshold):
                 print("Not doing corrective action.")
                 break # do not take a corrective action
             if(driver == "slow"):
-                slow_driver(throttle)
+                slow_driver(throttle, behavior)
             if(driver == "cautious"):
-                cautious_driver(throttle)
+                cautious_driver(throttle, behavior)
             if(driver == "drowsy"):
-                drowsy_driver(throttle)
+                drowsy_driver(throttle, behavior)
             if(driver == "fast"):
-                fast_driver(throttle)
+                fast_driver(throttle, behavior)
             flag = True
             response = sock.recv(4096)
             print(response.decode())
@@ -242,7 +247,7 @@ def script_loop(driver, throttle, threshold):
             steer = random.uniform(-0.0005, 0.001)
             vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=steer))
         else:
-            vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0.001))
+            vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=behavior*0.001))
     
 # main function
 def main():
@@ -254,7 +259,8 @@ def main():
         locationx = float(args.locationx)
         locationy = float(args.locationy)
         locationz = float(args.locationz)
-        hostname_to_IP = {'iMac': '192.168.0.5', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+        behavior = 1 if (args.behavior == 'right') else -1
+        hostname_to_IP = {'iMac': '192.168.0.7', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
         IP = hostname_to_IP.get(args.hostname)
         if(IP is None):
              IP = args.hostname
@@ -290,11 +296,6 @@ def main():
         vehicle = None
         spawn_point = carla.Transform(carla.Location(locationx,locationy,locationz),carla.Rotation(0,0.234757,0))
         vehicle = world.try_spawn_actor(bp, spawn_point) # spawn the car (actor)
-        #spawn_point_lidar = carla.Transform(carla.Location(x=0, z=2.4))
-        #display_manager = raycast.DisplayManager(grid_size=[2, 2], window_size=[600, 400], show_window=True)
-        #sensor = raycast.SensorManager(world, display_manager, 'LiDAR', carla.Transform(carla.Location(x=0, z=2.4)), vehicle, {'channels' : '64', 'range' : '200', 'points_per_second': 100000, 'rotation_frequency': '20'}, [1, 1])
-        #lidar_thread = threading.Thread(target=raycast.pygame_loop, args=(display_manager, client, world))
-        #lidar_thread.start()
         actor_list.append(vehicle)
         if(args.autonomous == 'on'):
             vehicle.set_autopilot(True)
@@ -307,7 +308,7 @@ def main():
         time.sleep(3)
         threshold_dict = {"drowsy": 1.3, "slow": 1.2, "cautious": 1.1, "fast": 0.65}
         threshold = threshold_dict.get(driver)
-        script_loop(driver, throttle, threshold)
+        script_loop(driver, throttle, threshold, behavior)
     except KeyboardInterrupt:
         for actor in actor_list:
             actor.destroy()
