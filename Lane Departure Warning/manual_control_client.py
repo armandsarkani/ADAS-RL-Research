@@ -301,6 +301,9 @@ class LaneDepartureData:
         self.left_lane_width = 0
         self.steer = player.get_control().steer
         velocity = player.get_velocity()
+        self.vel_x = velocity.x
+        self.vel_y = velocity.y
+        self.vel_z = velocity.z
         self.speed = math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
         self.speed_limit = player.get_speed_limit()
         self.lane_id = worldmap.get_waypoint(location).lane_id
@@ -1025,9 +1028,6 @@ def Receive(sock):
 def main():
     global worldset
     global driver_name
-    if(sys.argv[1] == "help"):
-       print("Format: (-d device) (-m set/none)")
-       exit()
     argparser = argparse.ArgumentParser(
         description='CARLA Manual Control Client')
     argparser.add_argument(
@@ -1092,7 +1092,7 @@ def main():
     print(__doc__)
     driver_name = args.name
     worldset = args.mode
-    hostname_to_IP = {'iMac': '192.168.0.7', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.0.9', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
          IP = args.hostname
@@ -1108,11 +1108,6 @@ def main():
                 response = sock.recv(4096)
                 if(response is not None and "Success" in response.decode()):
                     break
-        if(not(os.path.exists('Sensors'))):
-            os.mkdir('Sensors')
-        if(not(os.path.exists('Sensors/' + driver_name))):
-            os.mkdir('Sensors/' + driver_name)
-        os.chdir('Sensors/' + driver_name)
         thread = threading.Thread(target=Receive, args=(sock,))
         thread.start()
         game_loop(args)

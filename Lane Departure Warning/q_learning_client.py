@@ -52,6 +52,9 @@ class LaneDepartureData:
         self.left_lane_width = 0
         self.steer = vehicle.get_control().steer
         velocity = vehicle.get_velocity()
+        self.vel_x = velocity.x
+        self.vel_y = velocity.y
+        self.vel_z = velocity.z
         self.lane_id = worldmap.get_waypoint(location).lane_id
         self.speed = math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
         self.speed_limit = vehicle.get_speed_limit()
@@ -221,7 +224,7 @@ def script_loop(driver, throttle, threshold, behavior):
             turn_signal_status = False
             continue
         secondary_corrective_percentage = 0.85
-        while(np.random.binomial(1, corrective_percentage) == 1 and "WARNING! Approaching lane." in response.decode()): # only take corrective action certain % of time
+        while(np.random.binomial(1, corrective_percentage) == 0.95 and "WARNING! Approaching lane." in response.decode()): # only take corrective action certain % of time
             if(dr >= threshold and np.random.binomial(1, secondary_corrective_percentage) == 1):  # certain % of the time, if driver is at threshold or closer to the center of the lane, do not take a corrective action
                 print("Not doing corrective action.")
                 break # do not take a corrective action
@@ -260,7 +263,7 @@ def main():
         locationy = float(args.locationy)
         locationz = float(args.locationz)
         behavior = 1 if (args.behavior == 'right') else -1
-        hostname_to_IP = {'iMac': '192.168.0.7', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+        hostname_to_IP = {'iMac': '192.168.0.9', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
         IP = hostname_to_IP.get(args.hostname)
         if(IP is None):
              IP = args.hostname

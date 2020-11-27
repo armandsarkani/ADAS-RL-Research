@@ -43,6 +43,9 @@ warning = 1
 actions = [no_warning, warning]
 dict_actions = {no_warning: "no warning", warning: "warning"}
 
+# debug
+pause_warnings = False
+
 # list of clients
 clients = []
 
@@ -63,6 +66,9 @@ class LaneDepartureData:
     acc_y = 0
     acc_z = 0
     speed = 0
+    vel_x = 0
+    vel_y = 0
+    vel_z = 0
     speed_limit = 0
     lane_id = 0
     turn_signal = None
@@ -196,6 +202,8 @@ def choose_action(client, state_value):
         values = client.q_values[state_value[0], state_value[1], state_value[2], :] # row of values for a given state, any actions
         return np.random.choice([action for action, value in enumerate(values) if value == np.max(values)])
 def send_action(conn, action, state):
+    if(pause_warnings):
+        return
     if(action == warning):
         string = "WARNING! Approaching lane. State: " + str(state.value)
         conn.send(string.encode())
@@ -286,51 +294,57 @@ def left_lane_distance(location_x, location_y, left_x, left_y, left_lane_width):
                return(lane_marking_x - location_x)
                
 # merging warning system
-def merging_warning():
+def merging_warning(vehicle): # current client == vehicle
     while True:
-        neighbors = find_neighbors()
-        euclidean_distances = find_euclidean_distances(neighbors)
-        issue_merging_warnings(euclidean_distances)
+        neighbors = find_neighbors(vehicle)
+        euclidean_distances = find_euclidean_distances(vehicle, neighbors)
+        issue_merging_warnings(vehicle, euclidean_distances)
         time.sleep(1)
-def find_neighbors():
-    neighbors = {}
-    for c0 in clients:
-        c0_neighbors = []
-        for c1 in clients:
-            if(c0 == c1):
-                continue
-            if(c0.ldw_data is not None and c1.ldw_data is not None):
-                if(abs(c0.ldw_data.lane_id - c1.ldw_data.lane_id) == 1 or abs(c0.ldw_data.lane_id - c1.ldw_data.lane_id) == 2):
-                    c0_neighbors.append(c1)
-                    neighbors.update({c0: c0_neighbors})
+def find_neighbors(vehicle):
+    neighbors = []
+    for c in clients:
+        if(c == vehicle):
+            continue
+        if(vehicle.ldw_data is not None and c.ldw_data is not None):
+            if(abs(vehicle.ldw_data.lane_id - c.ldw_data.lane_id) == 1 or abs(vehicle.ldw_data.lane_id - c.ldw_data.lane_id) == 2):
+                neighbors.append(c)
     return neighbors
-def find_euclidean_distances(neighbors):
+def find_euclidean_distances(vehicle, neighbors):
     euclidean_distances = {}
-    for vehicle in neighbors:
-        neighbor_distances = []
-        for neighbor in neighbors[vehicle]:
-            if(vehicle.ldw_data is not None and neighbor.ldw_data is not None):
-                vehicle_coords = np.array((vehicle.ldw_data.location_x, vehicle.ldw_data.location_y))
-                neighbor_coords = np.array((neighbor.ldw_data.location_x, neighbor.ldw_data.location_y))
-                distance = np.linalg.norm(vehicle_coords - neighbor_coords)
-                neighbor_distances.append((neighbor, distance))
-                euclidean_distances.update({vehicle: neighbor_distances})
+    for neighbor in neighbors:
+        if(vehicle.ldw_data is not None and neighbor.ldw_data is not None):
+            vehicle_coords = np.array((vehicle.ldw_data.location_x, vehicle.ldw_data.location_y))
+            neighbor_coords = np.array((neighbor.ldw_data.location_x, neighbor.ldw_data.location_y))
+            distance = np.linalg.norm(vehicle_coords - neighbor_coords)
+            euclidean_distances.update({neighbor: distance})
     return euclidean_distances
-def issue_merging_warnings(euclidean_distances):
-    for vehicle in euclidean_distances:
-        array = euclidean_distances[vehicle]
+def issue_merging_warnings(vehicle, euclidean_distances):
+    dist_threshold = 10 # meters
+    for neighbor in euclidean_distances:
+        distance = euclidean_distances[neighbor]
         vehicle_state = State(vehicle)
-        for element in array:
-            neighbor = element[0]
-            distance = element[1]
-            #print("Distance between", vehicle.driver_name, "and", neighbor.driver_name, "=", distance)
-            neighbor_state = State(neighbor)
-            if(is_unsafe(vehicle_state.value) and is_unsafe(neighbor_state.value) and distance < 10):
+        neighbor_state = State(neighbor)
+        if(distance < dist_threshold):
+            if(analyze_trajectories(vehicle, neighbor)):
                 warning = "WARNING! Unsafe merge onto adjacent lane!"
                 vehicle.conn.send(warning.encode())
-
-            
-                
+def analyze_trajectories(vehicle, neighbor):
+    x = 0
+    y = 1
+    z = 2
+    vel_vehicle = [vehicle.ldw_data.vel_x, vehicle.ldw_data.vel_y, vehicle.ldw_data.vel_z]
+    vel_neighbor = [neighbor.ldw_data.vel_x, neighbor.ldw_data.vel_y, neighbor.ldw_data.vel_z]
+    steer_vehicle = vehicle.ldw_data.steer
+    steer_neighbor = neighbor.ldw_data.steer
+    #if(steer_vehicle * steer_neighbor > 0): # same direction steer
+    #   return False
+    if(abs(vehicle.ldw_data.location_x - vehicle.ldw_data.left_x) <= 1): # if lanes are adjacent in x-direction
+        print({"vel_vehicle_y": vel_vehicle[y], "vel_neighbor_y": vel_neighbor[y]})
+        if(vel_vehicle[y] * vel_neighbor[y] < 0 and abs(vel_vehicle[y]) > 0 and abs(vel_neighbor[y]) > 0): # opposite signs
+            return True
+    else:
+        if(vel_vehicle[x] * vel_neighbor[x] < 0 and abs(vel_vehicle[x]) > 0 and abs(vel_neighbor[x]) > 0): # opposite signs
+            return True
 # data management functions
 def receive_data(client, conn):
     while True:
@@ -584,7 +598,7 @@ def convert(seconds):
 def main():
     global lock
     args = parse_arguments()
-    hostname_to_IP = {'iMac': '192.168.0.7', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.0.9', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
         IP = args.hostname
@@ -592,8 +606,6 @@ def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((IP, port))
     lock = threading.Lock()
-    merging_thread = threading.Thread(target=merging_warning)
-    merging_thread.start()
     while True:
         try:
             sock.listen(1)
@@ -616,8 +628,10 @@ def client_thread(conn):
     client = client_class.Client(driver_name, conn)
     clients.append(client)
     client.state_counts = load_state_counts(client)
-    thread = threading.Thread(target=receive_data, args=(client, conn, ))
-    thread.start()
+    main_thread = threading.Thread(target=receive_data, args=(client, conn, ))
+    merging_thread = threading.Thread(target=merging_warning, args = (client,))
+    main_thread.start()
+    merging_thread.start()
     server_loop(client, conn)
 def server_loop(client, conn):
     thread = threading.currentThread()
