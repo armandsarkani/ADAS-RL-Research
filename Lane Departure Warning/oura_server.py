@@ -173,6 +173,7 @@ def main():
         help='specify an output JSON file name for human state data (default is HumanStates.json)')
     args = argparser.parse_args()
     data = {}
+    print("Running Oura Ring Server for", args.output)
     if(not os.path.exists(args.output)):
         with open(args.output, 'w') as file:
             json.dump(data, file)
