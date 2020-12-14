@@ -339,7 +339,6 @@ def analyze_trajectories(vehicle, neighbor):
     #if(steer_vehicle * steer_neighbor > 0): # same direction steer
     #   return False
     if(abs(vehicle.ldw_data.location_x - vehicle.ldw_data.left_x) <= 1): # if lanes are adjacent in x-direction
-        print({"vel_vehicle_y": vel_vehicle[y], "vel_neighbor_y": vel_neighbor[y]})
         if(vel_vehicle[y] * vel_neighbor[y] < 0 and abs(vel_vehicle[y]) > 0 and abs(vel_neighbor[y]) > 0): # opposite signs
             return True
     else:
@@ -598,7 +597,7 @@ def convert(seconds):
 def main():
     global lock
     args = parse_arguments()
-    hostname_to_IP = {'iMac': '192.168.0.9', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.0.3', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
         IP = args.hostname

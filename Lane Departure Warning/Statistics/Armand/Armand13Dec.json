@@ -1,0 +1,27 @@
+{
+    "q_table_name": "Armand.npy",
+    "driver_id": "eabb0c1703254ed5b612041bf29781d0",
+    "warning_most_common_state": "[10, 0, 1]",
+    "avg_warning_dr": 1.467142857142857,
+    "avg_warning_dl": 2.027428571428571,
+    "total_time_run": "0:07:25",
+    "total_time_run_seconds": 445.79444098472595,
+    "total_num_episodes": 2,
+    "num_corrections": 13,
+    "num_invasions": 12,
+    "num_warning_states": 70,
+    "warning_ratio_dist_states": {
+        "0": "N/A",
+        "1": "0.0%",
+        "2": "0.0%",
+        "3": "100.0%",
+        "4": "27.0%",
+        "5": "52.9%",
+        "6": "40.9%",
+        "7": "87.6%",
+        "8": "37.7%",
+        "9": "100.0%",
+        "10": "100.0%",
+        "11": "100.0%"
+    }
+}

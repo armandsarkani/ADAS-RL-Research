@@ -772,6 +772,7 @@ class CollisionSensor(object):
         if not self:
             return
         actor_type = get_actor_display_name(event.other_actor)
+        print("Collision detected with", str(actor_type))
         self.hud.notification('Collision with %r' % actor_type)
         impulse = event.normal_impulse
         intensity = math.sqrt(impulse.x**2 + impulse.y**2 + impulse.z**2)
@@ -1092,7 +1093,7 @@ def main():
     print(__doc__)
     driver_name = args.name
     worldset = args.mode
-    hostname_to_IP = {'iMac': '192.168.0.9', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.0.3', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
          IP = args.hostname

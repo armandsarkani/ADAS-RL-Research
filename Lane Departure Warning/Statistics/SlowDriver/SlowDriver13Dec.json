@@ -1,0 +1,27 @@
+{
+    "q_table_name": "SlowDriver.npy",
+    "driver_id": "4c7329c7286e4739af6431b23561ae96",
+    "warning_most_common_state": "[10, 0, 1]",
+    "avg_warning_dr": 0.7795918367346939,
+    "avg_warning_dl": 2.720408163265306,
+    "total_time_run": "0:03:23",
+    "total_time_run_seconds": 203.209046125412,
+    "total_num_episodes": 1,
+    "num_corrections": 13,
+    "num_invasions": 15,
+    "num_warning_states": 49,
+    "warning_ratio_dist_states": {
+        "0": "N/A",
+        "1": "0.0%",
+        "2": "0.0%",
+        "3": "100.0%",
+        "4": "42.9%",
+        "5": "25.0%",
+        "6": "5.9%",
+        "7": "100.0%",
+        "8": "60.0%",
+        "9": "100.0%",
+        "10": "100.0%",
+        "11": "100.0%"
+    }
+}

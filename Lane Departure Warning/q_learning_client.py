@@ -32,6 +32,7 @@ turn_signal_status = False
 locationx = 0
 locationy = 0
 locationz = 0
+collisions = []
 
 # lane departure data class to send to server
 class LaneDepartureData:
@@ -125,7 +126,7 @@ def cautious_driver(throttle, behavior):
     for i in range(0, 3):
         vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=behavior*random.uniform(-0.005,-0.015)))
 def fast_driver(throttle, behavior):
-    vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=behavior*random.uniform(-0.008,-0.025)))
+    vehicle.apply_control(carla.VehicleControl(throttle=throttle*1.1, steer=behavior*random.uniform(-0.01,-0.025)))
 def drowsy_driver(throttle, behavior):
     vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=behavior*random.uniform(-0.015,0.015)))
 
@@ -199,6 +200,13 @@ def parse_arguments():
 def process_lidar(measurement):
     for detection in measurement:
         print(detection)
+def collision_handler(event):
+    global collisions
+    collisions.append(event)
+    print("Collision")
+    colliding_actor = event.other_actor
+    impulse = event.normal_impulse
+    intensity = math.sqrt(impulse.x**2 + impulse.y**2 + impulse.z**2)
 
 # game loop
 def script_loop(driver, throttle, threshold, behavior):
@@ -224,7 +232,7 @@ def script_loop(driver, throttle, threshold, behavior):
             turn_signal_status = False
             continue
         secondary_corrective_percentage = 0.85
-        while(np.random.binomial(1, corrective_percentage) == 0.95 and "WARNING! Approaching lane." in response.decode()): # only take corrective action certain % of time
+        while(np.random.binomial(1, corrective_percentage) == 1 and "WARNING! Approaching lane." in response.decode()): # only take corrective action certain % of time
             if(dr >= threshold and np.random.binomial(1, secondary_corrective_percentage) == 1):  # certain % of the time, if driver is at threshold or closer to the center of the lane, do not take a corrective action
                 print("Not doing corrective action.")
                 break # do not take a corrective action
@@ -263,7 +271,7 @@ def main():
         locationy = float(args.locationy)
         locationz = float(args.locationz)
         behavior = 1 if (args.behavior == 'right') else -1
-        hostname_to_IP = {'iMac': '192.168.0.9', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
+        hostname_to_IP = {'iMac': '192.168.0.3', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'localhost': '127.0.0.1'}
         IP = hostname_to_IP.get(args.hostname)
         if(IP is None):
              IP = args.hostname
@@ -299,6 +307,9 @@ def main():
         vehicle = None
         spawn_point = carla.Transform(carla.Location(locationx,locationy,locationz),carla.Rotation(0,0.234757,0))
         vehicle = world.try_spawn_actor(bp, spawn_point) # spawn the car (actor)
+        collision_sensor = world.spawn_actor(world.get_blueprint_library().find('sensor.other.collision'),
+                                        carla.Transform(), attach_to=vehicle)
+        collision_sensor.listen(lambda event: collision_handler(event))
         actor_list.append(vehicle)
         if(args.autonomous == 'on'):
             vehicle.set_autopilot(True)
@@ -313,6 +324,10 @@ def main():
         threshold = threshold_dict.get(driver)
         script_loop(driver, throttle, threshold, behavior)
     except KeyboardInterrupt:
+        if(len(collisions) > 0):
+            print("Run completed.", len(collisions), "collisions measured.")
+        else:
+            print("No collisions measured.")
         for actor in actor_list:
             actor.destroy()
         print("Actors destroyed.")
