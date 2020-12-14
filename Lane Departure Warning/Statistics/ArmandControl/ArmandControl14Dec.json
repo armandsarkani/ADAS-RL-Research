@@ -1,0 +1,27 @@
+{
+    "q_table_name": "ArmandControl.npy",
+    "driver_id": "95cb9da226e449b5b4547c755541b570",
+    "warning_most_common_state": "[11, 0, 1]",
+    "avg_warning_dr": 3.138101265822785,
+    "avg_warning_dl": 0.3732911392405064,
+    "total_time_run": "0:11:28",
+    "total_time_run_seconds": 688.8886530399323,
+    "total_num_episodes": 3,
+    "num_corrections": 13,
+    "num_invasions": 12,
+    "num_warning_states": 79,
+    "warning_ratio_dist_states": {
+        "0": "0.0%",
+        "1": "0.0%",
+        "2": "0.0%",
+        "3": "23.6%",
+        "4": "12.3%",
+        "5": "1.0%",
+        "6": "11.6%",
+        "7": "28.8%",
+        "8": "8.0%",
+        "9": "14.2%",
+        "10": "30.9%",
+        "11": "100.0%"
+    }
+}
