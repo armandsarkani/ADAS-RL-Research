@@ -35,6 +35,8 @@ class Client:
     num_invasions = 0
     sampling_rate = 0.1  # rate at which state transitions are measured
     vector_size = int(2/sampling_rate)
+    min_vector_size = int(2/sampling_rate)/2
+    max_vector_size = int(2/sampling_rate)*2
     block_thread = False
     ldw_data = None
     conn = None
@@ -46,7 +48,7 @@ class Client:
         timestamp = dt.strftime('%d%b')
         self.input_file = driver_name + 'HumanStates.json'
         self.output_file = driver_name + '.npy'
-        self.statistics_file = driver_name + timestamp + '.json'
+        self.statistics_file = driver_name + 'Statistics.json'
         if("Control" in driver_name or "control" in driver_name):
             self.control = True
         if(os.path.exists(self.output_file)):
@@ -67,3 +69,11 @@ class Client:
         for i in range(8, 12):
             self.q_values[i, :, :, 0] = 0
             self.q_values[i, :, :, 1] = 1
+    def set_vector_size(self, size):
+        new_size = int((self.vector_size + size)/2)
+        if(new_size < self.min_vector_size):
+            self.vector_size = self.min_vector_size
+        elif(new_size > self.max_vector_size):
+            self.vector_size = self.max_vector_size
+        else:
+            self.vector_size = new_size

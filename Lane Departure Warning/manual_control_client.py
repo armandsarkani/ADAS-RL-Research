@@ -109,6 +109,7 @@ try:
     from pygame.locals import K_a
     from pygame.locals import K_c
     from pygame.locals import K_d
+    from pygame.locals import K_t
     from pygame.locals import K_h
     from pygame.locals import K_m
     from pygame.locals import K_p
@@ -140,6 +141,7 @@ worldmap = None
 first_pass = True
 worldset = ""
 driver_name = None
+turn_signal_status = False
 def find_weather_presets():
     rgx = re.compile('.+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)')
     name = lambda x: ' '.join(m.group(0) for m in rgx.finditer(x))
@@ -307,6 +309,7 @@ class LaneDepartureData:
         self.speed = math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
         self.speed_limit = player.get_speed_limit()
         self.lane_id = worldmap.get_waypoint(location).lane_id
+        self.turn_signal = turn_signal_status
         if(worldmap.get_waypoint(location).get_right_lane() is not None):
             self.right_x = worldmap.get_waypoint(location).get_right_lane().transform.location.x
             self.right_y = worldmap.get_waypoint(location).get_right_lane().transform.location.y
@@ -462,6 +465,13 @@ class KeyboardControl(object):
                         client.start_recorder("manual_recording.rec")
                         world.recording_enabled = True
                         world.hud.notification("Recorder is ON")
+                elif event.key == K_t:
+                    global turn_signal_status
+                    turn_signal_status = not(turn_signal_status) # toggle turn signal
+                    if(turn_signal_status):
+                        world.hud.notification("Turn signals on")
+                    elif(not(turn_signal_status)):
+                        world.hud.notification("Turn signals off")
                 elif event.key == K_p and (pygame.key.get_mods() & KMOD_CTRL):
                     # stop recorder
                     client.stop_recorder()
@@ -601,7 +611,7 @@ class HUD(object):
             'Map:     % 20s' % world.map.name,
             'Simulation time: % 12s' % datetime.timedelta(seconds=int(self.simulation_time)),
             '',
-            'Speed:   % 15.0f km/h' % (3.6 * math.sqrt(v.x**2 + v.y**2 + v.z**2)),
+            'Speed:   % 15.0f mph' % (0.621371 * 3.6 * math.sqrt(v.x**2 + v.y**2 + v.z**2)),
             u'Heading:% 16.0f\N{DEGREE SIGN} % 2s' % (t.rotation.yaw, heading),
             'Location:% 20s' % ('(% 5.1f, % 5.1f)' % (t.location.x, t.location.y)),
             'GNSS:% 24s' % ('(% 2.6f, % 3.6f)' % (world.gnss_sensor.lat, world.gnss_sensor.lon)),

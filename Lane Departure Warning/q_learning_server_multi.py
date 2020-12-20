@@ -83,6 +83,7 @@ def calculate_metrics(client):
         d = client.ldw_data
         if(d is not None):
             while(d is not None and d.turn_signal == True):
+                d = client.ldw_data
                 pass
             dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
             dl = left_lane_distance(d.location_x, d.location_y, d.left_x, d.left_y, d.left_lane_width)
@@ -239,7 +240,7 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
             print(client.driver_name, "Disconnected.\n")
             main()
         send_action(conn, action, init_state)
-        for j in range(0, client.vector_size): # generic response time
+        for j in range(0, int(client.vector_size)): # generic response time
             state = State(client)
             state_vector.append(state)
             time.sleep(client.sampling_rate)
@@ -247,7 +248,7 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
             state_vector.append(next_state)
             if(is_safe(next_state.value) and not is_safe(init_state.value) and j > 1):
                 client.num_corrections += 1
-                #client.vector_size = j
+                client.set_vector_size(j)
                 break
         # Q-learning lookup table update
         iteration_rewards = define_rewards(client, init_state, action, state_vector[-1])
@@ -568,6 +569,22 @@ def write_statistics(data, statistics_file):
             with open(statistics_file, 'w') as file:
                 json.dump(data, file, indent = 4)
     os.chdir('../..')
+def load_episode_number(client, statistics_file):
+    if(not(os.path.exists('Statistics'))):
+        os.mkdir('Statistics')
+    os.chdir('Statistics')
+    if(not(os.path.exists(client.driver_name))):
+        os.mkdir(client.driver_name)
+    os.chdir(client.driver_name)
+    if(os.path.exists(statistics_file)):
+        with open(statistics_file) as file:
+            data = json.load(file)
+            episode = data["total_num_episodes"] + 1
+            os.chdir('../..')
+            return episode
+    else:
+        os.chdir('../..')
+        return 1
 def load_state_counts(client): # state counts need to be loaded to form warning frequency plot of all data, iteration data is write-only
     lock.acquire()
     data_file = client.driver_name + "_warning_frequency_data.json"
@@ -634,7 +651,7 @@ def client_thread(conn):
     server_loop(client, conn)
 def server_loop(client, conn):
     thread = threading.currentThread()
-    episode = 1
+    episode = load_episode_number(client, client.statistics_file)
     init_time = time.time()
     try:
         while(True):
