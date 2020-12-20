@@ -81,15 +81,11 @@ def write_json(data, filename, mode = 'w'):
     with open(filename, mode) as f:
         json.dump(data, f, indent=4)
 def save_json():
-    if(not(os.path.exists('Oura Data'))):
-        os.mkdir('Oura Data')
-    os.chdir('Oura Data')
     userinfo, sleep, activity, readiness = get_all_data()
     write_json(userinfo, 'UserInfo.json')
     write_json(sleep, 'Sleep.json')
     write_json(activity, 'Activity.json')
     write_json(readiness, 'Readiness.json')
-    os.chdir('..')
 
 # human state calculation/classification functions
 def calculate_sleep(file):
@@ -167,25 +163,31 @@ def main():
     argparser = argparse.ArgumentParser(
         description='Oura Ring Data Server')
     argparser.add_argument(
-        '-o', '--output',
-        metavar='OUTPUT.json',
-        default='HumanStates.json',
-        help='specify an output JSON file name for human state data (default is HumanStates.json)')
+        '-dn', '--name',
+        metavar='DRIVER_NAME',
+        default='FastDriver',
+        help='specify a driver name for whom to save Oura Data')
     args = argparser.parse_args()
     data = {}
-    print("Running Oura Ring Server for", args.output)
-    if(not os.path.exists(args.output)):
-        with open(args.output, 'w') as file:
+    print("Running Oura Ring Server for", args.name)
+    file_name = args.name + 'HumanStates.json'
+    os.chdir('Oura Data')
+    if(not os.path.exists(args.name)):
+        os.mkdir(args.name)
+        os.chdir(args.name)
+        with open(file_name, 'w') as file:
             json.dump(data, file)
     else:
-        with open(args.output) as file:
+        os.chdir(args.name)
+        with open(file_name) as file:
             data = json.load(file)
     while True:
         dateTimeObj = datetime.now()
         timestampStr = dateTimeObj.strftime("%d-%b-%Y (%H:%M:%S)")
         state = dict_states.get(get_current_state())
         data.update({timestampStr: state})
-        write_json(data, args.output)
+        save_json()
+        write_json(data, file_name)
         time.sleep(0.5)
 main()
         

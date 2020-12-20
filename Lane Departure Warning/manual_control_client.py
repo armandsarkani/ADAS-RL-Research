@@ -953,6 +953,7 @@ class CameraManager(object):
             self.surface = pygame.surfarray.make_surface(array.swapaxes(0, 1))
         if self.recording:
             #image.save_to_disk('_out/%08d' % image.frame_number)
+            pass
 
 
 # ==============================================================================

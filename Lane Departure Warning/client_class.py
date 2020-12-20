@@ -46,8 +46,8 @@ class Client:
         self.conn = conn
         dt = datetime.now()
         timestamp = dt.strftime('%d%b')
-        self.input_file = driver_name + 'HumanStates.json'
-        self.output_file = driver_name + '.npy'
+        self.input_file = 'Oura Data/' + driver_name + '/' + driver_name + 'HumanStates.json'
+        self.output_file = 'Binaries/' + driver_name + '.npy'
         self.statistics_file = driver_name + 'Statistics.json'
         if("Control" in driver_name or "control" in driver_name):
             self.control = True
