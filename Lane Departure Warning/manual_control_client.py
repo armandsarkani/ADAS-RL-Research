@@ -1029,6 +1029,11 @@ def Receive(sock):
             prev_lane_id = worldmap.get_waypoint(player.get_location()).lane_id
             prev_location = player.get_location()
         response = sock.recv(4096)
+        # display message on HUD
+        if("Approaching lane" in response.decode()):
+            world.hud.notification("WARNING! Approaching lane.")
+        if("Unsafe merge" in response.decode()):
+            world.hud.notification("WARNING! Unsafe merge onto adjacent lane.")
         print(response.decode())
         print("\n")
             

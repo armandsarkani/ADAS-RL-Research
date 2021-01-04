@@ -327,7 +327,7 @@ def issue_merging_warnings(vehicle, euclidean_distances):
         neighbor_state = State(neighbor)
         if(distance < dist_threshold):
             if(analyze_trajectories(vehicle, neighbor)):
-                warning = "WARNING! Unsafe merge onto adjacent lane!"
+                warning = "WARNING! Unsafe merge onto adjacent lane."
                 vehicle.conn.send(warning.encode())
 def analyze_trajectories(vehicle, neighbor):
     x = 0
