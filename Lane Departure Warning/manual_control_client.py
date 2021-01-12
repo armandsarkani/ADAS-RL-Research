@@ -1109,7 +1109,7 @@ def main():
     print(__doc__)
     driver_name = args.name
     worldset = args.mode
-    hostname_to_IP = {'iMac': '192.168.0.3', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.0.2', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
          IP = args.hostname

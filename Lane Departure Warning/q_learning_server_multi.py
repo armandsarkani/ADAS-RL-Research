@@ -145,9 +145,9 @@ def define_rewards(client, state, action, next_state):
     elif(state.value[0] < next_state.value[0]):
         reward += -10 * (next_state.value[0] - state.value[0])
     if(state.value[1] > next_state.value[1]):
-        reward += 15 * (state.value[1] - next_state.value[1])
+        reward += 10 * (state.value[1] - next_state.value[1])
     elif(state.value[1] < next_state.value[1]):
-        reward += -15 * (next_state.value[1] - state.value[1])
+        reward += -10 * (next_state.value[1] - state.value[1])
     lane_id = state.metrics.get("lane_id")
     next_lane_id = next_state.metrics.get("lane_id")
     if(lane_id != next_lane_id): # if lane invasion occurs
@@ -216,6 +216,7 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
     init_state = State(client)
     plot_data = {}
     desc_str = client.driver_name + " (episode " + str(episode) + ")"
+    client.iteration_vector_sizes = []
     for i in trange(iterations, desc= desc_str, leave=True):
         state_vector = []
         if(client.control and init_state.value[0] == 11): # only when invaded
@@ -244,12 +245,11 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
             state = State(client)
             state_vector.append(state)
             time.sleep(client.sampling_rate)
-            next_state = State(client)
-            state_vector.append(next_state)
-            if(is_safe(next_state.value) and not is_safe(init_state.value) and j > 1):
+            if(j > 1 and not is_safe(init_state.value) and (init_state.value[0] - state_vector[-1].value[0]) >= 3): # a correction has been detected
                 client.num_corrections += 1
                 client.set_vector_size(j)
                 break
+        client.iteration_vector_sizes.append(client.vector_size)
         # Q-learning lookup table update
         iteration_rewards = define_rewards(client, init_state, action, state_vector[-1])
         final_state = state_vector[-1]
@@ -433,6 +433,7 @@ def save_plot_data(client, plot_data):
     os.chdir('../..')
     lock.release()
 def plot(client, plot_data, episode):
+    episode_orig = episode
     lock.acquire()
     state_counts = client.state_counts
     driver_name = client.driver_name
@@ -494,6 +495,20 @@ def plot(client, plot_data, episode):
     plt.savefig(file_name, dpi=600)
     plt.clf()
     client.state_counts = state_counts
+    # vector size plot
+    plt.axis([0, iterations, 0, 16])
+    dt = datetime.now()
+    file_name = driver_name + '_vector_sizes_' + timestamp_alt + '_ep' + str(episode_orig) + '.png'
+    title = driver_name + " vector size plot for episode " + str(episode_orig) + " on " + timestamp
+    plt.title(title)
+    plt.xlabel("Iterations")
+    plt.ylabel("Vector size")
+    x_axis = []
+    for i in range(0, iterations):
+        x_axis.append(i)
+    plt.plot(x_axis, client.iteration_vector_sizes, '-b')
+    plt.savefig(file_name, dpi=600)
+    plt.clf()
     os.chdir('../..')
     lock.release()
 def generate_statistics(client, episode, time_elapsed):
@@ -535,7 +550,7 @@ def generate_statistics(client, episode, time_elapsed):
     avg_dr = statistics.mean(dr)
     avg_dl = statistics.mean(dl)
     total_time_run = convert(time_elapsed)
-    data = {"q_table_name": client.output_file, "driver_id": client.driver_id, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": client.num_corrections, "num_invasions": client.num_invasions, "num_warning_states": len(warning_states), "warning_ratio_dist_states": warning_ratios}
+    data = {"q_table_name": client.output_file, "driver_id": client.driver_id, "warning_most_common_state": most_common_state, "avg_warning_dr": avg_dr, "avg_warning_dl": avg_dl, "total_time_run": total_time_run, "total_time_run_seconds": time_elapsed, "total_num_episodes": episode, "num_corrections": client.num_corrections, "num_invasions": client.num_invasions, "num_warning_states": len(warning_states), "warning_ratio_dist_states": warning_ratios, "vector_size": client.vector_size}
     statistics_file = client.statistics_file
     write_statistics(data, statistics_file)
     lock.release()
@@ -602,6 +617,21 @@ def load_state_counts(client): # state counts need to be loaded to form warning 
         os.chdir('../..')
     lock.release()
     return state_counts
+def load_vector_size(client):
+    lock.acquire()
+    vector_size = None
+    data_file = client.driver_name + "Statistics.json"
+    data_path = 'Statistics/' + client.driver_name + '/' + data_file
+    if(os.path.exists(data_path)):
+        os.chdir('Statistics/' + client.driver_name)
+        with open(data_file) as file:
+            data = json.load(file)
+            if("vector_size" in data):
+                vector_size = data["vector_size"]
+        os.chdir('../..')
+    lock.release()
+    return vector_size
+
 def convert(seconds):
     seconds = seconds % (24 * 3600)
     hour = seconds // 3600
@@ -614,7 +644,7 @@ def convert(seconds):
 def main():
     global lock
     args = parse_arguments()
-    hostname_to_IP = {'iMac': '192.168.0.3', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.0.2', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
         IP = args.hostname
@@ -644,6 +674,9 @@ def client_thread(conn):
     client = client_class.Client(driver_name, conn)
     clients.append(client)
     client.state_counts = load_state_counts(client)
+    vector_size = load_vector_size(client)
+    if(vector_size is not None):
+        client.vector_size = vector_size
     main_thread = threading.Thread(target=receive_data, args=(client, conn, ))
     merging_thread = threading.Thread(target=merging_warning, args = (client,))
     main_thread.start()
@@ -668,7 +701,7 @@ def server_loop(client, conn):
                 print("Finished episode", episode, "for", client.driver_name)
                 episode += 1
             except BrokenPipeError:
-                print(client.driver_name, "Disconnected.\n")
+                print(client.driver_name, "disconnected.\n")
                 break
     except EOFError:
         conn.close()

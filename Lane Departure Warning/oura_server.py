@@ -165,7 +165,7 @@ def main():
     argparser.add_argument(
         '-dn', '--name',
         metavar='DRIVER_NAME',
-        default='FastDriver',
+        default='HumanStates',
         help='specify a driver name for whom to save Oura Data')
     args = argparser.parse_args()
     data = {}

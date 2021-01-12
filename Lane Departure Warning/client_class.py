@@ -33,10 +33,11 @@ class Client:
     all_states = {0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: [], 10: [], 11: []}
     num_corrections = 0
     num_invasions = 0
-    sampling_rate = 0.1  # rate at which state transitions are measured
+    sampling_rate = 0.25  # rate at which state transitions are measured
     vector_size = int(2/sampling_rate)
-    min_vector_size = int(2/sampling_rate)/2
+    min_vector_size = 4
     max_vector_size = int(2/sampling_rate)*2
+    iteration_vector_sizes = []
     block_thread = False
     ldw_data = None
     conn = None
@@ -69,11 +70,15 @@ class Client:
         for i in range(8, 12):
             self.q_values[i, :, :, 0] = 0
             self.q_values[i, :, :, 1] = 1
-    def set_vector_size(self, size):
-        new_size = int((self.vector_size + size)/2)
-        if(new_size < self.min_vector_size):
+    def set_vector_size(self, adjustment):
+        size = 0
+        if(adjustment > int(self.vector_size/2)): # larger adjustment, reduce vector size (slow response time)
+            size = self.vector_size - adjustment
+        else: # smaller adjustment, increase vector size (fast response time)
+            size = self.vector_size + adjustment
+        if(size < self.min_vector_size):
             self.vector_size = self.min_vector_size
-        elif(new_size > self.max_vector_size):
+        elif(size > self.max_vector_size):
             self.vector_size = self.max_vector_size
         else:
-            self.vector_size = new_size
+            self.vector_size = size
