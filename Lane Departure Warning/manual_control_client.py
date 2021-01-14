@@ -1182,12 +1182,17 @@ def game_loop(args):
             world = World(client.load_world('Town06'), hud, args.filter, args.rolename)
         else:
             world = World(client.get_world(), hud, args.filter, args.rolename)
-        controller = DualControl(world, args.autopilot)
+        if(args.control == "wheel"):
+            controller = DualControl(world, args.autopilot)
+        else:
+            controller = KeyboardControl(world, args.autopilot)
 
         clock = pygame.time.Clock()
         while True:
             clock.tick_busy_loop(60)
-            if controller.parse_events(world, clock):
+            if args.control == "wheel" and controller.parse_events(world, clock):
+                return
+            elif args.control == "keyboard" and controller.parse_events(client, world, clock):
                 return
             world.tick(clock)
             world.render(display)
@@ -1270,6 +1275,11 @@ def main():
         metavar='MODE',
         default='continue',
         help='world mode (set/continue)')
+    argparser.add_argument(
+       '-c', '--control',
+        metavar='CONTROL',
+        default='wheel',
+        help='control (wheel or keyboard)')
     argparser.add_argument(
         '--host',
         metavar='H',
