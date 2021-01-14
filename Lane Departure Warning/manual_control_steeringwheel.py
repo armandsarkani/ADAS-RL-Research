@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2019 Computer Vision Center (CVC) at the Universitat Autonoma de
-# Barcelona (UAB).
+# Copyright (c) 2019 Intel Labs
 #
 # This work is licensed under the terms of the MIT license.
 # For a copy, see <https://opensource.org/licenses/MIT>.
@@ -10,35 +9,13 @@
 # documented example, please take a look at tutorial.py.
 
 """
-Welcome to CARLA manual control.
+Welcome to CARLA manual control with steering wheel Logitech G920.
 
-Use ARROWS or WASD keys for control.
+To drive start by preshing the brake pedal.
+Change your wheel_config.ini according to your steering wheel.
 
-    W            : throttle
-    S            : brake
-    AD           : steer
-    Q            : toggle reverse
-    Space        : hand-brake
-    P            : toggle autopilot
-    M            : toggle manual transmission
-    ,/.          : gear up/down
+To find out the values of your steering wheel use jstest-gtk in Ubuntu.
 
-    TAB          : change sensor position
-    `            : next sensor
-    [1-9]        : change to sensor [1-9]
-    C            : change weather (Shift+C reverse)
-    Backspace    : change vehicle
-
-    R            : toggle recording images to disk
-
-    CTRL + R     : toggle recording of simulation (replacing any previous)
-    CTRL + P     : start replaying last recorded simulation
-    CTRL + +     : increments the start time of the replay by 1 second (+SHIFT = 10 seconds)
-    CTRL + -     : decrements the start time of the replay by 1 second (+SHIFT = 10 seconds)
-
-    F1           : toggle HUD
-    H/?          : toggle help
-    ESC          : quit
 """
 
 from __future__ import print_function
@@ -70,22 +47,15 @@ except IndexError:
 import carla
 
 from carla import ColorConverter as cc
-import imageio
-import pickle
-import threading
+
 import argparse
 import collections
 import datetime
-from datetime import datetime as dt
 import logging
 import math
 import random
 import re
 import weakref
-import time
-import socket
-import matplotlib.pyplot as plt
-from PIL import Image
 
 if sys.version_info >= (3, 0):
 
@@ -117,7 +87,6 @@ try:
     from pygame.locals import K_a
     from pygame.locals import K_c
     from pygame.locals import K_d
-    from pygame.locals import K_t
     from pygame.locals import K_h
     from pygame.locals import K_m
     from pygame.locals import K_p
@@ -125,9 +94,6 @@ try:
     from pygame.locals import K_r
     from pygame.locals import K_s
     from pygame.locals import K_w
-    from pygame.locals import K_x
-    from pygame.locals import K_MINUS
-    from pygame.locals import K_EQUALS
 except ImportError:
     raise RuntimeError('cannot import pygame, make sure pygame package is installed')
 
@@ -141,15 +107,7 @@ except ImportError:
 # -- Global functions ----------------------------------------------------------
 # ==============================================================================
 
-counter_left = 0
-counter = 0
-counter_right = 0
-player = None
-worldmap = None
-first_pass = True
-worldset = ""
-driver_name = None
-turn_signal_status = False
+
 def find_weather_presets():
     rgx = re.compile('.+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)')
     name = lambda x: ' '.join(m.group(0) for m in rgx.finditer(x))
@@ -165,175 +123,11 @@ def get_actor_display_name(actor, truncate=250):
 # ==============================================================================
 # -- World ---------------------------------------------------------------------
 # ==============================================================================
-def right_lane_departure_warning():
-    location = player.get_location()
-    car = worldmap.get_waypoint(location)
-    right = car.get_right_lane()
-    global counter_right
-    counter_right += 1
-    #print("Car: ", location, " counter: ", counter_right)
-    #print("Car: ", car, " counter: ", counter_right)
-    #print("Right lane: ", right, " counter: ", counter_right)
-    stringC = "X " + str(counter_right)
-    world.world.debug.draw_string(location, stringC, draw_shadow=False,
-                                                                color=carla.Color(r=255, g=0, b=0), life_time=10.0,
-                                                                persistent_lines=True)
-    if (right is not None):
-        stringR = "R " + str(counter_right)
-        world.world.debug.draw_string(right.transform.location, stringR, draw_shadow=False,
-                                                                color=carla.Color(r=0, g=255, b=0), life_time=10.0,
-                                                                persistent_lines=True)
-    if(right is not None and abs(car.transform.location.x - right.transform.location.x) <= 1): # if x are negligibly similar
-        lane_width = right.lane_width
-        lane_marking_x = right.transform.location.x # constant x
-        car_y = location.y
-        if(car_y - right.transform.location.y < 0):
-            lane_marking_y = right.transform.location.y - lane_width/2 # different y
-            polarity = -1
-        else:
-            lane_marking_y = right.transform.location.y + lane_width/2 # different y
-            polarity = 1
-        lane_marking_z = right.transform.location.z
-        lane_marking_location = carla.Location(lane_marking_x, lane_marking_y, lane_marking_z)
-        world.world.debug.draw_string(lane_marking_location, "LM", draw_shadow=False,
-                                                                    color=carla.Color(r=0, g=0, b=255), life_time=10.0,
-                                                                    persistent_lines=True)
-        #print("Lane marking (x = ", lane_marking_x, ", y = ", lane_marking_y, ")")
-        if(polarity == -1 and car_y - lane_marking_y >= -1.5): #relative to lane marking check
-            print("Warning! Approaching right lane!, car y = ", car_y, "LM y = ", lane_marking_y)
-            return True
-        elif(polarity == 1 and lane_marking_y - car_y >= -1.5):
-            print("Warning! Approaching right lane!, car y = ", car_y, "LM y = ", lane_marking_y)
-            return True
-        #print("\n")
-    elif(right is not None and abs(car.transform.location.y - right.transform.location.y) <= 1): # if x are negligibly similar
-        lane_width = right.lane_width
-        lane_marking_y = right.transform.location.y # constant y
-        car_x = location.x
-        if(car_x - right.transform.location.x < 0):
-            polarity = -1
-            lane_marking_x = right.transform.location.x - lane_width/2 # different y
-        else:
-            polarity = 1
-            lane_marking_x = right.transform.location.x + lane_width/2 # different y
-        lane_marking_z = right.transform.location.z
-        lane_marking_location = carla.Location(lane_marking_x, lane_marking_y, lane_marking_z)
-        world.world.debug.draw_string(lane_marking_location, "LM", draw_shadow=False,
-                                                                    color=carla.Color(r=0, g=0, b=255), life_time=10.0,
-                                                                    persistent_lines=True)
-        #print("Lane marking (x = ", lane_marking_x, ", y = ", lane_marking_y, ")")
-        if(polarity == -1 and car_x - lane_marking_x >= -1.5):
-            print("Warning! Approaching right lane!, car x = ", car_x, "LM x = ", lane_marking_x)
-            return True
-        elif(polarity == 1 and lane_marking_x - car_x >= -1.5):
-            print("Warning! Approaching right lane!, car x = ", car_x, "LM x = ", lane_marking_x)
-            return True
-    return False
-def left_lane_departure_warning():
-    location = player.get_location()
-    car = worldmap.get_waypoint(location)
-    left = car.get_left_lane()
-    global counter_left
-    counter_left += 1
-    #print("Car: ", location, " counter: ", counter_left)
-    #print("Car: ", car, " counter: ", counter_left)
-    #print("Left lane: ", left, " counter: ", counter_left)
-    stringC = "X " + str(counter_left)
-    #world.world.debug.draw_string(location, stringC, draw_shadow=False,
-                                                                #color=carla.Color(r=255, g=0, b=0), life_time=10.0,
-                                                               # persistent_lines=True)
-    if (left is not None):
-        stringL = "L " + str(counter_left)
-        world.world.debug.draw_string(left.transform.location, stringL, draw_shadow=False,
-                                                                color=carla.Color(r=0, g=255, b=0), life_time=10.0,
-                                                                persistent_lines=True)
-    if(left is not None and abs(car.transform.location.x - left.transform.location.x) <= 1): # if x are negligibly similar
-        lane_width = left.lane_width
-        lane_marking_x = left.transform.location.x # constant x
-        car_y = location.y
-        if(car_y - left.transform.location.y < 0):
-            lane_marking_y = left.transform.location.y - lane_width/2 # different y
-            polarity = -1
-        else:
-            lane_marking_y = left.transform.location.y + lane_width/2 # different y
-            polarity = 1
-        lane_marking_z = left.transform.location.z
-        lane_marking_location = carla.Location(lane_marking_x, lane_marking_y, lane_marking_z)
-        world.world.debug.draw_string(lane_marking_location, "LM", draw_shadow=False,
-                                                                    color=carla.Color(r=0, g=0, b=255), life_time=10.0,
-                                                                    persistent_lines=True)
-        #print("Lane marking (x = ", lane_marking_x, ", y = ", lane_marking_y, ")")
-        if(polarity == -1 and car_y - lane_marking_y >= -1.5): #relative to lane marking check
-            print("Warning! Approaching left lane!, car y = ", car_y, "LM y = ", lane_marking_y)
-            return True
-        elif(polarity == 1 and lane_marking_y - car_y >= -1.5):
-            print("Warning! Approaching left lane!, car y = ", car_y, "LM y = ", lane_marking_y)
-            return True
-        #print("\n")
-    elif(left is not None and abs(car.transform.location.y - left.transform.location.y) <= 1): # if x are negligibly similar
-        lane_width = left.lane_width
-        lane_marking_y = left.transform.location.y # constant y
-        car_x = location.x
-        if(car_x - left.transform.location.x < 0):
-            polarity = -1
-            lane_marking_x = left.transform.location.x - lane_width/2 # different y
-        else:
-            polarity = 1
-            lane_marking_x = left.transform.location.x + lane_width/2 # different y
-        lane_marking_z = left.transform.location.z
-        lane_marking_location = carla.Location(lane_marking_x, lane_marking_y, lane_marking_z)
-        world.world.debug.draw_string(lane_marking_location, "LM", draw_shadow=False,
-                                                                    color=carla.Color(r=0, g=0, b=255), life_time=10.0,
-                                                                    persistent_lines=True)
-        #print("Lane marking (x = ", lane_marking_x, ", y = ", lane_marking_y, ")")
-        if(polarity == -1 and car_x - lane_marking_x >= -1.5):
-            print("Warning! Approaching left lane!, car x = ", car_x, "LM x = ", lane_marking_x)
-            return True
-        elif(polarity == 1 and lane_marking_x - car_x >= -1.5):
-            print("Warning! Approaching left lane!, car x = ", car_x, "LM x = ", lane_marking_x)
-            return True
-    return False
-class LaneDepartureData:
-    def __init__(self):
-        location = player.get_location()
-        self.location_x = player.get_location().x
-        self.location_y = player.get_location().y
-        self.right = 0
-        self.left = 0
-        self.right_x = 0
-        self.right_y = 0
-        self.right_lane_width = 0
-        self.left_x = 0
-        self.left_y = 0
-        self.acc_x = player.get_acceleration().x
-        self.acc_y = player.get_acceleration().y
-        self.acc_z  = player.get_acceleration().z
-        self.left_lane_width = 0
-        self.steer = player.get_control().steer
-        velocity = player.get_velocity()
-        self.vel_x = velocity.x
-        self.vel_y = velocity.y
-        self.vel_z = velocity.z
-        self.speed = math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
-        self.speed_limit = player.get_speed_limit()
-        self.lane_id = worldmap.get_waypoint(location).lane_id
-        self.turn_signal = turn_signal_status
-        if(worldmap.get_waypoint(location).get_right_lane() is not None):
-            self.right_x = worldmap.get_waypoint(location).get_right_lane().transform.location.x
-            self.right_y = worldmap.get_waypoint(location).get_right_lane().transform.location.y
-            self.right_lane_width = worldmap.get_waypoint(location).get_right_lane().lane_width
-            self.right = 1
-        if(worldmap.get_waypoint(location).get_left_lane() is not None):
-            self.left_x = worldmap.get_waypoint(location).get_left_lane().transform.location.x
-            self.left_y = worldmap.get_waypoint(location).get_left_lane().transform.location.y
-            self.left_lane_width = worldmap.get_waypoint(location).get_left_lane().lane_width
-            self.left = 1
-        
+
+
 class World(object):
-    def __init__(self, carla_world, hud, actor_filter, actor_role_name='hero'):
+    def __init__(self, carla_world, hud, actor_filter):
         self.world = carla_world
-        self.actor_role_name = actor_role_name
-        self.map = self.world.get_map()
         self.hud = hud
         self.player = None
         self.collision_sensor = None
@@ -345,16 +139,14 @@ class World(object):
         self._actor_filter = actor_filter
         self.restart()
         self.world.on_tick(hud.on_world_tick)
-        self.recording_enabled = False
-        self.recording_start = 0
 
     def restart(self):
         # Keep same camera config if the camera manager exists.
         cam_index = self.camera_manager.index if self.camera_manager is not None else 0
         cam_pos_index = self.camera_manager.transform_index if self.camera_manager is not None else 0
         # Get a random blueprint.
-        blueprint = self.world.get_blueprint_library().filter('model3')[0]
-        blueprint.set_attribute('role_name', self.actor_role_name)
+        blueprint = random.choice(self.world.get_blueprint_library().filter(self._actor_filter))
+        blueprint.set_attribute('role_name', 'hero')
         if blueprint.has_attribute('color'):
             color = random.choice(blueprint.get_attribute('color').recommended_values)
             blueprint.set_attribute('color', color)
@@ -367,9 +159,8 @@ class World(object):
             self.destroy()
             self.player = self.world.try_spawn_actor(blueprint, spawn_point)
         while self.player is None:
-            spawn_points = self.map.get_spawn_points()
-            #spawn_point = random.choice(spawn_points) if spawn_points else carla.Transform()
-            spawn_point = carla.Transform(carla.Location(151.071,146.458,2.5),carla.Rotation(0,0.234757,0))
+            spawn_points = self.world.get_map().get_spawn_points()
+            spawn_point = random.choice(spawn_points) if spawn_points else carla.Transform()
             self.player = self.world.try_spawn_actor(blueprint, spawn_point)
         # Set up the sensors.
         self.collision_sensor = CollisionSensor(self.player, self.hud)
@@ -389,24 +180,11 @@ class World(object):
         self.player.get_world().set_weather(preset[0])
 
     def tick(self, clock):
-        global player
-        player = self.player
-        global worldmap
-        worldmap = self.map
-        global world
-        world = self
-        d = LaneDepartureData()
-        data_string = pickle.dumps(d)
-        sock.send(data_string)
         self.hud.tick(self, clock)
+
     def render(self, display):
         self.camera_manager.render(display)
         self.hud.render(display)
-
-    def destroy_sensors(self):
-        self.camera_manager.sensor.destroy()
-        self.camera_manager.sensor = None
-        self.camera_manager.index = None
 
     def destroy(self):
         actors = [
@@ -418,6 +196,7 @@ class World(object):
         for actor in actors:
             if actor is not None:
                 actor.destroy()
+
 
 # ==============================================================================
 # -- DualControl -----------------------------------------------------------
@@ -459,14 +238,8 @@ class DualControl(object):
         self._reverse_idx = int(self._parser.get('G920 Racing Wheel', 'reverse'))
         self._handbrake_idx = int(
             self._parser.get('G920 Racing Wheel', 'handbrake'))
-        self._lsb_idx = int(
-            self._parser.get('G920 Racing Wheel', 'LSB'))
-        self._rsb_idx = int(
-            self._parser.get('G920 Racing Wheel', 'RSB'))
-
 
     def parse_events(self, world, clock):
-        global turn_signal_status
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return True
@@ -481,12 +254,6 @@ class DualControl(object):
                     world.next_weather()
                 elif event.button == self._reverse_idx:
                     self._control.gear = 1 if self._control.reverse else -1
-                elif event.button == self._lsb_idx or event.button == self._rsb_idx:
-                    turn_signal_status = not(turn_signal_status) # toggle turn signal
-                    if(turn_signal_status):
-                        world.hud.notification("Turn signals on")
-                    elif(not(turn_signal_status)):
-                        world.hud.notification("Turn signals off")
                 elif event.button == 23:
                     world.camera_manager.next_sensor()
 
@@ -511,12 +278,6 @@ class DualControl(object):
                     world.camera_manager.set_sensor(event.key - 1 - K_0)
                 elif event.key == K_r:
                     world.camera_manager.toggle_recording()
-                elif event.key == K_t:
-                    turn_signal_status = not(turn_signal_status) # toggle turn signal
-                    if(turn_signal_status):
-                        world.hud.notification("Turn signals on")
-                    elif(not(turn_signal_status)):
-                        world.hud.notification("Turn signals off")
                 if isinstance(self._control, carla.VehicleControl):
                     if event.key == K_q:
                         self._control.gear = 1 if self._control.reverse else -1
@@ -613,154 +374,6 @@ class DualControl(object):
         return (key == K_ESCAPE) or (key == K_q and pygame.key.get_mods() & KMOD_CTRL)
 
 
-
-# ==============================================================================
-# -- KeyboardControl -----------------------------------------------------------
-# ==============================================================================
-
-
-class KeyboardControl(object):
-    def __init__(self, world, start_in_autopilot):
-        self._autopilot_enabled = start_in_autopilot
-        if isinstance(world.player, carla.Vehicle):
-            self._control = carla.VehicleControl()
-            world.player.set_autopilot(self._autopilot_enabled)
-        elif isinstance(world.player, carla.Walker):
-            self._control = carla.WalkerControl()
-            self._autopilot_enabled = False
-            self._rotation = world.player.get_transform().rotation
-        else:
-            raise NotImplementedError("Actor type not supported")
-        self._steer_cache = 0.0
-        world.hud.notification("Press 'H' or '?' for help.", seconds=4.0)
-
-    def parse_events(self, client, world, clock):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return True
-            elif event.type == pygame.KEYUP:
-                if self._is_quit_shortcut(event.key):
-                    return True
-                elif event.key == K_BACKSPACE:
-                    world.restart()
-                elif event.key == K_F1:
-                    world.hud.toggle_info()
-                elif event.key == K_h or (event.key == K_SLASH and pygame.key.get_mods() & KMOD_SHIFT):
-                    world.hud.help.toggle()
-                elif event.key == K_TAB:
-                    world.camera_manager.toggle_camera()
-                elif event.key == K_c and pygame.key.get_mods() & KMOD_SHIFT:
-                    world.next_weather(reverse=True)
-                elif event.key == K_c:
-                    world.next_weather()
-                elif event.key == K_BACKQUOTE:
-                    world.camera_manager.next_sensor()
-                elif event.key > K_0 and event.key <= K_9:
-                    world.camera_manager.set_sensor(event.key - 1 - K_0)
-                elif event.key == K_r and not (pygame.key.get_mods() & KMOD_CTRL):
-                    world.camera_manager.toggle_recording()
-                elif event.key == K_r and (pygame.key.get_mods() & KMOD_CTRL):
-                    if (world.recording_enabled):
-                        client.stop_recorder()
-                        world.recording_enabled = False
-                        world.hud.notification("Recorder is OFF")
-                    else:
-                        client.start_recorder("manual_recording.rec")
-                        world.recording_enabled = True
-                        world.hud.notification("Recorder is ON")
-                elif event.key == K_t:
-                    global turn_signal_status
-                    turn_signal_status = not(turn_signal_status) # toggle turn signal
-                    if(turn_signal_status):
-                        world.hud.notification("Turn signals on")
-                    elif(not(turn_signal_status)):
-                        world.hud.notification("Turn signals off")
-                elif event.key == K_p and (pygame.key.get_mods() & KMOD_CTRL):
-                    # stop recorder
-                    client.stop_recorder()
-                    world.recording_enabled = False
-                    # work around to fix camera at start of replaying
-                    currentIndex = world.camera_manager.index
-                    world.destroy_sensors()
-                    # disable autopilot
-                    self._autopilot_enabled = False
-                    world.player.set_autopilot(self._autopilot_enabled)
-                    world.hud.notification("Replaying file 'manual_recording.rec'")
-                    # replayer
-                    client.replay_file("manual_recording.rec", world.recording_start, 0, 0)
-                    world.camera_manager.set_sensor(currentIndex)
-                #elif event.key == K_w:
-                elif event.key == K_MINUS and (pygame.key.get_mods() & KMOD_CTRL):
-                    if pygame.key.get_mods() & KMOD_SHIFT:
-                        world.recording_start -= 10
-                    else:
-                        world.recording_start -= 1
-                    world.hud.notification("Recording start time is %d" % (world.recording_start))
-                elif event.key == K_EQUALS and (pygame.key.get_mods() & KMOD_CTRL):
-                    if pygame.key.get_mods() & KMOD_SHIFT:
-                        world.recording_start += 10
-                    else:
-                        world.recording_start += 1
-                    world.hud.notification("Recording start time is %d" % (world.recording_start))
-                if isinstance(self._control, carla.VehicleControl):
-                    if event.key == K_q:
-                        self._control.gear = 1 if self._control.reverse else -1
-                    elif event.key == K_m:
-                        self._control.manual_gear_shift = not self._control.manual_gear_shift
-                        self._control.gear = world.player.get_control().gear
-                        world.hud.notification('%s Transmission' %
-                                               ('Manual' if self._control.manual_gear_shift else 'Automatic'))
-                    elif self._control.manual_gear_shift and event.key == K_COMMA:
-                        self._control.gear = max(-1, self._control.gear - 1)
-                    elif self._control.manual_gear_shift and event.key == K_PERIOD:
-                        self._control.gear = self._control.gear + 1
-                    elif event.key == K_p and not (pygame.key.get_mods() & KMOD_CTRL):
-                        self._autopilot_enabled = not self._autopilot_enabled
-                        world.player.set_autopilot(self._autopilot_enabled)
-                        world.hud.notification('Autopilot %s' % ('On' if self._autopilot_enabled else 'Off'))
-        if not self._autopilot_enabled:
-            if isinstance(self._control, carla.VehicleControl):
-                self._parse_vehicle_keys(pygame.key.get_pressed(), clock.get_time())
-                self._control.reverse = self._control.gear < 0
-            elif isinstance(self._control, carla.WalkerControl):
-                self._parse_walker_keys(pygame.key.get_pressed(), clock.get_time())
-            world.player.apply_control(self._control)
-
-    def _parse_vehicle_keys(self, keys, milliseconds):
-        self._control.throttle = 1.0 if keys[K_UP] or keys[K_w] else 0.0
-        steer_increment = 5e-4 * milliseconds
-        if keys[K_LEFT] or keys[K_a]:
-            self._steer_cache -= steer_increment
-        elif keys[K_RIGHT] or keys[K_d]:
-            self._steer_cache += steer_increment
-        else:
-            self._steer_cache = 0.0
-        self._steer_cache = min(0.7, max(-0.7, self._steer_cache))
-        self._control.steer = round(self._steer_cache, 1)
-        self._control.brake = 1.0 if keys[K_DOWN] or keys[K_s] else 0.0
-        self._control.hand_brake = keys[K_SPACE]
-
-    def _parse_walker_keys(self, keys, milliseconds):
-        self._control.speed = 0.0
-        if keys[K_DOWN] or keys[K_s]:
-            self._control.speed = 0.0
-        if keys[K_LEFT] or keys[K_a]:
-            self._control.speed = .01
-            self._rotation.yaw -= 0.08 * milliseconds
-        if keys[K_RIGHT] or keys[K_d]:
-            self._control.speed = .01
-            self._rotation.yaw += 0.08 * milliseconds
-        if keys[K_UP] or keys[K_w]:
-            self._control.speed = 5.556 if pygame.key.get_mods() & KMOD_SHIFT else 2.778
-        self._control.jump = keys[K_SPACE]
-        self._rotation.yaw = round(self._rotation.yaw, 1)
-        self._control.direction = self._rotation.get_forward_vector()
-
-    @staticmethod
-    def _is_quit_shortcut(key):
-        return (key == K_ESCAPE) or (key == K_q and pygame.key.get_mods() & KMOD_CTRL)
-
-
 # ==============================================================================
 # -- HUD -----------------------------------------------------------------------
 # ==============================================================================
@@ -771,7 +384,7 @@ class HUD(object):
         self.dim = (width, height)
         font = pygame.font.Font(pygame.font.get_default_font(), 20)
         fonts = [x for x in pygame.font.get_fonts() if 'arial' in x]
-        default_font = 'ubuntuarial'
+        default_font = 'arial'
         arial = default_font if default_font in fonts else fonts[0]
         arial = pygame.font.match_font(arial)
         self._font_arial = pygame.font.Font(arial, 14)
@@ -811,10 +424,9 @@ class HUD(object):
             'Client:  % 16.0f FPS' % clock.get_fps(),
             '',
             'Vehicle: % 20s' % get_actor_display_name(world.player, truncate=20),
-            'Map:     % 20s' % world.map.name,
             'Simulation time: % 12s' % datetime.timedelta(seconds=int(self.simulation_time)),
             '',
-            'Speed:   % 15.0f mph' % (0.621371 * 3.6 * math.sqrt(v.x**2 + v.y**2 + v.z**2)),
+            'Speed:   % 15.0f km/h' % (3.6 * math.sqrt(v.x**2 + v.y**2 + v.z**2)),
             u'Heading:% 16.0f\N{DEGREE SIGN} % 2s' % (t.rotation.yaw, heading),
             'Location:% 20s' % ('(% 5.1f, % 5.1f)' % (t.location.x, t.location.y)),
             'GNSS:% 24s' % ('(% 2.6f, % 3.6f)' % (world.gnss_sensor.lat, world.gnss_sensor.lon)),
@@ -985,7 +597,6 @@ class CollisionSensor(object):
         if not self:
             return
         actor_type = get_actor_display_name(event.other_actor)
-        print("Collision detected with", str(actor_type))
         self.hud.notification('Collision with %r' % actor_type)
         impulse = event.normal_impulse
         intensity = math.sqrt(impulse.x**2 + impulse.y**2 + impulse.z**2)
@@ -1123,30 +734,22 @@ class CameraManager(object):
 
     @staticmethod
     def _parse_image(weak_self, image):
-        global counter
         self = weak_self()
         if not self:
             return
         if self.sensors[self.index][0].startswith('sensor.lidar'):
-            # LiDAR Data Here
-            counter += 1
             points = np.frombuffer(image.raw_data, dtype=np.dtype('f4'))
             points = np.reshape(points, (int(points.shape[0] / 3), 3))
             lidar_data = np.array(points[:, :2])
             lidar_data *= min(self.hud.dim) / 100.0
             lidar_data += (0.5 * self.hud.dim[0], 0.5 * self.hud.dim[1])
-            lidar_data = np.fabs(lidar_data)  # pylint: disable=E1111
+            lidar_data = np.fabs(lidar_data) # pylint: disable=E1111
             lidar_data = lidar_data.astype(np.int32)
+            lidar_data = np.reshape(lidar_data, (-1, 2))
             lidar_img_size = (self.hud.dim[0], self.hud.dim[1], 3)
             lidar_img = np.zeros(lidar_img_size)
             lidar_img[tuple(lidar_data.T)] = (255, 255, 255)
             self.surface = pygame.surfarray.make_surface(lidar_img)
-            dt_now = dt.now()
-            timestamp = dt_now.strftime('%d-%b-%Y_%H:%M')
-            fname = driver_name + '_lidar_img_' + str(counter) + '.png'
-            img_uint8 = lidar_img.astype(np.uint8)
-            if(counter % 20 == 0):
-                imageio.imwrite(fname, img_uint8)
         else:
             image.convert(self.sensors[self.index][1])
             array = np.frombuffer(image.raw_data, dtype=np.dtype("uint8"))
@@ -1155,8 +758,7 @@ class CameraManager(object):
             array = array[:, :, ::-1]
             self.surface = pygame.surfarray.make_surface(array.swapaxes(0, 1))
         if self.recording:
-            #image.save_to_disk('_out/%08d' % image.frame_number)
-            pass
+            image.save_to_disk('_out/%08d' % image.frame_number)
 
 
 # ==============================================================================
@@ -1171,17 +773,14 @@ def game_loop(args):
 
     try:
         client = carla.Client(args.host, args.port)
-        client.set_timeout(20.0)
+        client.set_timeout(2.0)
 
         display = pygame.display.set_mode(
             (args.width, args.height),
             pygame.HWSURFACE | pygame.DOUBLEBUF)
 
         hud = HUD(args.width, args.height)
-        if(worldset == "set"):
-            world = World(client.load_world('Town06'), hud, args.filter, args.rolename)
-        else:
-            world = World(client.get_world(), hud, args.filter, args.rolename)
+        world = World(client.get_world(), hud, args.filter)
         controller = DualControl(world, args.autopilot)
 
         clock = pygame.time.Clock()
@@ -1195,59 +794,18 @@ def game_loop(args):
 
     finally:
 
-        if (world and world.recording_enabled):
-            client.stop_recorder()
-
         if world is not None:
             world.destroy()
 
         pygame.quit()
-def DetermineLaneCentering(prev_location, prev_lane_id):
-    if(player is None or worldmap is None):
-        return
-    location = player.get_location()
-    car = worldmap.get_waypoint(location)
-    new_lane_id = car.lane_id
-    if(new_lane_id != prev_lane_id):
-        print("Driver has likely not taken corrective action!")
-        return
-    print("Vehicle was at: x = ", prev_location.x, "y = ", prev_location.y)
-    print("Center of lane is at (wp): x = ", car.transform.location.x, "y = ", car.transform.location.y)
-    print("Moving vehicle...")
-    player.set_transform(car.transform)
-    #print("Vehicle has moved to: x = ", location.x, "y = ", location.y)
-    '''init_time = time.time()
-    while(abs(location.x - car.transform.location.x) <= 1 or abs(location.y - car.transform.location.y) > 1):
-        if(abs(location.x - car.transform.location.x) <= 1 or abs(location.y - car.transform.location.y) <= 1):
-            print("Driver has centered their vehicle!")
-            response_time = time.time() - init_time
-            print("Response time (s) ", response_time)
-            break'''
 
-def Receive(sock):
-    while True:
-        prev_location = None
-        prev_lane_id = None
-        if(player is not None and worldmap is not None):
-            prev_lane_id = worldmap.get_waypoint(player.get_location()).lane_id
-            prev_location = player.get_location()
-        response = sock.recv(4096)
-        # display message on HUD
-        if("Approaching lane" in response.decode()):
-            world.hud.notification("WARNING! Approaching lane.")
-        if("Unsafe merge" in response.decode()):
-            world.hud.notification("WARNING! Unsafe merge onto adjacent lane.")
-        print(response.decode())
-        print("\n")
-            
+
 # ==============================================================================
 # -- main() --------------------------------------------------------------------
 # ==============================================================================
 
 
 def main():
-    global worldset
-    global driver_name
     argparser = argparse.ArgumentParser(
         description='CARLA Manual Control Client')
     argparser.add_argument(
@@ -1256,25 +814,9 @@ def main():
         dest='debug',
         help='print debug information')
     argparser.add_argument(
-        '-n','--hostname',
-        metavar='HOSTNAME',
-        default='localhost',
-        help='computer hostname or IP address')
-    argparser.add_argument(
-        '-dn', '--name',
-        metavar='DRIVER_NAME',
-        default='DefaultDriver',
-        help='driver name')
-    argparser.add_argument(
-        '--mode',
-        metavar='MODE',
-        default='continue',
-        help='world mode (set/continue)')
-    argparser.add_argument(
         '--host',
         metavar='H',
         default='127.0.0.1',
-        #default='192.168.0.171',
         help='IP of the host server (default: 127.0.0.1)')
     argparser.add_argument(
         '-p', '--port',
@@ -1296,12 +838,8 @@ def main():
         metavar='PATTERN',
         default='vehicle.*',
         help='actor filter (default: "vehicle.*")')
-    argparser.add_argument(
-        '--rolename',
-        metavar='NAME',
-        default='hero',
-        help='actor role name (default: "hero")')
     args = argparser.parse_args()
+
     args.width, args.height = [int(x) for x in args.res.split('x')]
 
     log_level = logging.DEBUG if args.debug else logging.INFO
@@ -1310,34 +848,15 @@ def main():
     logging.info('listening to server %s:%s', args.host, args.port)
 
     print(__doc__)
-    driver_name = args.name
-    worldset = args.mode
-    hostname_to_IP = {'iMac': '192.168.0.2', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
-    IP = hostname_to_IP.get(args.hostname)
-    if(IP is None):
-         IP = args.hostname
+
     try:
-        port = 50007
-        global sock
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((IP, port))
-        if(driver_name != "DefaultDriver"):
-            sock.send(driver_name.encode())
-            response = sock.recv(4096)
-            while(response is None or "Success" not in response.decode()):
-                response = sock.recv(4096)
-                if(response is not None and "Success" in response.decode()):
-                    break
-        thread = threading.Thread(target=Receive, args=(sock,))
-        thread.start()
+
         game_loop(args)
-        sock.close()
 
     except KeyboardInterrupt:
-        sock.close()
-        thread.join()
         print('\nCancelled by user. Bye!')
 
 
 if __name__ == '__main__':
+
     main()
