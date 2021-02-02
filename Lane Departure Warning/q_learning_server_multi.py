@@ -35,7 +35,7 @@ inattentive = 2
 dict_human_states = {"attentive": attentive, "moderate": moderate, "inattentive": inattentive}
 
 # iterations per episode
-iterations = 100
+iterations = 20
 
 # actions
 no_warning = 0
@@ -217,7 +217,10 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
     plot_data = {}
     desc_str = client.driver_name + " (episode " + str(episode) + ")"
     client.iteration_vector_sizes = []
+    false_positives = []
+    false_negatives = []
     for i in trange(iterations, desc= desc_str, leave=True):
+        client.rd.append(init_state.metrics.get("dr"))
         state_vector = []
         if(client.control and init_state.value[0] == 11): # only when invaded
             action = warning
@@ -249,6 +252,16 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
                 client.num_corrections += 1
                 client.set_vector_size(j)
                 break
+        if(action == warning and not(not is_safe(init_state.value) and (init_state.value[0] - state_vector[-1].value[0]) >= 2)): # false positive: warning issued but no corrective action
+            false_positives.append(1)
+        else:
+            false_positives.append(0)
+        if(action == no_warning and (not is_safe(init_state.value) and (init_state.value[0] - state_vector[-1].value[0]) >= 2)): # false negative: warning not issued but corrective action
+            false_negatives.append(1)
+        elif(init_state.value[0] == 11 and (init_state.value[0] - state_vector[-1].value[0]) >= 2): # false negative: corrective action taken as car hit lane marking
+            false_negatives.append(1)
+        else:
+            false_negatives.append(0)
         client.iteration_vector_sizes.append(client.vector_size)
         # Q-learning lookup table update
         iteration_rewards = define_rewards(client, init_state, action, state_vector[-1])
@@ -259,10 +272,18 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
         np.save(client.output_file, client.q_values) # save on each iteration
         lock.release()
         init_state = final_state
+    tt = threading.Thread(target=temp_thread, args=(client, conn,))
+    client.false_positives.update({client.local_episode_num: false_positives})
+    client.false_negatives.update({client.local_episode_num: false_negatives})
     client.block_thread = True
+    tt.start()
     plot(client, plot_data, episode)
     save_plot_data(client, plot_data)
+    client.local_episode_num += 1
     client.block_thread = False
+def temp_thread(client, conn):
+    while(client.block_thread):
+        conn.send("Loading...".encode())
 def right_lane_distance(location_x, location_y, right_x, right_y, right_lane_width):
     if(abs(location_x - right_x) <= 1): # if x are negligibly similar
         if(location_y - right_y < 0):
@@ -397,6 +418,63 @@ def parse_arguments():
         help='computer hostname or IP address')
     args = argparser.parse_args()
     return args
+def load_episode_number(client, statistics_file):
+    if(not(os.path.exists('Statistics'))):
+        os.mkdir('Statistics')
+    os.chdir('Statistics')
+    if(not(os.path.exists(client.driver_name))):
+        os.mkdir(client.driver_name)
+    os.chdir(client.driver_name)
+    if(os.path.exists(statistics_file)):
+        with open(statistics_file) as file:
+            data = json.load(file)
+            episode = data["total_num_episodes"] + 1
+            os.chdir('../..')
+            return episode
+    else:
+        os.chdir('../..')
+        return 1
+def load_state_counts(client): # state counts need to be loaded to form warning frequency plot of all data, iteration data is write-only
+    lock.acquire()
+    data_file = client.driver_name + "_warning_frequency_data.json"
+    data_path = 'Data/' + client.driver_name + '/' + data_file
+    state_counts = {3: [], 4: [], 5: [], 6: [], 7: [], 8: []}
+    if(os.path.exists(data_path)):
+        os.chdir('Data/' + client.driver_name)
+        with open(data_file) as file:
+            data = json.load(file)
+            i = 3
+            for key in data:
+                state_counts[i] = data[key] # load in state_counts dictionary if it already exists for plotting frequency graphs
+                i += 1
+            file.close()
+        os.chdir('../..')
+    lock.release()
+    return state_counts
+def load_vector_size(client):
+    lock.acquire()
+    vector_size = None
+    data_file = client.driver_name + "Statistics.json"
+    data_path = 'Statistics/' + client.driver_name + '/' + data_file
+    if(os.path.exists(data_path)):
+        os.chdir('Statistics/' + client.driver_name)
+        with open(data_file) as file:
+            data = json.load(file)
+            if("vector_size" in data):
+                vector_size = data["vector_size"]
+        os.chdir('../..')
+    lock.release()
+    return vector_size
+
+def convert(seconds):
+    seconds = seconds % (24 * 3600)
+    hour = seconds // 3600
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+    return '%d:%02d:%02d' % (hour, minutes, seconds)
+
+# plotting and statistics
 def save_plot_data(client, plot_data):
     lock.acquire()
     if(not(os.path.exists('Data'))):
@@ -445,13 +523,16 @@ def plot(client, plot_data, episode):
         os.mkdir(driver_name)
     os.chdir(driver_name)
     # distance/iteration plot
+    f = plt.figure()
+    f.set_figwidth(6.4)
+    f.set_figheight(4.8)
     plt.axis([0, iterations, 11, 0])
     dt = datetime.now()
     timestamp = dt.strftime('%d-%b-%Y (%H:%M)')
     timestamp_alt = dt.strftime('%d-%b-%Y_%H%M')
     file_name = driver_name + '_' + timestamp_alt + '_ep' + str(episode) + '.png'
     title = driver_name + " plot for episode " + str(episode) + " on " + timestamp
-    plt.title(title)
+    #plt.title(title)
     plt.xlabel("Iterations")
     plt.ylabel("Distance state (lower is safer)")
     i = 1
@@ -465,6 +546,9 @@ def plot(client, plot_data, episode):
     plt.savefig(file_name, dpi=600)
     plt.clf()
     # warning frequency plot
+    f = plt.figure()
+    f.set_figwidth(6.4)
+    f.set_figheight(4.8)
     for i in range(3, 9): # initialization
         state_counts[i].append(0) # add zero entry for this episode
     episode = len(state_counts[3])
@@ -474,7 +558,7 @@ def plot(client, plot_data, episode):
     timestamp = dt.strftime('%d-%b-%Y')
     file_name = driver_name + '_warning_frequency_plot_' + timestamp + '.png'
     title = driver_name + " warning frequency plot"
-    plt.title(title)
+    #plt.title(title)
     plt.xlabel("Episodes")
     plt.ylabel("Number of warnings")
     plt.axis([0, episode+1, 0, 10])
@@ -496,11 +580,15 @@ def plot(client, plot_data, episode):
     plt.clf()
     client.state_counts = state_counts
     # vector size plot
+    f = plt.figure()
+    f.set_figwidth(6.4)
+    f.set_figheight(4.8)
     plt.axis([0, iterations, 0, 16])
+    plt.xticks(range(0, iterations+1, int(iterations/4)))
     dt = datetime.now()
     file_name = driver_name + '_vector_sizes_' + timestamp_alt + '_ep' + str(episode_orig) + '.png'
     title = driver_name + " vector size plot for episode " + str(episode_orig) + " on " + timestamp
-    plt.title(title)
+    #plt.title(title)
     plt.xlabel("Iterations")
     plt.ylabel("Vector size")
     x_axis = []
@@ -509,6 +597,59 @@ def plot(client, plot_data, episode):
     plt.plot(x_axis, client.iteration_vector_sizes, '-b')
     plt.savefig(file_name, dpi=600)
     plt.clf()
+    # false positives plot
+    f = plt.figure()
+    f.set_figwidth(10)
+    f.set_figheight(5)
+    plt.axis([1, client.local_episode_num+1, 0, 1])
+    plt.xticks(range(1, client.local_episode_num+1))
+    plt.yticks(range(0, 1))
+    file_name = driver_name + '_FP.png'
+    plt.xlabel("Episodes")
+    plt.ylabel("FP")
+    width = 0.0125
+    for i in range(1, client.local_episode_num+1):
+        offset = 0.125
+        for j in range(0, iterations):
+            plt.bar(i-offset, client.false_positives[i][j], color = '#360CF2', width = width, align = 'center')
+            offset -= 0.0125
+    plt.savefig(file_name, dpi=600, bbox_inches='tight')
+    plt.clf()
+    # false negatives plot
+    f = plt.figure()
+    f.set_figwidth(10)
+    f.set_figheight(5)
+    plt.axis([1, client.local_episode_num+1, 0, 1])
+    plt.xticks(range(1, client.local_episode_num+1))
+    plt.yticks(range(0, 1))
+    file_name = driver_name + '_FN.png'
+    plt.xlabel("Episodes")
+    plt.ylabel("FN")
+    width = 0.0125
+    for i in range(1, client.local_episode_num+1):
+        offset = 0.125
+        for j in range(0, iterations):
+            plt.bar(i-offset, client.false_negatives[i][j], color = '#FA2F20', width = width, align = 'center')
+            offset -= 0.0125
+    plt.savefig(file_name, dpi=600, bbox_inches='tight')
+    plt.clf()
+    # right distance (rd) plot
+    f = plt.figure()
+    f.set_figwidth(10)
+    f.set_figheight(5)
+    plt.axis([1, client.local_episode_num+1, 2.5, 0])
+    plt.xticks(range(1, client.local_episode_num+1))
+    plt.yticks([0, 0.5, 1, 1.5, 2, 2.5])
+    file_name = driver_name + '_RD.png'
+    plt.xlabel("Episodes")
+    plt.ylabel("RD")
+    x_axis = []
+    for i in range(0, len(client.rd)):
+        x_axis.append((i/iterations)+1)
+    plt.plot(x_axis, client.rd, '-g')
+    plt.savefig(file_name, dpi=600, bbox_inches='tight')
+    plt.clf()
+    plt.close('all')
     os.chdir('../..')
     lock.release()
 def generate_statistics(client, episode, time_elapsed):
@@ -584,67 +725,12 @@ def write_statistics(data, statistics_file):
             with open(statistics_file, 'w') as file:
                 json.dump(data, file, indent = 4)
     os.chdir('../..')
-def load_episode_number(client, statistics_file):
-    if(not(os.path.exists('Statistics'))):
-        os.mkdir('Statistics')
-    os.chdir('Statistics')
-    if(not(os.path.exists(client.driver_name))):
-        os.mkdir(client.driver_name)
-    os.chdir(client.driver_name)
-    if(os.path.exists(statistics_file)):
-        with open(statistics_file) as file:
-            data = json.load(file)
-            episode = data["total_num_episodes"] + 1
-            os.chdir('../..')
-            return episode
-    else:
-        os.chdir('../..')
-        return 1
-def load_state_counts(client): # state counts need to be loaded to form warning frequency plot of all data, iteration data is write-only
-    lock.acquire()
-    data_file = client.driver_name + "_warning_frequency_data.json"
-    data_path = 'Data/' + client.driver_name + '/' + data_file
-    state_counts = {3: [], 4: [], 5: [], 6: [], 7: [], 8: []}
-    if(os.path.exists(data_path)):
-        os.chdir('Data/' + client.driver_name)
-        with open(data_file) as file:
-            data = json.load(file)
-            i = 3
-            for key in data:
-                state_counts[i] = data[key] # load in state_counts dictionary if it already exists for plotting frequency graphs
-                i += 1
-            file.close()
-        os.chdir('../..')
-    lock.release()
-    return state_counts
-def load_vector_size(client):
-    lock.acquire()
-    vector_size = None
-    data_file = client.driver_name + "Statistics.json"
-    data_path = 'Statistics/' + client.driver_name + '/' + data_file
-    if(os.path.exists(data_path)):
-        os.chdir('Statistics/' + client.driver_name)
-        with open(data_file) as file:
-            data = json.load(file)
-            if("vector_size" in data):
-                vector_size = data["vector_size"]
-        os.chdir('../..')
-    lock.release()
-    return vector_size
-
-def convert(seconds):
-    seconds = seconds % (24 * 3600)
-    hour = seconds // 3600
-    seconds %= 3600
-    minutes = seconds // 60
-    seconds %= 60
-    return '%d:%02d:%02d' % (hour, minutes, seconds)
 
 # driving functions
 def main():
     global lock
     args = parse_arguments()
-    hostname_to_IP = {'iMac': '192.168.86.250', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBA': '192.168.87.21', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.86.245', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBA': '192.168.87.21', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
         IP = args.hostname

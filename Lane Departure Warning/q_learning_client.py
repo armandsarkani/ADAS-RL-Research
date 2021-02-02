@@ -33,6 +33,8 @@ locationx = 0
 locationy = 0
 locationz = 0
 collisions = []
+orig_throttle = 0
+#response = None
 
 # lane departure data class to send to server
 class LaneDepartureData:
@@ -213,7 +215,13 @@ def script_loop(driver, throttle, threshold, behavior):
     global turn_signal_status
     while(True):
         response = sock.recv(4096)
-        print(response.decode())
+        if("Loading" not in response.decode()):
+            print(response.decode())
+        if("Loading" in response.decode()):
+            quick_lane_centering(vehicle)
+            while("Loading" in response.decode()):
+                vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0))
+                response = sock.recv(4096)
         flag = False
         d = LaneDepartureData()
         dr = right_lane_distance(d.location_x, d.location_y, d.right_x, d.right_y, d.right_lane_width)
@@ -231,7 +239,7 @@ def script_loop(driver, throttle, threshold, behavior):
             print("Turn signals off.")
             turn_signal_status = False
             continue
-        secondary_corrective_percentage = 0.85
+        secondary_corrective_percentage = 0.95
         while(np.random.binomial(1, corrective_percentage) == 1 and "WARNING! Approaching lane." in response.decode()): # only take corrective action certain % of time
             if(dr >= threshold and np.random.binomial(1, secondary_corrective_percentage) == 1):  # certain % of the time, if driver is at threshold or closer to the center of the lane, do not take a corrective action
                 print("Not doing corrective action.")
@@ -246,7 +254,13 @@ def script_loop(driver, throttle, threshold, behavior):
                 fast_driver(throttle, behavior)
             flag = True
             response = sock.recv(4096)
-            print(response.decode())
+            if("Loading" not in response.decode()):
+                print(response.decode())
+            if("Loading" in response.decode()):
+                quick_lane_centering(vehicle)
+                while("Loading" in response.decode()):
+                    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=0))
+                    response = sock.recv(4096)
         if(flag):
            quick_lane_centering(vehicle)
         if(vehicle.get_location().x >= 630.0):
@@ -271,12 +285,13 @@ def main():
         locationy = float(args.locationy)
         locationz = float(args.locationz)
         behavior = 1 if (args.behavior == 'right') else -1
-        hostname_to_IP = {'iMac': '192.168.86.250', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBA': '192.168.87.21', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
+        hostname_to_IP = {'iMac': '192.168.86.245', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBA': '192.168.87.21', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
         IP = hostname_to_IP.get(args.hostname)
         if(IP is None):
              IP = args.hostname
         worldset = args.mode
         driver_name = args.name
+        global orig_throttle
         throttle, orig_throttle = float(args.throttle), float(args.throttle)
         driver = args.driver
         port = 50007

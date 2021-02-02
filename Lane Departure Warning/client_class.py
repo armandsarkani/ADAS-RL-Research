@@ -19,7 +19,9 @@ num_speed_states = 3
 num_human_states = 3
 
 class Client:
+    local_episode_num = 1
     driver_name = None
+    init_time = None
     input_file = None
     output_file = None
     statistics_file = None
@@ -29,6 +31,9 @@ class Client:
     state_counts = {3: [], 4: [], 5: [], 6: [], 7: [], 8: []}
     driver_id = None
     human_state = 1
+    false_positives = {}
+    false_negatives = {}
+    rd = []
     warning_states = []
     all_states = {0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: [], 10: [], 11: []}
     num_corrections = 0
