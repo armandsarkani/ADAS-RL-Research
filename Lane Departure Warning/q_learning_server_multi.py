@@ -22,12 +22,6 @@ from datetime import datetime, date
 # thread lock
 lock = None
 
-# step size
-alpha = 0.6
-
-# gamma for Q-Learning
-gamma = 0.8
-
 # human states
 attentive = 0
 moderate = 1
@@ -35,7 +29,7 @@ inattentive = 2
 dict_human_states = {"attentive": attentive, "moderate": moderate, "inattentive": inattentive}
 
 # iterations per episode
-iterations = 20
+iterations = 1000
 
 # actions
 no_warning = 0
@@ -162,14 +156,14 @@ def define_rewards(client, state, action, next_state):
         reward += 30
     if(is_intermediate(state.value) and is_safe(next_state.value) and action == no_warning): # if corrective action taken after no warning from intermediate to safe state
         reward -= 10
-    if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == no_warning): # if no warning issued, but next state was unsafe
-        reward -= 30
-        if(state.value[2] == inattentive):
-            reward -= 10
-    if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == warning): # if warning issued, but next state was unsafe
-        reward += 20
-        if(state.value[2] == inattentive):
-            reward += 20
+#    if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == no_warning): # if no warning issued, but next state was unsafe
+#        reward -= 30
+#        if(state.value[2] == inattentive):
+#            reward -= 10
+#    if(is_intermediate(state.value) and is_unsafe(next_state.value) and action == warning): # if warning issued, but next state was unsafe
+#        reward += 20
+#        if(state.value[2] == inattentive):
+#            reward += 20
     if(state.value[2] == inattentive and action == warning): # giving warning to inattentive driver
         reward += 5
     if(state.value[2] == attentive and action == warning): # giving warning to attentive driver
@@ -190,9 +184,9 @@ def is_intermediate(state_value):
     else:
         return False
 def is_unsafe(state_value):
-    if(state_value[0] > 8 and state_value[2] != inattentive):
+    if(state_value[0] >= 10 and state_value[2] != inattentive):
         return True
-    elif(state_value[0] >= 7 and state_value[2] == inattentive):
+    elif(state_value[0] >= 8 and state_value[2] == inattentive):
         return True
     else:
         return False
@@ -211,15 +205,23 @@ def send_action(conn, action, state):
     else:
         string = "Safe. State: " + str(state.value)
         conn.send(string.encode())
-def q_learning(client, conn, thread, episode, step_size= alpha):
+def q_learning(client, conn, thread, episode):
     iteration_rewards = 0
     init_state = State(client)
     plot_data = {}
     desc_str = client.driver_name + " (episode " + str(episode) + ")"
     client.iteration_vector_sizes = []
-    false_positives = []
-    false_negatives = []
+    #false_positives = []
+    #false_negatives = []
+    corrective_action = False
     for i in trange(iterations, desc= desc_str, leave=True):
+        # learning rate adaptive adjustment
+        if(i >= 0.3 * iterations and i < 0.5 * iterations):
+            client.alpha = 0.5
+        elif(i >= 0.5 * iterations and i < 0.8 * iterations):
+            client.alpha = 0.3
+        elif(i >= 0.8 * iterations):
+            client.alpha = 0.1
         client.rd.append(init_state.metrics.get("dr"))
         state_vector = []
         if(client.control and init_state.value[0] == 11): # only when invaded
@@ -248,33 +250,34 @@ def q_learning(client, conn, thread, episode, step_size= alpha):
             state = State(client)
             state_vector.append(state)
             time.sleep(client.sampling_rate)
-            if(j > 1 and not is_safe(init_state.value) and (init_state.value[0] - state_vector[-1].value[0]) >= 3): # a correction has been detected
+            if(j > 1 and not is_safe(init_state.value) and (init_state.value[0] - state_vector[-1].value[0]) >= 2): # a correction has been detected
                 client.num_corrections += 1
                 client.set_vector_size(j)
                 break
-        if(action == warning and not(not is_safe(init_state.value) and (init_state.value[0] - state_vector[-1].value[0]) >= 2)): # false positive: warning issued but no corrective action
-            false_positives.append(1)
+            
+        if(action == warning and (init_state.value[0] - state_vector[-1].value[0]) < 0): # false positive: warning issued but no corrective action
+#            print("False positive from", str(init_state.value), "to", str(state_vector[-1].value))
+            client.false_positives.append(1)
         else:
-            false_positives.append(0)
-        if(action == no_warning and (not is_safe(init_state.value) and (init_state.value[0] - state_vector[-1].value[0]) >= 2)): # false negative: warning not issued but corrective action
-            false_negatives.append(1)
-        elif(init_state.value[0] == 11 and (init_state.value[0] - state_vector[-1].value[0]) >= 2): # false negative: corrective action taken as car hit lane marking
-            false_negatives.append(1)
+            client.false_positives.append(0)
+        if(is_unsafe(init_state.value) and (init_state.value[0] - state_vector[-1].value[0]) >= 2): # false negative: corrective action taken as car hit lane marking
+            client.false_negatives.append(1)
         else:
-            false_negatives.append(0)
+            client.false_negatives.append(0)
         client.iteration_vector_sizes.append(client.vector_size)
-        # Q-learning lookup table update
-        iteration_rewards = define_rewards(client, init_state, action, state_vector[-1])
         final_state = state_vector[-1]
-        delta = step_size * (iteration_rewards + gamma * np.max(client.q_values[final_state.value[0], final_state.value[1], final_state.value[2], :]) - client.q_values[init_state.value[0], init_state.value[1], init_state.value[2], action])
-        client.q_values[init_state.value[0], init_state.value[1], init_state.value[2], action] += delta
-        lock.acquire()
-        np.save(client.output_file, client.q_values) # save on each iteration
-        lock.release()
+        # Q-learning lookup table update (if not a corrective action)
+        if((init_state.value[0] - state_vector[-1].value[0]) < 0):
+            iteration_rewards = define_rewards(client, init_state, action, state_vector[-1])
+            delta = client.alpha * (iteration_rewards + client.gamma * np.max(client.q_values[final_state.value[0], final_state.value[1], final_state.value[2], :]) - client.q_values[init_state.value[0], init_state.value[1], init_state.value[2], action])
+            client.q_values[init_state.value[0], init_state.value[1], init_state.value[2], action] += delta
+            lock.acquire()
+            np.save(client.output_file, client.q_values) # save on each iteration
+            lock.release()
         init_state = final_state
     tt = threading.Thread(target=temp_thread, args=(client, conn,))
-    client.false_positives.update({client.local_episode_num: false_positives})
-    client.false_negatives.update({client.local_episode_num: false_negatives})
+    #client.false_positives.update({client.local_episode_num: false_positives})
+    #client.false_negatives.update({client.local_episode_num: false_negatives})
     client.block_thread = True
     tt.start()
     plot(client, plot_data, episode)
@@ -583,7 +586,7 @@ def plot(client, plot_data, episode):
     f = plt.figure()
     f.set_figwidth(6.4)
     f.set_figheight(4.8)
-    plt.axis([0, iterations, 0, 16])
+    plt.axis([0, iterations, 0, 40])
     plt.xticks(range(0, iterations+1, int(iterations/4)))
     dt = datetime.now()
     file_name = driver_name + '_vector_sizes_' + timestamp_alt + '_ep' + str(episode_orig) + '.png'
@@ -600,52 +603,70 @@ def plot(client, plot_data, episode):
     # false positives plot
     f = plt.figure()
     f.set_figwidth(10)
-    f.set_figheight(5)
-    plt.axis([1, client.local_episode_num+1, 0, 1])
-    plt.xticks(range(1, client.local_episode_num+1))
-    plt.yticks(range(0, 1))
+    f.set_figheight(2)
+    #plt.axis([1, client.local_episode_num+1, 0, 1])
+    #plt.xticks(range(1, client.local_episode_num+1))
+    plt.axis([1, iterations, 0, 1])
+    plt.xticks(range(0, iterations, int(iterations/10)), fontsize=12, fontweight='bold')
+    plt.yticks(range(0, 1), fontsize=12, fontweight='bold')
     file_name = driver_name + '_FP.png'
-    plt.xlabel("Episodes")
-    plt.ylabel("FP")
-    width = 0.0125
-    for i in range(1, client.local_episode_num+1):
-        offset = 0.125
-        for j in range(0, iterations):
-            plt.bar(i-offset, client.false_positives[i][j], color = '#360CF2', width = width, align = 'center')
-            offset -= 0.0125
+    plt.xlabel("Iterations", fontsize=12, fontweight='bold')
+    plt.ylabel("FP", fontsize=12, fontweight='bold')
+    width = 0.5
+    x_axis = []
+    for i in range(0, len(client.false_positives)):
+        x_axis.append(i)
+        #offset = 0.125
+        #for j in range(0, iterations):
+            #plt.bar(i-offset, client.false_positives[i][j], color = '#360CF2', width = width, align = 'center')
+            #offset -= 0.0125
+    plt.bar(x_axis, client.false_positives, color = '#360CF2', width = width, align = 'center')
+    file = open("GraphData.txt", "a")
+    file.write(str(client.false_positives) + '\n')
+    file.write(str(client.false_negatives) + '\n')
+    file.write(str(client.rd) + '\n')
     plt.savefig(file_name, dpi=600, bbox_inches='tight')
     plt.clf()
     # false negatives plot
     f = plt.figure()
     f.set_figwidth(10)
-    f.set_figheight(5)
-    plt.axis([1, client.local_episode_num+1, 0, 1])
-    plt.xticks(range(1, client.local_episode_num+1))
-    plt.yticks(range(0, 1))
+    f.set_figheight(2)
+    #plt.axis([1, client.local_episode_num+1, 0, 1])
+    #plt.xticks(range(1, client.local_episode_num+1))
+    plt.axis([1, iterations, 0, 1])
+    plt.xticks(range(0, iterations, int(iterations/10)), fontsize=12, fontweight='bold')
+    plt.yticks(range(0, 1), fontsize=12, fontweight='bold')
     file_name = driver_name + '_FN.png'
-    plt.xlabel("Episodes")
-    plt.ylabel("FN")
-    width = 0.0125
-    for i in range(1, client.local_episode_num+1):
-        offset = 0.125
-        for j in range(0, iterations):
-            plt.bar(i-offset, client.false_negatives[i][j], color = '#FA2F20', width = width, align = 'center')
-            offset -= 0.0125
+    plt.xlabel("Iterations", fontsize=12, fontweight='bold')
+    plt.ylabel("FN", fontsize=12, fontweight='bold')
+    width = 0.5
+    x_axis = []
+    for i in range(0, len(client.false_negatives)):
+        x_axis.append(i)
+        #offset = 0.125
+        #for j in range(0, iterations):
+            #plt.bar(i-offset, client.false_positives[i][j], color = '#360CF2', width = width, align = 'center')
+            #offset -= 0.0125
+    plt.bar(x_axis, client.false_negatives, color = '#FC0317', width = width, align = 'center')
     plt.savefig(file_name, dpi=600, bbox_inches='tight')
     plt.clf()
     # right distance (rd) plot
     f = plt.figure()
     f.set_figwidth(10)
-    f.set_figheight(5)
-    plt.axis([1, client.local_episode_num+1, 2.5, 0])
-    plt.xticks(range(1, client.local_episode_num+1))
-    plt.yticks([0, 0.5, 1, 1.5, 2, 2.5])
+    f.set_figheight(2)
+    #plt.axis([1, client.local_episode_num+1, 2.5, 0])
+    #plt.xticks(range(1, client.local_episode_num+1))
+    #plt.yticks([0, 0.5, 1, 1.5, 2, 2.5])
+    plt.axis([1, iterations, 0, 1])
+    plt.xticks(range(0, iterations, int(iterations/10)), fontsize=12, fontweight='bold')
+    plt.yticks([0, 0.5, 1, 1.5, 2, 2.5], fontsize=12, fontweight='bold')
     file_name = driver_name + '_RD.png'
-    plt.xlabel("Episodes")
-    plt.ylabel("RD")
+    plt.xlabel("Iterations", fontsize=12, fontweight='bold')
+    plt.ylabel("RD", fontsize=12, fontweight='bold')
     x_axis = []
     for i in range(0, len(client.rd)):
-        x_axis.append((i/iterations)+1)
+        #x_axis.append((i/iterations)+1)
+        x_axis.append(i)
     plt.plot(x_axis, client.rd, '-g')
     plt.savefig(file_name, dpi=600, bbox_inches='tight')
     plt.clf()
@@ -730,7 +751,7 @@ def write_statistics(data, statistics_file):
 def main():
     global lock
     args = parse_arguments()
-    hostname_to_IP = {'iMac': '192.168.86.245', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBA': '192.168.87.21', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.86.245', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBA': '192.168.87.28', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
         IP = args.hostname

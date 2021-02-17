@@ -120,7 +120,7 @@ def send_data(): # send data to server
     
 # driver scenarios
 def slow_driver(throttle, behavior):
-    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=behavior*random.uniform(-0.005,-0.015)))
+    vehicle.apply_control(carla.VehicleControl(throttle=throttle, steer=behavior*random.uniform(-0.0025,-0.01)))
 def cautious_driver(throttle, behavior):
     init_time = time.time()
     while(time.time() - init_time < cautious_time):
@@ -239,11 +239,13 @@ def script_loop(driver, throttle, threshold, behavior):
             print("Turn signals off.")
             turn_signal_status = False
             continue
-        secondary_corrective_percentage = 0.95
+        secondary_corrective_percentage = 0.7
         while(np.random.binomial(1, corrective_percentage) == 1 and "WARNING! Approaching lane." in response.decode()): # only take corrective action certain % of time
             if(dr >= threshold and np.random.binomial(1, secondary_corrective_percentage) == 1):  # certain % of the time, if driver is at threshold or closer to the center of the lane, do not take a corrective action
                 print("Not doing corrective action.")
+                secondary_corrective_percentage *= 0.9
                 break # do not take a corrective action
+            d = LaneDepartureData()
             if(driver == "slow"):
                 slow_driver(throttle, behavior)
             if(driver == "cautious"):
@@ -254,8 +256,6 @@ def script_loop(driver, throttle, threshold, behavior):
                 fast_driver(throttle, behavior)
             flag = True
             response = sock.recv(4096)
-            if("Loading" not in response.decode()):
-                print(response.decode())
             if("Loading" in response.decode()):
                 quick_lane_centering(vehicle)
                 while("Loading" in response.decode()):
@@ -285,7 +285,7 @@ def main():
         locationy = float(args.locationy)
         locationz = float(args.locationz)
         behavior = 1 if (args.behavior == 'right') else -1
-        hostname_to_IP = {'iMac': '192.168.86.245', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBA': '192.168.87.21', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
+        hostname_to_IP = {'iMac': '192.168.86.245', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBA': '192.168.87.28', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
         IP = hostname_to_IP.get(args.hostname)
         if(IP is None):
              IP = args.hostname
@@ -322,9 +322,9 @@ def main():
         vehicle = None
         spawn_point = carla.Transform(carla.Location(locationx,locationy,locationz),carla.Rotation(0,0.234757,0))
         vehicle = world.try_spawn_actor(bp, spawn_point) # spawn the car (actor)
-        collision_sensor = world.spawn_actor(world.get_blueprint_library().find('sensor.other.collision'),
-                                        carla.Transform(), attach_to=vehicle)
-        collision_sensor.listen(lambda event: collision_handler(event))
+#        collision_sensor = world.spawn_actor(world.get_blueprint_library().find('sensor.other.collision'),
+#                                        carla.Transform(), attach_to=vehicle)
+        #collision_sensor.listen(lambda event: collision_handler(event))
         actor_list.append(vehicle)
         if(args.autonomous == 'on'):
             vehicle.set_autopilot(True)
@@ -339,10 +339,10 @@ def main():
         threshold = threshold_dict.get(driver)
         script_loop(driver, throttle, threshold, behavior)
     except KeyboardInterrupt:
-        if(len(collisions) > 0):
-            print("Run completed.", len(collisions), "collisions measured.")
-        else:
-            print("No collisions measured.")
+#        if(len(collisions) > 0):
+#            print("Run completed.", len(collisions), "collisions measured.")
+#        else:
+#            print("No collisions measured.")
         for actor in actor_list:
             actor.destroy()
         print("Actors destroyed.")

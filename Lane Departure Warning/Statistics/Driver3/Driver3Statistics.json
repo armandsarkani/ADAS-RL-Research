@@ -1,0 +1,28 @@
+{
+    "q_table_name": "Binaries/Driver3.npy",
+    "driver_id": "fc4a73553cb141278e46f8925b485d4b",
+    "warning_most_common_state": "[5, 0, 2]",
+    "avg_warning_dr": 1.2486330935251797,
+    "avg_warning_dl": 2.306978417266187,
+    "total_time_run": "0:34:40",
+    "total_time_run_seconds": 2080.856371164322,
+    "total_num_episodes": 2,
+    "num_corrections": 232,
+    "num_invasions": 102,
+    "num_warning_states": 556,
+    "warning_ratio_dist_states": {
+        "0": "0.0%",
+        "1": "0.0%",
+        "2": "0.0%",
+        "3": "69.3%",
+        "4": "25.2%",
+        "5": "39.8%",
+        "6": "12.7%",
+        "7": "77.2%",
+        "8": "100.0%",
+        "9": "100.0%",
+        "10": "100.0%",
+        "11": "100.0%"
+    },
+    "vector_size": 11
+}

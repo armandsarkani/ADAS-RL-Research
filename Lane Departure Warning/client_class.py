@@ -27,18 +27,22 @@ class Client:
     statistics_file = None
     control = False
     epsilon = 0.1 # probability for exploration
+    alpha = 0.7 # step size
+    gamma = 0.8 # gamma for Q-Learning
     q_values = np.zeros((num_distance_states, num_speed_states, num_human_states, 2)) # q-value lookup table, initialized to zeros
     state_counts = {3: [], 4: [], 5: [], 6: [], 7: [], 8: []}
     driver_id = None
     human_state = 1
-    false_positives = {}
-    false_negatives = {}
+    #false_positives = {}
+    #false_negatives = {}
+    false_positives = []
+    false_negatives = []
     rd = []
     warning_states = []
     all_states = {0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: [], 10: [], 11: []}
     num_corrections = 0
     num_invasions = 0
-    sampling_rate = 0.25  # rate at which state transitions are measured
+    sampling_rate = 0.1  # rate at which state transitions are measured
     vector_size = int(2/sampling_rate)
     min_vector_size = 4
     max_vector_size = int(2/sampling_rate)*2
@@ -77,10 +81,10 @@ class Client:
             self.q_values[i, :, :, 1] = 1
     def set_vector_size(self, adjustment):
         size = 0
-        if(adjustment > int(self.vector_size/2)): # larger adjustment, reduce vector size (slow response time)
-            size = self.vector_size - adjustment
-        else: # smaller adjustment, increase vector size (fast response time)
-            size = self.vector_size + adjustment
+        if(adjustment > int(self.vector_size/2)): # larger adjustment
+            size = self.vector_size - (adjustment/2)
+        else: # smaller adjustment
+            size = self.vector_size + (adjustment/2)
         if(size < self.min_vector_size):
             self.vector_size = self.min_vector_size
         elif(size > self.max_vector_size):

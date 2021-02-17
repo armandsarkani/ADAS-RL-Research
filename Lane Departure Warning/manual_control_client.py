@@ -398,6 +398,8 @@ class World(object):
         d = LaneDepartureData()
         data_string = pickle.dumps(d)
         sock.send(data_string)
+        if(player.get_location().x >= 630.0):
+            player.set_transform(carla.Transform(carla.Location(151.071,146.458,2.5),carla.Rotation(0,0.234757,0))) # reset position to the beginning of the road to continue testing when the vehicle reaches end of road
         self.hud.tick(self, clock)
     def render(self, display):
         self.camera_manager.render(display)
@@ -1238,12 +1240,13 @@ def Receive(sock):
             prev_location = player.get_location()
         response = sock.recv(4096)
         # display message on HUD
-        if("Approaching lane" in response.decode()):
-            world.hud.notification("WARNING! Approaching lane.")
-        if("Unsafe merge" in response.decode()):
-            world.hud.notification("WARNING! Unsafe merge onto adjacent lane.")
-        print(response.decode())
-        print("\n")
+        if("Loading" not in response.decode()):
+            if("Approaching lane" in response.decode()):
+                world.hud.notification("WARNING! Approaching lane.")
+            if("Unsafe merge" in response.decode()):
+                world.hud.notification("WARNING! Unsafe merge onto adjacent lane.")
+            print(response.decode())
+            print("\n")
             
 # ==============================================================================
 # -- main() --------------------------------------------------------------------
@@ -1322,7 +1325,7 @@ def main():
     print(__doc__)
     driver_name = args.name
     worldset = args.mode
-    hostname_to_IP = {'iMac': '192.168.86.245', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBA': '192.168.87.21', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
+    hostname_to_IP = {'iMac': '192.168.86.245', 'MBP': '192.168.0.78', 'MBPo': '192.168.254.41', 'MBA': '192.168.87.28', 'MBAo': '192.168.254.67', 'localhost': '127.0.0.1'}
     IP = hostname_to_IP.get(args.hostname)
     if(IP is None):
          IP = args.hostname
