@@ -1,5 +1,5 @@
-# **Privacy-Aware Personalized ADAS Research**
-UCI undergraduate research project exploring personalized Advanced Driver Assistance Systems (ADAS) that are privacy-aware and adaptive based on various human states. <br/>
+# **ADAS-RL Research**
+UCI undergraduate research project exploring personalized Advanced Driver Assistance Systems (ADAS) that are adaptive based on various human states. <br/>
 
 ## Information
 
