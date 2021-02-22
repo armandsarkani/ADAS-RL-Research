@@ -35,6 +35,8 @@ class Client:
     human_state = 1
     #false_positives = {}
     #false_negatives = {}
+    plot_data = {}
+    mi_data = []
     false_positives = []
     false_negatives = []
     rd = []

@@ -1,0 +1,28 @@
+{
+    "q_table_name": "Binaries/AggressiveDriver.npy",
+    "driver_id": "69ef5cf75c0a45ce8c9f2f434f166de9",
+    "warning_most_common_state": "[6, 0, 1]",
+    "avg_warning_dr": 0.9846666666666666,
+    "avg_warning_dl": 2.546333333333333,
+    "total_time_run": "0:03:01",
+    "total_time_run_seconds": 181.26456570625305,
+    "total_num_episodes": 3,
+    "num_corrections": 22,
+    "num_invasions": 0,
+    "num_warning_states": 30,
+    "warning_ratio_dist_states": {
+        "0": "0.0%",
+        "1": "0.0%",
+        "2": "0.0%",
+        "3": "11.9%",
+        "4": "21.7%",
+        "5": "12.5%",
+        "6": "71.7%",
+        "7": "33.3%",
+        "8": "80.0%",
+        "9": "95.0%",
+        "10": "100.0%",
+        "11": "100.0%"
+    },
+    "vector_size": 5.5
+}

@@ -29,7 +29,7 @@ inattentive = 2
 dict_human_states = {"attentive": attentive, "moderate": moderate, "inattentive": inattentive}
 
 # iterations per episode
-iterations = 1000
+iterations = 100
 
 # actions
 no_warning = 0
@@ -208,11 +208,8 @@ def send_action(conn, action, state):
 def q_learning(client, conn, thread, episode):
     iteration_rewards = 0
     init_state = State(client)
-    plot_data = {}
     desc_str = client.driver_name + " (episode " + str(episode) + ")"
     client.iteration_vector_sizes = []
-    #false_positives = []
-    #false_negatives = []
     corrective_action = False
     for i in trange(iterations, desc= desc_str, leave=True):
         # learning rate adaptive adjustment
@@ -236,7 +233,8 @@ def q_learning(client, conn, thread, episode):
             action = choose_action(client, init_state.value)
         if(action == warning):
             client.warning_states.append(init_state)
-        plot_data.update({init_state: action})
+        client.plot_data.update({init_state: action})
+        client.mi_data.append({'state': init_state.value, 'action': int(action), 'vector_size': int(client.vector_size)})
         client.all_states[init_state.value[0]].append(action)
         if(not thread.is_alive()):
             lock.acquire()
@@ -280,8 +278,8 @@ def q_learning(client, conn, thread, episode):
     #client.false_negatives.update({client.local_episode_num: false_negatives})
     client.block_thread = True
     tt.start()
-    plot(client, plot_data, episode)
-    save_plot_data(client, plot_data)
+    plot(client, episode)
+    save_plot_data(client)
     client.local_episode_num += 1
     client.block_thread = False
 def temp_thread(client, conn):
@@ -478,7 +476,7 @@ def convert(seconds):
     return '%d:%02d:%02d' % (hour, minutes, seconds)
 
 # plotting and statistics
-def save_plot_data(client, plot_data):
+def save_plot_data(client):
     lock.acquire()
     if(not(os.path.exists('Data'))):
           os.mkdir('Data')
@@ -487,19 +485,29 @@ def save_plot_data(client, plot_data):
     if(not(os.path.exists(driver_name))):
         os.mkdir(driver_name)
     os.chdir(driver_name)
+    mi_data_file_name = driver_name + '_mi_data.json'
     iterations_data_file_name = driver_name + '_iterations_data.json'
     wf_data_file_name = driver_name + '_warning_frequency_data.json'
     plot_data_values = {}
-    for state in plot_data:
+    for state in client.plot_data:
         if(str(state.value) in plot_data_values):
             value = plot_data_values[str(state.value)]
-            value.append(int(plot_data[state]))
+            value.append(int(client.plot_data[state]))
             plot_data_values.update({str(state.value): value})
         else:
-            plot_data_values.update({str(state.value): [int(plot_data[state])]})
+            plot_data_values.update({str(state.value): [int(client.plot_data[state])]})
     dt = datetime.now()
     timestamp = dt.strftime('%d-%b-%Y (%H:%M)')
     iterations_data = {timestamp: plot_data_values}
+    if(not os.path.exists(mi_data_file_name)):
+        with open(mi_data_file_name, 'w') as file:
+            json.dump(client.mi_data, file)
+    else:
+        with open(mi_data_file_name, 'r') as file:
+            old_mi_data = json.load(file)
+            client.mi_data += old_mi_data
+            with open(mi_data_file_name, 'w') as file:
+                json.dump(client.mi_data, file)
     if(not os.path.exists(iterations_data_file_name)):
         with open(iterations_data_file_name, 'w') as file:
             json.dump(iterations_data, file)
@@ -513,7 +521,7 @@ def save_plot_data(client, plot_data):
         json.dump(client.state_counts, file)
     os.chdir('../..')
     lock.release()
-def plot(client, plot_data, episode):
+def plot(client, episode):
     episode_orig = episode
     lock.acquire()
     state_counts = client.state_counts
@@ -539,9 +547,9 @@ def plot(client, plot_data, episode):
     plt.xlabel("Iterations")
     plt.ylabel("Distance state (lower is safer)")
     i = 1
-    for key in plot_data:
+    for key in client.plot_data:
         y = key.value[0]
-        if(plot_data[key] == warning):
+        if(client.plot_data[key] == warning):
             plt.plot(i, y, 'ro') # plot (iteration, state) warning as red
         else:
             plt.plot(i, y, 'go') # plot (iteration, state) no warning as green
@@ -555,8 +563,8 @@ def plot(client, plot_data, episode):
     for i in range(3, 9): # initialization
         state_counts[i].append(0) # add zero entry for this episode
     episode = len(state_counts[3])
-    for key in plot_data:
-        if(plot_data[key] == warning and key.value[0] >= 3 and key.value[0] <= 8):
+    for key in client.plot_data:
+        if(client.plot_data[key] == warning and key.value[0] >= 3 and key.value[0] <= 8):
             state_counts[key.value[0]][episode-1] += 1
     timestamp = dt.strftime('%d-%b-%Y')
     file_name = driver_name + '_warning_frequency_plot_' + timestamp + '.png'
